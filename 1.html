@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Add the Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-group">
+        <label for="actb_dahm_p">Input A:</label>
+        <input type="text" class="form-control" id="actb_dahm_p" />
+      </div>
+      <div class="form-group">
+        <label for="actb_dahm_p1">Input B:</label>
+        <input type="text" class="form-control" id="actb_dahm_p1" />
+      </div>
+      <div class="form-group">
+        <label for="dahm_n">Input C:</label>
+        <input type="text" class="form-control" id="dahm_n" disabled />
+      </div>
+    </div>
+
+    <!-- Add jQuery and Bootstrap JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+      // Định nghĩa hàm để xử lý việc cập nhật giá trị của "dahm_n"
+      function updateDahmNValue() {
+        const tenDa = $("#actb_dahm_p").val();
+        const lhkd = $("#actb_dahm_p1").val();
+        const lhkdChilds = lhkd.split("-");
+        console.log(lhkdChilds);
+        let tenHM = "";
+        switch (lhkdChilds[0]) {
+          case "31011":
+            tenHM = "PM.31011." + tenDa;
+            break;
+          case "31012":
+            tenHM = "ERP.31012." + tenDa;
+            break;
+          case "31013":
+            tenHM = "ERP.31013." + tenDa;
+            break;
+          case "31014":
+            tenHM = "PM.31014." + tenDa;
+            break;
+          case "31021":
+            tenHM = "TĐH.31021." + tenDa;
+            break;
+          case "31022":
+            tenHM = "TĐH.31022." + tenDa;
+            break;
+          case "31023":
+            tenHM = "TĐH.31023." + tenDa;
+            break;
+          case "31031":
+            tenHM = "DVHT.31031." + tenDa;
+            break;
+          case "31032":
+            tenHM = "DVHT.31032." + tenDa;
+            break;
+          case "31033":
+            tenHM = "DVHT.31033." + tenDa;
+            break;
+          case "31041":
+            tenHM = "DT.31041." + tenDa;
+            break;
+
+          default:
+            break;
+        }
+        $("#dahm_n").val(tenHM);
+      }
+
+      // Lắng nghe sự kiện khi giá trị của input "actb_dahm_p" thay đổi
+      $("#actb_dahm_p, #actb_dahm_p1").on("input", updateDahmNValue);
+    </script>
+  </body>
+</html>
