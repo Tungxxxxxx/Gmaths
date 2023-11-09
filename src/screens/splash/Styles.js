@@ -32,10 +32,10 @@ export const bottom = {
   justifyContent: 'center',
 };
 export const bottomContent = {
-  fontFamily: 'SFProDisplay-Regular',
+  fontFamily: 'SF Pro',
   fontWeight: '400',
   fontSize: 14,
   lineHeight: 20,
-  color: '#3C3C4399',
+  color: 'rgba(60, 60, 67, 0.6)',
   letterSpacing: -0.4, // Tương ứng với letterSpacing trong CSS
 };

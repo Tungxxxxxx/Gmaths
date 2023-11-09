@@ -7,6 +7,7 @@ import { styles } from './Styles';
 import BannerHero from './BannerHero';
 import { Dimensions } from 'react-native';
 import PagingDot from '../../components/PagingDot';
+import Listing from './Listing';
 const { width } = Dimensions.get('window');
 const bannerWidth = width - 32;
 class Homepage extends React.Component {
@@ -59,23 +60,28 @@ class Homepage extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.content}>
-            <View style={styles.bannerContainer}>
-              <PagingDot activeDot={activeDot} />
-              <ScrollView
-                showsHorizontalScrollIndicator={false}
-                pagingEnabled
-                horizontal={true}
-                contentContainerStyle={{ width: bannerWidth * 3, height: 335 }}
-                scrollEventThrottle={16}
-                onScroll={(e) => {
-                  this.handleScrollBanner(e);
-                }}
-              >
-                <BannerHero />
-                <BannerHero />
-                <BannerHero />
-              </ScrollView>
-            </View>
+            <ScrollView showsVerticalScrollIndicator={false}>
+              <View style={styles.bannerContainer}>
+                <PagingDot activeDot={activeDot} />
+                <ScrollView
+                  showsHorizontalScrollIndicator={false}
+                  pagingEnabled
+                  horizontal={true}
+                  contentContainerStyle={{ width: bannerWidth * 3, height: 335 }}
+                  scrollEventThrottle={16}
+                  onScroll={(e) => {
+                    this.handleScrollBanner(e);
+                  }}
+                >
+                  <BannerHero />
+                  <BannerHero />
+                  <BannerHero />
+                </ScrollView>
+              </View>
+              <View style={styles.listing}>
+                <Listing />
+              </View>
+            </ScrollView>
           </View>
         </ImageBackground>
       </View>
