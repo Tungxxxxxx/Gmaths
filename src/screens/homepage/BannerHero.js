@@ -27,7 +27,7 @@ class BannerHero extends React.Component {
           <Text style={styles.txtLarge}>SCHOOL</Text>
           <Text style={styles.txtSmall}>FUN WITH MATHS</Text>
         </View>
-        <TouchableOpacity style={styles.buttonCTA}>
+        <TouchableOpacity style={styles.buttonCTA} disabled={!this.props.isActiveButtonCTA}>
           <Text style={styles.labelButtonCTA}>Đăng ký gói cước ngay</Text>
         </TouchableOpacity>
       </RadialGradient>

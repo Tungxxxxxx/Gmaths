@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StatusBar, Text, View, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { ImageBackground, StatusBar, Text, View, Image, TouchableOpacity, ScrollView, Button } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { BG, logo } from '../../assets/images/index';
@@ -7,13 +7,16 @@ import { styles } from './Styles';
 import BannerHero from './BannerHero';
 import { Dimensions } from 'react-native';
 import PagingDot from '../../components/PagingDot';
+// import Listing from './Listing';
+import LoadableListing from './LoadingListing';
 import Listing from './Listing';
 const { width } = Dimensions.get('window');
 const bannerWidth = width - 32;
 class Homepage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activeDot: 1 };
+    this.state = { activeDot: 1, isActiveButtonCTA: false };
+    this.scrollViewRef = React.createRef();
   }
   handleScrollBanner = (e) => {
     if (!e) {
@@ -41,6 +44,11 @@ class Homepage extends React.Component {
       // console.log('>>>>Check event scroll', check);
     }
   };
+  setActiveButtonCTA = (flag) => {
+    this.setState({
+      isActiveButtonCTA: flag,
+    });
+  };
   render() {
     const { activeDot } = this.state;
     return (
@@ -60,7 +68,11 @@ class Homepage extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={styles.content}>
-            <ScrollView showsVerticalScrollIndicator={false}>
+            <ScrollView
+              showsVerticalScrollIndicator={false}
+              ref={this.scrollViewRef}
+              contentContainerStyle={{ paddingBottom: '100%' }}
+            >
               <View style={styles.bannerContainer}>
                 <PagingDot activeDot={activeDot} />
                 <ScrollView
@@ -73,13 +85,13 @@ class Homepage extends React.Component {
                     this.handleScrollBanner(e);
                   }}
                 >
-                  <BannerHero />
-                  <BannerHero />
-                  <BannerHero />
+                  <BannerHero isActiveButtonCTA={this.state.isActiveButtonCTA} />
+                  <BannerHero isActiveButtonCTA={this.state.isActiveButtonCTA} />
+                  <BannerHero isActiveButtonCTA={this.state.isActiveButtonCTA} />
                 </ScrollView>
               </View>
               <View style={styles.listing}>
-                <Listing />
+                <Listing scrollViewRef={this.scrollViewRef} setActiveButtonCTA={this.setActiveButtonCTA} />
               </View>
             </ScrollView>
           </View>

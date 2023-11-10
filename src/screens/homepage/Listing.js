@@ -19,11 +19,17 @@ class Listing extends React.Component {
     const grade = this.props.grades.filter((item) => item.id === gradeId)[0];
     return grade;
   };
+  setActiveButtonCTA = (flag) => {
+    this.props.setActiveButtonCTA(flag);
+  };
   handleClickGrade = (id) => {
     if (this.state.activeId !== id) {
+      id === 0 ? this.setActiveButtonCTA(false) : this.setActiveButtonCTA(true);
+      this.props.scrollViewRef.current.scrollTo({ y: 359 });
       this.setState({ activeId: id });
       this.props.fetchGetCourses(id);
     } else {
+      this.props.scrollViewRef.current.scrollTo({ y: 359 });
       return;
     }
   };
