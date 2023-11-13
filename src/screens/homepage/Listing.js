@@ -5,7 +5,7 @@ import { fetchGetCourses } from '../../redux/actions/fetchGetCourses';
 import { StyleSheet, View, TouchableOpacity, Text, FlatList, Image } from 'react-native';
 import PriceFormat from '../../components/PriceFormat';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import LinearGradient from 'react-native-linear-gradient';
+import { BUY_COURSE } from '../../constant/Constant';
 class Listing extends React.Component {
   constructor(props) {
     super(props);
@@ -33,7 +33,6 @@ class Listing extends React.Component {
       return;
     }
   };
-
   render() {
     const { grades, courses } = this.props;
     const { activeId } = this.state;
@@ -81,7 +80,12 @@ class Listing extends React.Component {
           numColumns={1}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.childCourses}>
+            <TouchableOpacity
+              style={styles.childCourses}
+              onPress={() => {
+                this.props.updateModal(BUY_COURSE);
+              }}
+            >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={styles.courseTxtAvatar}>
                   <Text style={styles.txtAvatar}>{this.getGradeById(item.gradeId).name}</Text>

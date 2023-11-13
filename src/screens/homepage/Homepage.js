@@ -5,18 +5,24 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { BG, logo } from '../../assets/images/index';
 import { styles } from './Styles';
 import BannerHero from './BannerHero';
-import { Dimensions } from 'react-native';
 import PagingDot from '../../components/PagingDot';
-// import Listing from './Listing';
-import LoadableListing from './LoadingListing';
 import Listing from './Listing';
+import { Dimensions } from 'react-native';
+import SignIn from '../../components/Modal/SignIn';
+import { SIGN_IN, SIGN_UP, BUY_COURSE } from '../../constant/Constant';
+import SignUp from '../../components/Modal/SignUp';
+import BuyCourse from '../../components/Modal/BuyCourse';
+
 const { width } = Dimensions.get('window');
 const bannerWidth = width - 32;
 class Homepage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { activeDot: 1, isActiveButtonCTA: false };
+    this.state = { activeDot: 1, isActiveButtonCTA: false, modal: SIGN_UP };
     this.scrollViewRef = React.createRef();
+    this.signInRef = React.createRef();
+    this.signUpRef = React.createRef();
+    this.buyCourseRef = React.createRef();
   }
   handleScrollBanner = (e) => {
     if (!e) {
@@ -49,8 +55,35 @@ class Homepage extends React.Component {
       isActiveButtonCTA: flag,
     });
   };
+  showSignInModal = () => {
+    this.setState(
+      () => ({ modal: SIGN_IN }),
+      () => {
+        if (this.signInRef.current) {
+          this.signInRef.current.showModal();
+        }
+      },
+    );
+  };
+  updateModal = (modalName) => {
+    this.setState(
+      () => ({
+        modal: modalName,
+        signUpVisible: true,
+      }),
+      () => {
+        if (this.signUpRef.current) {
+          this.signUpRef.current.showModal();
+        }
+        if (this.buyCourseRef.current) {
+          this.buyCourseRef.current.showModal();
+        }
+      },
+    );
+  };
   render() {
-    const { activeDot } = this.state;
+    console.log(' this.buyCourseRef', this.buyCourseRef);
+    const { activeDot, modal } = this.state;
     return (
       <View style={styles.container}>
         <ImageBackground source={BG} style={styles.bgImage}>
@@ -63,7 +96,12 @@ class Homepage extends React.Component {
               <Image source={logo} style={styles.logo} />
               <Text style={styles.titleContent}>Gmaths</Text>
             </View>
-            <TouchableOpacity style={styles.rightFunc}>
+            <TouchableOpacity
+              style={styles.rightFunc}
+              onPress={() => {
+                this.showSignInModal();
+              }}
+            >
               <MaterialCommunityIcons name="account-circle-outline" size={24} color={'#1565C0'} />
             </TouchableOpacity>
           </View>
@@ -91,10 +129,21 @@ class Homepage extends React.Component {
                 </ScrollView>
               </View>
               <View style={styles.listing}>
-                <Listing scrollViewRef={this.scrollViewRef} setActiveButtonCTA={this.setActiveButtonCTA} />
+                <Listing
+                  scrollViewRef={this.scrollViewRef}
+                  setActiveButtonCTA={this.setActiveButtonCTA}
+                  updateModal={this.updateModal}
+                />
               </View>
             </ScrollView>
           </View>
+          {modal === SIGN_IN ? (
+            <SignIn ref={this.signInRef} updateModal={this.updateModal} />
+          ) : modal === SIGN_UP ? (
+            <SignUp ref={this.signUpRef} />
+          ) : (
+            <BuyCourse ref={this.buyCourseRef} />
+          )}
         </ImageBackground>
       </View>
     );

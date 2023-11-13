@@ -3,7 +3,6 @@ import { View, Image, TouchableOpacity, Text } from 'react-native';
 import RadialGradient from 'react-native-radial-gradient';
 import { styles, radialColor, radialStops } from './Styles';
 import { logo, Rectangle1 } from '../../assets/images/index';
-import PagingDot from '../../components/PagingDot';
 
 class BannerHero extends React.Component {
   constructor(props) {

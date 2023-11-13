@@ -14,6 +14,7 @@ export const main = {
   alignItems: 'center',
 };
 export const mainContent = {
+  fontFamily: 'SF Pro',
   color: '#1565C0',
   fontWeight: '500',
   marginTop: 20,

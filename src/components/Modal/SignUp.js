@@ -1,21 +1,16 @@
 import React from 'react';
 import { Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import LeftIconInput from '../Input/LeftIconInput';
-import PassInput from '../Input/PassInput';
-import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { SvgXml } from 'react-native-svg';
 import { zaloIcon, messenger, phone, logo } from '../../assets/images/index';
-import { IN_CORRECT_PASS } from '../../constant/Message';
-import { SIGN_UP } from '../../constant/Constant';
 import { Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
 const contentWidth = width - 64;
-class SignIn extends React.Component {
+class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { visible: false, errorMes: '' };
+    this.state = { visible: false };
   }
   showModal = () => {
     this.setState((prevState) => {
@@ -28,27 +23,21 @@ class SignIn extends React.Component {
     });
   };
   render() {
-    const { visible, errorMes } = this.state;
-    console.log('SignIn', visible);
+    const { visible } = this.state;
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => {
-            this.showModal();
-          }}
-        ></TouchableOpacity>
         <Modal animationType="slide" transparent={true} visible={visible}>
           <View style={styles.modalContainer}>
             <View style={styles.grabber}></View>
             <View style={styles.titleContainer}>
-              <Text style={styles.title}>Đăng nhập</Text>
+              <Text style={styles.title}>Đăng ký</Text>
               <TouchableOpacity
-                style={styles.closeContainer}
+                style={styles.backContainer}
                 onPress={() => {
                   this.closeModal();
                 }}
               >
-                <Ionicons name="close" size={16} style={styles.close} />
+                <AntDesign name="left" size={16} style={styles.back} />
               </TouchableOpacity>
             </View>
             <View style={styles.content}>
@@ -56,49 +45,38 @@ class SignIn extends React.Component {
                 <Image source={logo} style={{ width: 80, height: 80 }} />
                 <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
               </View>
-              <View style={styles.signInForm}>
-                <LeftIconInput name={'person-outline'} transform={[{ rotate: '0deg' }]} />
-                <PassInput errorMes={errorMes} />
-                {errorMes !== '' && <Text style={styles.errorMes}>{errorMes}</Text>}
+              <View style={styles.signUpForm}>
+                <LeftIconInput name={'phone-portrait-outline'} transform={[{ rotate: '180deg' }]} />
                 <TouchableOpacity style={styles.buttonContainer}>
-                  <Text style={styles.txtButton}>Đăng nhập</Text>
+                  <Text style={styles.txtButton}>Gửi mã OTP</Text>
                 </TouchableOpacity>
                 <View style={styles.links}>
                   <TouchableOpacity>
-                    <Text style={styles.forgetPass}>Quên mật khẩu?</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.updateModal(SIGN_UP);
-                    }}
-                  >
-                    <Text style={styles.forgetPass}>Đăng ký</Text>
+                    <Text style={styles.forgetPass}>Đã có tài khoản? Đăng nhập ngay!</Text>
                   </TouchableOpacity>
                 </View>
-              </View>
-              {errorMes === '' ? (
-                <View style={styles.orSignIn}>
-                  <View style={styles.divider}></View>
-                  <Text style={styles.txtOrSignIn}>hoặc</Text>
-                  <View style={styles.divider}></View>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                  <Text style={styles.txtBottom}>
+                    Bằng cách điền thông tin sau đó nhấp vào "Đăng ký", bạn mặc nhiên đồng ý với{` `}
+                  </Text>
+                  <TouchableOpacity>
+                    <Text style={[styles.txtLink, styles.txtBottom]}>Điều khoản</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.txtBottom}>, </Text>
+                  <TouchableOpacity>
+                    <Text style={[styles.txtLink, styles.txtBottom]}>Quy chế hoạt động</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.txtBottom}> và </Text>
+                  <TouchableOpacity>
+                    <Text style={[styles.txtLink, styles.txtBottom]}>Chính sách bảo mật</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.txtBottom}> của Gmaths.vn!</Text>
                 </View>
-              ) : (
                 <View style={styles.dividerFull}></View>
-              )}
-
-              <View style={styles.authAcc}>
-                <View style={styles.CTA}>
-                  <AntDesign style={styles.socialIcon} name="apple1" />
-                </View>
-                <View style={styles.CTA}>
-                  <AntDesign style={styles.socialIcon} name="google" />
-                </View>
-                <View style={styles.CTA}>
-                  <FontAwesome style={[styles.socialIcon, { paddingLeft: 5 }]} name="facebook" />
-                </View>
+                <Text style={styles.txtBottom}>Gặp vấn đề về đăng ký tài khoản mới?</Text>
+                <Text style={styles.txtBottom}>Liên hệ với Gmaths để nhận được sự trợ giúp kịp thời</Text>
               </View>
-              <Text style={styles.txtContact}>Không thể đăng nhập?</Text>
-              <Text style={styles.txtContact}>Liên hệ với Gmaths để nhận được sự trợ giúp kịp thời</Text>
+
               <View style={styles.contact}>
                 <View style={styles.iconContactView}>
                   <SvgXml xml={phone} style={styles.iconContact} />
@@ -147,10 +125,10 @@ const styles = StyleSheet.create({
     letterSpacing: -0.4,
     color: 'rgba(0, 0, 0, 1)',
   },
-  closeContainer: {
+  backContainer: {
     position: 'absolute',
     top: 12,
-    right: 16,
+    left: 16,
     width: 32,
     height: 32,
     borderRadius: 16,
@@ -158,7 +136,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  close: { fontFamily: 'SF Pro', fontWeight: '900', lineHeight: 16, fontSize: 16, color: 'rgba(0, 0, 0, 1)' },
+  back: { fontFamily: 'SF Pro', fontWeight: '900', lineHeight: 16, fontSize: 16, color: 'rgba(0, 0, 0, 1)' },
   grabber: { width: '11.58%', height: 5, backgroundColor: 'rgba(60, 60, 67, 0.3)', borderRadius: 100, top: 5 },
   content: { width: '100%', flex: 1, paddingHorizontal: 32, paddingTop: 24, alignItems: 'center' },
   logoView: { width: '100%', height: 116, alignItems: 'center', marginBottom: 24 },
@@ -171,20 +149,9 @@ const styles = StyleSheet.create({
     color: '#1565C0',
     marginTop: 12,
   },
-  signInForm: {
+  signUpForm: {
     width: '100%',
     alignItems: 'center',
-  },
-  errorMes: {
-    width: '100%',
-    fontFamily: 'SF Pro',
-    fontWeight: '400',
-    fontSize: 14,
-    lineHeight: 20,
-    letterSpacing: -0.4,
-    color: '#FF3B30',
-    textAlign: 'left',
-    marginTop: 12,
   },
   buttonContainer: {
     width: '100%',
@@ -196,6 +163,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     marginTop: 24,
   },
+
   txtButton: {
     fontFamily: 'SF Pro',
     fontWeight: '700',
@@ -216,59 +184,32 @@ const styles = StyleSheet.create({
   links: {
     width: '100%',
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 24,
   },
-  orSignIn: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 24,
+  txtBottom: {
+    fontFamily: 'SF Pro',
+    fontWeight: '400',
+    fontSize: 12,
+    lineHeight: 16,
+    letterSpacing: -0.4,
+    color: 'rgba(60, 60, 67, 0.6)',
+    textAlign: 'center',
   },
-  divider: {
-    width: '42.44%',
-    height: 1,
-    backgroundColor: 'rgba(60, 60, 67, 0.18)',
+  txtLink: {
+    textDecorationLine: 'underline',
+  },
+  txtLinkCommon: {
+    marginLeft: 2, // Khoảng cách giữa các liên kết
+    marginRight: 2,
   },
   dividerFull: {
     width: '100%',
     height: 1,
     backgroundColor: 'rgba(60, 60, 67, 0.18)',
+    marginTop: 24,
     marginBottom: 24,
-  },
-  txtOrSignIn: {
-    fontFamily: 'SF Pro',
-    fontWeight: '400',
-    fontSize: 14,
-    lineHeight: 20,
-    letterSpacing: -0.4,
-    color: 'rgba(60, 60, 67, 0.6)',
-  },
-  authAcc: {
-    flexDirection: 'row',
-    width: 168,
-    justifyContent: 'space-between',
-    marginBottom: 24,
-  },
-  CTA: {
-    width: 48,
-    height: 48,
-    borderRadius: 24,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#FFFFFF',
-    padding: 12,
-  },
-  socialIcon: {
-    width: 24,
-    height: 24,
-    color: '#1976D2',
-    fontFamily: 'SF Pro',
-    fontWeight: '400',
-    fontSize: 24,
-    lineHeight: 24,
   },
   contact: {
     flexDirection: 'row',
@@ -297,4 +238,4 @@ const styles = StyleSheet.create({
   },
   iconContactView: { height: 40, width: 40, borderRadius: 16, padding: 8 },
 });
-export default SignIn;
+export default SignUp;
