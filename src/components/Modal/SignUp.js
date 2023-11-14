@@ -1,5 +1,14 @@
 import React from 'react';
-import { Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  TouchableWithoutFeedback,
+} from 'react-native';
 import LeftIconInput from '../Input/LeftIconInput';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { SvgXml } from 'react-native-svg';
@@ -13,7 +22,7 @@ class SignUp extends React.Component {
     this.state = { visible: false };
   }
   showModal = () => {
-    this.setState((prevState) => {
+    this.setState(() => {
       return { visible: true };
     });
   };
@@ -26,70 +35,87 @@ class SignUp extends React.Component {
     const { visible } = this.state;
     return (
       <View style={styles.container}>
-        <Modal animationType="slide" transparent={true} visible={visible}>
-          <View style={styles.modalContainer}>
-            <View style={styles.grabber}></View>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>Đăng ký</Text>
-              <TouchableOpacity
-                style={styles.backContainer}
-                onPress={() => {
-                  this.closeModal();
-                }}
-              >
-                <AntDesign name="left" size={16} style={styles.back} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.content}>
-              <View style={styles.logoView}>
-                <Image source={logo} style={{ width: 80, height: 80 }} />
-                <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
-              </View>
-              <View style={styles.signUpForm}>
-                <LeftIconInput name={'phone-portrait-outline'} transform={[{ rotate: '180deg' }]} />
-                <TouchableOpacity style={styles.buttonContainer}>
-                  <Text style={styles.txtButton}>Gửi mã OTP</Text>
-                </TouchableOpacity>
-                <View style={styles.links}>
-                  <TouchableOpacity>
-                    <Text style={styles.forgetPass}>Đã có tài khoản? Đăng nhập ngay!</Text>
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={visible}
+          onRequestClose={() => {
+            this.closeModal();
+          }}
+        >
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            activeOpacity={1}
+            onPressOut={() => {
+              this.closeModal();
+            }}
+          >
+            <TouchableWithoutFeedback>
+              <View style={styles.modalContainer}>
+                <View style={styles.grabber}></View>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.title}>Đăng ký</Text>
+                  <TouchableOpacity
+                    style={styles.backContainer}
+                    onPress={() => {
+                      this.closeModal();
+                    }}
+                  >
+                    <AntDesign name="left" size={16} style={styles.back} />
                   </TouchableOpacity>
                 </View>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
-                  <Text style={styles.txtBottom}>
-                    Bằng cách điền thông tin sau đó nhấp vào "Đăng ký", bạn mặc nhiên đồng ý với{` `}
-                  </Text>
-                  <TouchableOpacity>
-                    <Text style={[styles.txtLink, styles.txtBottom]}>Điều khoản</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.txtBottom}>, </Text>
-                  <TouchableOpacity>
-                    <Text style={[styles.txtLink, styles.txtBottom]}>Quy chế hoạt động</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.txtBottom}> và </Text>
-                  <TouchableOpacity>
-                    <Text style={[styles.txtLink, styles.txtBottom]}>Chính sách bảo mật</Text>
-                  </TouchableOpacity>
-                  <Text style={styles.txtBottom}> của Gmaths.vn!</Text>
-                </View>
-                <View style={styles.dividerFull}></View>
-                <Text style={styles.txtBottom}>Gặp vấn đề về đăng ký tài khoản mới?</Text>
-                <Text style={styles.txtBottom}>Liên hệ với Gmaths để nhận được sự trợ giúp kịp thời</Text>
-              </View>
+                <View style={styles.content}>
+                  <View style={styles.logoView}>
+                    <Image source={logo} style={{ width: 80, height: 80 }} />
+                    <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
+                  </View>
+                  <View style={styles.signUpForm}>
+                    <LeftIconInput name={'phone-portrait-outline'} transform={[{ rotate: '180deg' }]} />
+                    <TouchableOpacity style={styles.buttonContainer}>
+                      <Text style={styles.txtButton}>Gửi mã OTP</Text>
+                    </TouchableOpacity>
+                    <View style={styles.links}>
+                      <TouchableOpacity>
+                        <Text style={styles.forgetPass}>Đã có tài khoản? Đăng nhập ngay!</Text>
+                      </TouchableOpacity>
+                    </View>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'center' }}>
+                      <Text style={styles.txtBottom}>
+                        Bằng cách điền thông tin sau đó nhấp vào "Đăng ký", bạn mặc nhiên đồng ý với{` `}
+                      </Text>
+                      <TouchableOpacity>
+                        <Text style={[styles.txtLink, styles.txtBottom]}>Điều khoản</Text>
+                      </TouchableOpacity>
+                      <Text style={styles.txtBottom}>, </Text>
+                      <TouchableOpacity>
+                        <Text style={[styles.txtLink, styles.txtBottom]}>Quy chế hoạt động</Text>
+                      </TouchableOpacity>
+                      <Text style={styles.txtBottom}> và </Text>
+                      <TouchableOpacity>
+                        <Text style={[styles.txtLink, styles.txtBottom]}>Chính sách bảo mật</Text>
+                      </TouchableOpacity>
+                      <Text style={styles.txtBottom}> của Gmaths.vn!</Text>
+                    </View>
+                    <View style={styles.dividerFull}></View>
+                    <Text style={styles.txtBottom}>Gặp vấn đề về đăng ký tài khoản mới?</Text>
+                    <Text style={styles.txtBottom}>Liên hệ với Gmaths để nhận được sự trợ giúp kịp thời</Text>
+                  </View>
 
-              <View style={styles.contact}>
-                <View style={styles.iconContactView}>
-                  <SvgXml xml={phone} style={styles.iconContact} />
-                </View>
-                <View style={styles.iconContactView}>
-                  <SvgXml xml={zaloIcon} style={styles.iconContact} />
-                </View>
-                <View style={styles.iconContactView}>
-                  <SvgXml xml={messenger} style={styles.iconContact} />
+                  <View style={styles.contact}>
+                    <View style={styles.iconContactView}>
+                      <SvgXml xml={phone} style={styles.iconContact} />
+                    </View>
+                    <View style={styles.iconContactView}>
+                      <SvgXml xml={zaloIcon} style={styles.iconContact} />
+                    </View>
+                    <View style={styles.iconContactView}>
+                      <SvgXml xml={messenger} style={styles.iconContact} />
+                    </View>
+                  </View>
                 </View>
               </View>
-            </View>
-          </View>
+            </TouchableWithoutFeedback>
+          </TouchableOpacity>
         </Modal>
       </View>
     );

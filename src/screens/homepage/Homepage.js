@@ -69,20 +69,20 @@ class Homepage extends React.Component {
     this.setState(
       () => ({
         modal: modalName,
-        signUpVisible: true,
       }),
       () => {
         if (this.signUpRef.current) {
           this.signUpRef.current.showModal();
         }
         if (this.buyCourseRef.current) {
+          console.log('Homepage', modalName);
           this.buyCourseRef.current.showModal();
         }
       },
     );
   };
+
   render() {
-    console.log(' this.buyCourseRef', this.buyCourseRef);
     const { activeDot, modal } = this.state;
     return (
       <View style={styles.container}>

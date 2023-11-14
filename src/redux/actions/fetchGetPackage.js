@@ -1,40 +1,97 @@
-import { GET_PACKAGE_REQUEST, GET_PACKAGE_SUCCESS, GET_PACKAGE_FAILURE } from '../../constant/Action';
+import { GET_PACKAGES_REQUEST, GET_PACKAGES_SUCCESS, GET_PACKAGES_FAILURE } from '../../constant/Action';
 
 const dataInit = [
-  { id: 1, courseId: 1, code: 'GM1', name: 'Gói ngày' },
-  { id: 2, courseId: 1, code: 'GM7', name: 'Gói 7 ngày' },
-  { id: 3, courseId: 1, code: 'GM30', name: 'Gói 30 ngày' },
-  { id: 4, courseId: 2, code: 'GM1', name: 'Gói ngày' },
-  { id: 5, courseId: 3, code: 'GM1', name: 'Gói ngày' },
-  { id: 6, courseId: 4, code: 'GM1', name: 'Gói ngày' },
-  { id: 7, courseId: 5, code: 'GM1', name: 'Gói ngày' },
-  { id: 8, courseId: 6, code: 'GM1', name: 'Gói ngày' },
+  {
+    id: 1,
+    courseId: 1,
+    code: 'GM1',
+    name: 'Gói ngày',
+    price: 5000,
+    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+  },
+  {
+    id: 2,
+    courseId: 1,
+    code: 'GM7',
+    name: 'Gói 7 ngày',
+    price: 30000,
+    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+  },
+  {
+    id: 3,
+    courseId: 1,
+    code: 'GM30',
+    name: 'Gói 30 ngày',
+    price: 120000,
+    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+  },
+  {
+    id: 4,
+    courseId: 2,
+    code: 'GM1',
+    name: 'Gói ngày',
+    price: 5000,
+    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+  },
+  {
+    id: 5,
+    courseId: 3,
+    code: 'GM1',
+    name: 'Gói ngày',
+    price: 5000,
+    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+  },
+  {
+    id: 6,
+    courseId: 4,
+    code: 'GM1',
+    name: 'Gói ngày',
+    price: 5000,
+    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+  },
+  {
+    id: 7,
+    courseId: 5,
+    code: 'GM1',
+    name: 'Gói ngày',
+    price: 5000,
+    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+  },
+  {
+    id: 8,
+    courseId: 6,
+    code: 'GM1',
+    name: 'Gói ngày',
+    price: 5000,
+    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+  },
 ];
-const getCourses = (courseId) => {
+const getPackages = (courseId) => {
   return dataInit.filter((item) => item.courseId === courseId);
 };
 //phải trả về 1 đối tượng
-export const fetchGetPackageRequest = () => {
+const fetchGetPackagesRequest = () => {
   return {
-    type: GET_PACKAGE_REQUEST,
+    type: GET_PACKAGES_REQUEST,
   };
 };
-export const fetchGetPackageSuccess = (data) => {
-  return { type: GET_PACKAGE_SUCCESS, payload: data };
+const fetchGetPackagesSuccess = (data) => {
+  return { type: GET_PACKAGES_SUCCESS, payload: data };
 };
-export const fetchGetPackageFailure = (error) => {
-  return { type: GET_PACKAGE_FAILURE, payload: error.message };
+const fetchGetPackagesFailure = (error) => {
+  return { type: GET_PACKAGES_FAILURE, payload: error.message };
 };
 
 //trả về 1 dispatch
-export const fetchGetPackage = (courseId) => {
+export const fetchGetPackages = (courseId) => {
   return (dispatch) => {
-    dispatch(fetchGetPackageRequest());
+    dispatch(fetchGetPackagesRequest());
     try {
-      const courses = courseId === 0 ? dataInit : getCourses(courseId);
-      dispatch(fetchGetPackageSuccess(dataInit));
+      const packages = !courseId ? [] : getPackages(courseId);
+      console.log('fetchGetPackages', packages);
+      dispatch(fetchGetPackagesSuccess(packages));
     } catch (error) {
-      dispatch(fetchGetPackageFailure(error));
+      dispatch(fetchGetPackagesFailure(error));
     }
   };
 };

@@ -31,7 +31,6 @@ export const fetchGetCoursesFailure = (error) => {
 //trả về 1 dispatch
 export const fetchGetCourses = (gradeId) => {
   return (dispatch) => {
-    console.log('action');
     dispatch(fetchGetCoursesRequest());
     try {
       const courses = gradeId === 0 ? dataInit : getCourses(gradeId);

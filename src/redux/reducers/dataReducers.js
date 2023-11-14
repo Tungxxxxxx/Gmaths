@@ -33,3 +33,57 @@ export const getCoursesReducer = (state = initCoursesState, action) => {
       return state;
   }
 };
+const initPackageState = {
+  packagesLoading: false,
+  packages: [],
+  packagesErrorMess: '',
+};
+export const getPackagesReducer = (state = initPackageState, action) => {
+  console.log('action', action.type);
+  switch (action.type) {
+    case Action.GET_PACKAGES_REQUEST:
+      return { ...state, packagesLoading: true, packages: [], packagesErrorMess: '' };
+    case Action.GET_PACKAGES_SUCCESS:
+      return { ...state, packagesLoading: false, packages: action.payload, packagesErrorMess: '' };
+    case Action.GET_PACKAGES_FAILURE:
+      return { ...state, packagesLoading: false, packages: [], packagesErrorMess: action.payload };
+    default:
+      return state;
+  }
+};
+const initUserState = {
+  usersLoading: false,
+  users: [],
+  usersErrorMess: '',
+};
+export const getUsersReducer = (state = initUserState, action) => {
+  console.log('action', action.type);
+  switch (action.type) {
+    case Action.GET_PACKAGES_REQUEST:
+      return { ...state, usersLoading: true, users: [], usersErrorMess: '' };
+    case Action.GET_PACKAGES_SUCCESS:
+      return { ...state, usersLoading: false, users: action.payload, usersErrorMess: '' };
+    case Action.GET_PACKAGES_FAILURE:
+      return { ...state, usersLoading: false, users: [], usersErrorMess: action.payload };
+    default:
+      return state;
+  }
+};
+const initUserCoursesState = {
+  usersCoursesLoading: false,
+  usersCourses: [],
+  usersCoursesErrorMess: '',
+};
+export const getUserCoursesReducer = (state = initUserCoursesState, action) => {
+  console.log('action', action.type);
+  switch (action.type) {
+    case Action.GET_PACKAGES_REQUEST:
+      return { ...state, usersCoursesLoading: true, usersCourses: [], usersCoursesErrorMess: '' };
+    case Action.GET_PACKAGES_SUCCESS:
+      return { ...state, usersCoursesLoading: false, usersCourses: action.payload, usersCoursesErrorMess: '' };
+    case Action.GET_PACKAGES_FAILURE:
+      return { ...state, usersCoursesLoading: false, usersCourses: [], usersCoursesErrorMess: action.payload };
+    default:
+      return state;
+  }
+};

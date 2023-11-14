@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { fetchGetGrades } from '../../redux/actions/fetchGetGrades';
 import { fetchGetCourses } from '../../redux/actions/fetchGetCourses';
+import { fetchGetPackages } from '../../redux/actions/fetchGetPackage';
 import { StyleSheet, View, TouchableOpacity, Text, FlatList, Image } from 'react-native';
 import PriceFormat from '../../components/PriceFormat';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -33,10 +34,10 @@ class Listing extends React.Component {
       return;
     }
   };
+
   render() {
     const { grades, courses } = this.props;
     const { activeId } = this.state;
-    // console.log('render', courses);
     // Sắp xếp mảng tăng dần theo name
     grades.sort((a, b) => {
       return a.name.localeCompare(b.name);
@@ -79,16 +80,24 @@ class Listing extends React.Component {
           data={courses}
           numColumns={1}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item }) => (
+          renderItem={({ item, index }) => (
             <TouchableOpacity
               style={styles.childCourses}
               onPress={() => {
+                this.props.fetchGetPackages(item.id);
                 this.props.updateModal(BUY_COURSE);
               }}
             >
               <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                 <View style={styles.courseTxtAvatar}>
-                  <Text style={styles.txtAvatar}>{this.getGradeById(item.gradeId).name}</Text>
+                  <Text
+                    style={[
+                      styles.txtAvatar,
+                      { color: index === 0 || index === 1 ? '#42A5F5' : index === 2 ? '#1976D2' : '#1565C0' },
+                    ]}
+                  >
+                    {this.getGradeById(item.gradeId).name}
+                  </Text>
                 </View>
                 <View style={styles.courseDetails}>
                   <Text style={styles.courseTitle}>{this.getGradeById(item.gradeId).fullname + ' - ' + item.name}</Text>
@@ -199,4 +208,4 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return { grades: state.grades.grades, courses: state.courses.courses, grades: state.grades.grades };
 };
-export default connect(mapStateToProps, { fetchGetGrades, fetchGetCourses })(Listing);
+export default connect(mapStateToProps, { fetchGetGrades, fetchGetCourses, fetchGetPackages })(Listing);

@@ -1,5 +1,14 @@
 import React from 'react';
-import { Image, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import {
+  Image,
+  Modal,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import LeftIconInput from '../Input/LeftIconInput';
 import PassInput from '../Input/PassInput';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -18,7 +27,7 @@ class SignIn extends React.Component {
     this.state = { visible: false, errorMes: '' };
   }
   showModal = () => {
-    this.setState((prevState) => {
+    this.setState(() => {
       return { visible: true };
     });
   };
@@ -32,86 +41,100 @@ class SignIn extends React.Component {
     console.log('SignIn', visible);
     return (
       <View style={styles.container}>
-        <TouchableOpacity
-          onPress={() => {
-            this.showModal();
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={visible}
+          onRequestClose={() => {
+            this.closeModal();
           }}
-        ></TouchableOpacity>
-        <Modal animationType="slide" transparent={true} visible={visible}>
-          <View style={styles.modalContainer}>
-            <View style={styles.grabber}></View>
-            <View style={styles.titleContainer}>
-              <Text style={styles.title}>Đăng nhập</Text>
-              <TouchableOpacity
-                style={styles.closeContainer}
-                onPress={() => {
-                  this.closeModal();
-                }}
-              >
-                <Ionicons name="close" size={16} style={styles.close} />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.content}>
-              <View style={styles.logoView}>
-                <Image source={logo} style={{ width: 80, height: 80 }} />
-                <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
-              </View>
-              <View style={styles.signInForm}>
-                <LeftIconInput name={'person-outline'} transform={[{ rotate: '0deg' }]} />
-                <PassInput errorMes={errorMes} />
-                {errorMes !== '' && <Text style={styles.errorMes}>{errorMes}</Text>}
-                <TouchableOpacity style={styles.buttonContainer}>
-                  <Text style={styles.txtButton}>Đăng nhập</Text>
-                </TouchableOpacity>
-                <View style={styles.links}>
-                  <TouchableOpacity>
-                    <Text style={styles.forgetPass}>Quên mật khẩu?</Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={() => {
-                      this.props.updateModal(SIGN_UP);
-                    }}
-                  >
-                    <Text style={styles.forgetPass}>Đăng ký</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-              {errorMes === '' ? (
-                <View style={styles.orSignIn}>
-                  <View style={styles.divider}></View>
-                  <Text style={styles.txtOrSignIn}>hoặc</Text>
-                  <View style={styles.divider}></View>
-                </View>
-              ) : (
-                <View style={styles.dividerFull}></View>
-              )}
+        >
+          <TouchableOpacity
+            style={{ flex: 1 }}
+            activeOpacity={1}
+            onPressOut={() => {
+              this.closeModal();
+            }}
+          >
+            <ScrollView contentContainerStyle={{ flex: 1 }} directionalLockEnabled={true}>
+              <TouchableWithoutFeedback>
+                <View style={styles.modalContainer}>
+                  <View style={styles.grabber}></View>
+                  <View style={styles.titleContainer}>
+                    <Text style={styles.title}>Đăng nhập</Text>
+                    <TouchableOpacity
+                      style={styles.closeContainer}
+                      onPress={() => {
+                        this.closeModal();
+                      }}
+                    >
+                      <Ionicons name="close" size={16} style={styles.close} />
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.content}>
+                    <View style={styles.logoView}>
+                      <Image source={logo} style={{ width: 80, height: 80 }} />
+                      <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
+                    </View>
+                    <View style={styles.signInForm}>
+                      <LeftIconInput name={'person-outline'} transform={[{ rotate: '0deg' }]} />
+                      <PassInput errorMes={errorMes} />
+                      {errorMes !== '' && <Text style={styles.errorMes}>{errorMes}</Text>}
+                      <TouchableOpacity style={styles.buttonContainer}>
+                        <Text style={styles.txtButton}>Đăng nhập</Text>
+                      </TouchableOpacity>
+                      <View style={styles.links}>
+                        <TouchableOpacity>
+                          <Text style={styles.forgetPass}>Quên mật khẩu?</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this.props.updateModal(SIGN_UP);
+                          }}
+                        >
+                          <Text style={styles.forgetPass}>Đăng ký</Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                    {errorMes === '' ? (
+                      <View style={styles.orSignIn}>
+                        <View style={styles.divider}></View>
+                        <Text style={styles.txtOrSignIn}>hoặc</Text>
+                        <View style={styles.divider}></View>
+                      </View>
+                    ) : (
+                      <View style={styles.dividerFull}></View>
+                    )}
 
-              <View style={styles.authAcc}>
-                <View style={styles.CTA}>
-                  <AntDesign style={styles.socialIcon} name="apple1" />
+                    <View style={styles.authAcc}>
+                      <View style={styles.CTA}>
+                        <AntDesign style={styles.socialIcon} name="apple1" />
+                      </View>
+                      <View style={styles.CTA}>
+                        <AntDesign style={styles.socialIcon} name="google" />
+                      </View>
+                      <View style={styles.CTA}>
+                        <FontAwesome style={[styles.socialIcon, { paddingLeft: 5 }]} name="facebook" />
+                      </View>
+                    </View>
+                    <Text style={styles.txtContact}>Không thể đăng nhập?</Text>
+                    <Text style={styles.txtContact}>Liên hệ với Gmaths để nhận được sự trợ giúp kịp thời</Text>
+                    <View style={styles.contact}>
+                      <View style={styles.iconContactView}>
+                        <SvgXml xml={phone} style={styles.iconContact} />
+                      </View>
+                      <View style={styles.iconContactView}>
+                        <SvgXml xml={zaloIcon} style={styles.iconContact} />
+                      </View>
+                      <View style={styles.iconContactView}>
+                        <SvgXml xml={messenger} style={styles.iconContact} />
+                      </View>
+                    </View>
+                  </View>
                 </View>
-                <View style={styles.CTA}>
-                  <AntDesign style={styles.socialIcon} name="google" />
-                </View>
-                <View style={styles.CTA}>
-                  <FontAwesome style={[styles.socialIcon, { paddingLeft: 5 }]} name="facebook" />
-                </View>
-              </View>
-              <Text style={styles.txtContact}>Không thể đăng nhập?</Text>
-              <Text style={styles.txtContact}>Liên hệ với Gmaths để nhận được sự trợ giúp kịp thời</Text>
-              <View style={styles.contact}>
-                <View style={styles.iconContactView}>
-                  <SvgXml xml={phone} style={styles.iconContact} />
-                </View>
-                <View style={styles.iconContactView}>
-                  <SvgXml xml={zaloIcon} style={styles.iconContact} />
-                </View>
-                <View style={styles.iconContactView}>
-                  <SvgXml xml={messenger} style={styles.iconContact} />
-                </View>
-              </View>
-            </View>
-          </View>
+              </TouchableWithoutFeedback>
+            </ScrollView>
+          </TouchableOpacity>
         </Modal>
       </View>
     );
