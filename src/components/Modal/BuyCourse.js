@@ -79,123 +79,127 @@ class BuyCourse extends React.Component {
               this.closeModal();
             }}
           >
-            <ScrollView contentContainerStyle={{ flex: 1 }} directionalLockEnabled={true}>
-              <TouchableWithoutFeedback>
-                <View style={styles.modalContainer}>
-                  <View style={styles.grabber}></View>
-                  <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Đăng ký</Text>
-                    <TouchableOpacity
-                      style={styles.closeContainer}
-                      onPress={() => {
-                        this.closeModal();
-                      }}
-                    >
-                      <Ionicons name="close" size={16} style={styles.close} />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.content}>
-                    <View style={styles.logoView}>
-                      <Image source={logo} style={{ width: 80, height: 80 }} />
-                      <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
-                    </View>
-                    <View style={styles.buttonCTAsContainer}>
+            <View style={{ flex: 1 }}>
+              <ScrollView contentContainerStyle={{ flex: 1 }} showsVerticalScrollIndicator={false}>
+                <TouchableWithoutFeedback style={{ flex: 1 }}>
+                  <View style={styles.modalContainer}>
+                    <View style={styles.grabber}></View>
+                    <View style={styles.titleContainer}>
+                      <Text style={styles.title}>Đăng ký</Text>
                       <TouchableOpacity
-                        style={[styles.buttonCTA, activeButtonCTA === MOBI && styles.activeButtonCTA]}
+                        style={styles.closeContainer}
                         onPress={() => {
-                          this.handleMobiClick();
+                          this.closeModal();
                         }}
                       >
-                        <Text style={[styles.txtButtonCTA, activeButtonCTA === MOBI && styles.activeTxtButtonCTA]}>
-                          mobifone
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={[styles.buttonCTA, activeButtonCTA === VINA && styles.activeButtonCTA]}
-                        onPress={() => {
-                          this.handleVinaClick();
-                        }}
-                      >
-                        <Text style={[styles.txtButtonCTA, activeButtonCTA === VINA && styles.activeTxtButtonCTA]}>
-                          vinaphone
-                        </Text>
+                        <Ionicons name="close" size={16} style={styles.close} />
                       </TouchableOpacity>
                     </View>
+                    <View style={styles.content}>
+                      <View style={styles.logoView}>
+                        <Image source={logo} style={{ width: 80, height: 80 }} />
+                        <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
+                      </View>
+                      <View style={styles.buttonCTAsContainer}>
+                        <TouchableOpacity
+                          style={[styles.buttonCTA, activeButtonCTA === MOBI && styles.activeButtonCTA]}
+                          onPress={() => {
+                            this.handleMobiClick();
+                          }}
+                        >
+                          <Text style={[styles.txtButtonCTA, activeButtonCTA === MOBI && styles.activeTxtButtonCTA]}>
+                            mobifone
+                          </Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          style={[styles.buttonCTA, activeButtonCTA === VINA && styles.activeButtonCTA]}
+                          onPress={() => {
+                            this.handleVinaClick();
+                          }}
+                        >
+                          <Text style={[styles.txtButtonCTA, activeButtonCTA === VINA && styles.activeTxtButtonCTA]}>
+                            vinaphone
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
 
-                    <View style={styles.listing}>
-                      <FlatList
-                        scrollEnabled={false}
-                        data={packages}
-                        numColumns={1}
-                        keyExtractor={(item) => item.id.toString()}
-                        renderItem={({ item, index }) => (
-                          <View style={styles.packageContainer}>
-                            <View style={styles.packageTitle}>
-                              <View style={styles.courseTxtAvatar}>
-                                <Text
-                                  style={[
-                                    styles.txtAvatar,
-                                    {
-                                      color:
-                                        index === 0 || index === 1 ? '#42A5F5' : index === 2 ? '#1976D2' : '#1565C0',
-                                    },
-                                  ]}
+                      <View style={styles.listing}>
+                        <FlatList
+                          scrollEnabled={false}
+                          data={packages}
+                          numColumns={1}
+                          keyExtractor={(item) => item.id.toString()}
+                          renderItem={({ item, index }) => (
+                            <View style={styles.packageContainer}>
+                              <View style={styles.packageTitle}>
+                                <View style={styles.courseTxtAvatar}>
+                                  <Text
+                                    style={[
+                                      styles.txtAvatar,
+                                      {
+                                        color:
+                                          index === 0 || index === 1 ? '#42A5F5' : index === 2 ? '#1976D2' : '#1565C0',
+                                      },
+                                    ]}
+                                  >
+                                    {item.code}
+                                  </Text>
+                                </View>
+                                <View style={styles.courseDetails}>
+                                  <Text style={styles.courseTitle}>{item.name}</Text>
+                                  <Text style={styles.coursePrice}>
+                                    <PriceFormat price={item.price} /> đ / ngày
+                                  </Text>
+                                </View>
+                                <TouchableOpacity
+                                  style={styles.rightContainer}
+                                  onPress={() => {
+                                    this.showHideInfo(item.id);
+                                  }}
                                 >
-                                  {item.code}
-                                </Text>
+                                  <Ionicons
+                                    name={
+                                      showCourseIds.includes(item.id) ? 'chevron-up-outline' : 'chevron-down-outline'
+                                    }
+                                    size={16}
+                                    style={styles.rightIcon}
+                                    color={showCourseIds.includes(item.id) ? '#000000' : 'rgba(60, 60, 67, 0.6)'}
+                                  />
+                                </TouchableOpacity>
                               </View>
-                              <View style={styles.courseDetails}>
-                                <Text style={styles.courseTitle}>{item.name}</Text>
-                                <Text style={styles.coursePrice}>
-                                  <PriceFormat price={item.price} /> đ / ngày
-                                </Text>
-                              </View>
-                              <TouchableOpacity
-                                style={styles.rightContainer}
-                                onPress={() => {
-                                  this.showHideInfo(item.id);
-                                }}
-                              >
-                                <Ionicons
-                                  name={showCourseIds.includes(item.id) ? 'chevron-up-outline' : 'chevron-down-outline'}
-                                  size={16}
-                                  style={styles.rightIcon}
-                                  color={showCourseIds.includes(item.id) ? '#000000' : 'rgba(60, 60, 67, 0.6)'}
-                                />
+                              {showCourseIds.includes(item.id) ? (
+                                <View style={styles.info}>
+                                  {item.contents &&
+                                    item.contents.length > 0 &&
+                                    item.contents.map((content) => {
+                                      return (
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                                          <Ionicons style={styles.checkIcon} name="checkmark-outline" />
+                                          <Text key={randomKey()} style={styles.txtInfo}>
+                                            {content}
+                                          </Text>
+                                        </View>
+                                      );
+                                    })}
+                                </View>
+                              ) : null}
+                              <TouchableOpacity style={styles.buttonContainer}>
+                                <View style={styles.txtButtonView}>
+                                  <Text style={styles.txtSmallButton}>Soạn</Text>
+                                  <Text style={styles.txtLargeButton}> DK GM1 </Text>
+                                  <Text style={styles.txtSmallButton}>gửi </Text>
+                                  <Text style={styles.txtLargeButton}>****</Text>
+                                </View>
                               </TouchableOpacity>
                             </View>
-                            {showCourseIds.includes(item.id) ? (
-                              <View style={styles.info}>
-                                {item.contents &&
-                                  item.contents.length > 0 &&
-                                  item.contents.map((content) => {
-                                    return (
-                                      <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
-                                        <Ionicons style={styles.checkIcon} name="checkmark-outline" />
-                                        <Text key={randomKey()} style={styles.txtInfo}>
-                                          {content}
-                                        </Text>
-                                      </View>
-                                    );
-                                  })}
-                              </View>
-                            ) : null}
-                            <TouchableOpacity style={styles.buttonContainer}>
-                              <View style={styles.txtButtonView}>
-                                <Text style={styles.txtSmallButton}>Soạn</Text>
-                                <Text style={styles.txtLargeButton}> DK GM1 </Text>
-                                <Text style={styles.txtSmallButton}>gửi </Text>
-                                <Text style={styles.txtLargeButton}>****</Text>
-                              </View>
-                            </TouchableOpacity>
-                          </View>
-                        )}
-                      />
+                          )}
+                        />
+                      </View>
                     </View>
                   </View>
-                </View>
-              </TouchableWithoutFeedback>
-            </ScrollView>
+                </TouchableWithoutFeedback>
+              </ScrollView>
+            </View>
           </TouchableOpacity>
         </Modal>
       </View>
@@ -208,7 +212,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    // height: '88%',
+    height: '88%',
     alignItems: 'center',
     backgroundColor: 'rgba(242, 242, 247, 1)',
     borderRadius: 12,

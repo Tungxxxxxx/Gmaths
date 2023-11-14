@@ -43,7 +43,8 @@ class PassInput extends React.Component {
           placeholder="Mật khẩu"
           placeholderTextColor={onFocus || errorMes !== '' ? '#000000' : 'rgba(60, 60, 67, 0.3)'}
           secureTextEntry={!isShowPass}
-          enterKeyHint="done"
+          returnKeyType="go"
+          autoCorrect={false}
           onFocus={() => {
             this.onFocus();
           }}

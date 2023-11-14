@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
   View,
+  KeyboardAvoidingView,
 } from 'react-native';
 import LeftIconInput from '../Input/LeftIconInput';
 import PassInput from '../Input/PassInput';
@@ -56,8 +57,8 @@ class SignIn extends React.Component {
               this.closeModal();
             }}
           >
-            <ScrollView contentContainerStyle={{ flex: 1 }} directionalLockEnabled={true}>
-              <TouchableWithoutFeedback>
+            <TouchableWithoutFeedback>
+              <ScrollView contentContainerStyle={{ flex: 1 }} directionalLockEnabled={true}>
                 <View style={styles.modalContainer}>
                   <View style={styles.grabber}></View>
                   <View style={styles.titleContainer}>
@@ -132,8 +133,8 @@ class SignIn extends React.Component {
                     </View>
                   </View>
                 </View>
-              </TouchableWithoutFeedback>
-            </ScrollView>
+              </ScrollView>
+            </TouchableWithoutFeedback>
           </TouchableOpacity>
         </Modal>
       </View>

@@ -35,8 +35,10 @@ class LeftIconInput extends React.Component {
           ref={(input) => {
             this.accountInputRef = input;
           }}
-          enterKeyHint="next"
-          autoComplete="off"
+          // enterKeyHint="next"
+          returnKeyType="next"
+          autoCorrect={false}
+          keyboardType="email-address"
           onFocus={() => {
             this.onFocus();
           }}
