@@ -9,8 +9,8 @@ const dataInit = [
     price: 5000,
     contents: [
       { id: 1, content: '12 bài giảng' },
-      { id: 1, content: '16 bài tập ôn luyện' },
-      { id: 1, content: '8 đề thi nâng cao' },
+      { id: 2, content: '16 bài tập ôn luyện' },
+      { id: 3, content: '8 đề thi nâng cao' },
     ],
   },
   {
@@ -21,8 +21,8 @@ const dataInit = [
     price: 30000,
     contents: [
       { id: 1, content: '12 bài giảng' },
-      { id: 1, content: '16 bài tập ôn luyện' },
-      { id: 1, content: '8 đề thi nâng cao' },
+      { id: 2, content: '16 bài tập ôn luyện' },
+      { id: 3, content: '8 đề thi nâng cao' },
     ],
   },
   {
@@ -33,74 +33,12 @@ const dataInit = [
     price: 120000,
     contents: [
       { id: 1, content: '12 bài giảng' },
-      { id: 1, content: '16 bài tập ôn luyện' },
-      { id: 1, content: '8 đề thi nâng cao' },
-    ],
-  },
-  {
-    id: 4,
-    courseId: 2,
-    code: 'GM1',
-    name: 'Gói ngày',
-    price: 5000,
-    contents: [
-      { id: 1, content: '12 bài giảng' },
-      { id: 1, content: '16 bài tập ôn luyện' },
-      { id: 1, content: '8 đề thi nâng cao' },
-    ],
-  },
-  {
-    id: 5,
-    courseId: 3,
-    code: 'GM1',
-    name: 'Gói ngày',
-    price: 5000,
-    contents: [
-      { id: 1, content: '12 bài giảng' },
-      { id: 1, content: '16 bài tập ôn luyện' },
-      { id: 1, content: '8 đề thi nâng cao' },
-    ],
-  },
-  {
-    id: 6,
-    courseId: 4,
-    code: 'GM1',
-    name: 'Gói ngày',
-    price: 5000,
-    contents: [
-      { id: 1, content: '12 bài giảng' },
-      { id: 1, content: '16 bài tập ôn luyện' },
-      { id: 1, content: '8 đề thi nâng cao' },
-    ],
-  },
-  {
-    id: 7,
-    courseId: 5,
-    code: 'GM1',
-    name: 'Gói ngày',
-    price: 5000,
-    contents: [
-      { id: 1, content: '12 bài giảng' },
-      { id: 1, content: '16 bài tập ôn luyện' },
-      { id: 1, content: '8 đề thi nâng cao' },
-    ],
-  },
-  {
-    id: 8,
-    courseId: 6,
-    code: 'GM1',
-    name: 'Gói ngày',
-    price: 5000,
-    contents: [
-      { id: 1, content: '12 bài giảng' },
-      { id: 1, content: '16 bài tập ôn luyện' },
-      { id: 1, content: '8 đề thi nâng cao' },
+      { id: 2, content: '16 bài tập ôn luyện' },
+      { id: 3, content: '8 đề thi nâng cao' },
     ],
   },
 ];
-const getPackages = (courseId) => {
-  return dataInit.filter((item) => item.courseId === courseId);
-};
+
 //phải trả về 1 đối tượng
 const fetchGetPackagesRequest = () => {
   return {
@@ -115,13 +53,11 @@ const fetchGetPackagesFailure = (error) => {
 };
 
 //trả về 1 dispatch
-export const fetchGetPackages = (courseId) => {
+export const fetchGetPackages = () => {
   return (dispatch) => {
     dispatch(fetchGetPackagesRequest());
     try {
-      const packages = !courseId ? [] : getPackages(courseId);
-      console.log('fetchGetPackages', packages);
-      dispatch(fetchGetPackagesSuccess(packages));
+      dispatch(fetchGetPackagesSuccess(dataInit));
     } catch (error) {
       dispatch(fetchGetPackagesFailure(error));
     }

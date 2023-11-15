@@ -6,8 +6,10 @@ import { fetchGetPackages } from '../../redux/actions/fetchGetPackage';
 import { StyleSheet, View, TouchableOpacity, Text, FlatList, Image } from 'react-native';
 import PriceFormat from '../../components/PriceFormat';
 import AntDesign from 'react-native-vector-icons/AntDesign';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import { BUY_COURSE, DA_HOAN_THANH, CHUAN_BI } from '../../constant/Constant';
 import * as colors from '../../color/Color';
+const INFO = '• 19:35 - 10/12/2023';
 class Listing extends React.Component {
   constructor(props) {
     super(props);
@@ -46,9 +48,12 @@ class Listing extends React.Component {
     }
     return null;
   };
+  getGradenameById = (id) => {
+    const { grades } = this.props;
+    return grades.filter((item) => item.id === id)[0].fullname;
+  };
   render() {
-    const { grades, courses, coursesOfUser, userLogin } = this.props;
-    console.log('coursesOfUser', coursesOfUser);
+    const { grades, courses, userLogin } = this.props;
     const { activeId } = this.state;
     // Sắp xếp mảng tăng dần theo name
     grades.sort((a, b) => {
@@ -99,8 +104,16 @@ class Listing extends React.Component {
               <TouchableOpacity
                 style={styles.childCourses}
                 onPress={() => {
-                  this.props.fetchGetPackages(item.id);
-                  this.props.updateModal(BUY_COURSE);
+                  if (userLogin) {
+                    this.props.navigation.navigate('LessonsOfCourse', {
+                      title: this.getGradenameById(item.gradeId) + ' - ' + item.name,
+                      avatar: userLogin.avatar,
+                      courseId: item.id,
+                    });
+                  } else {
+                    this.props.fetchGetPackages();
+                    this.props.updateModal(BUY_COURSE);
+                  }
                 }}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
@@ -125,14 +138,20 @@ class Listing extends React.Component {
                       },
                     ]}
                   >
-                    <Text
-                      style={[
-                        styles.txtAvatar,
-                        { color: index === 0 || index === 1 ? '#42A5F5' : index === 2 ? '#1976D2' : '#1565C0' },
-                      ]}
-                    >
-                      {this.getGradeById(item.gradeId).name}
-                    </Text>
+                    {!check ? (
+                      <Text
+                        style={[
+                          styles.txtAvatar,
+                          { color: index === 0 || index === 1 ? '#42A5F5' : index === 2 ? '#1976D2' : '#1565C0' },
+                        ]}
+                      >
+                        {this.getGradeById(item.gradeId).name}
+                      </Text>
+                    ) : courseOfUser.status === DA_HOAN_THANH ? (
+                      <Ionicons style={styles.checkIcon} size={24} color={'#34C759'} name="checkmark-sharp" />
+                    ) : courseOfUser.status === CHUAN_BI ? (
+                      <Ionicons style={styles.checkIcon} size={24} color={'#FF9500'} name="play" />
+                    ) : null}
                   </View>
 
                   <View style={styles.courseDetails}>
@@ -141,7 +160,13 @@ class Listing extends React.Component {
                     </Text>
 
                     <Text style={styles.coursePrice}>
-                      <PriceFormat price={item.price} />
+                      {!check ? (
+                        <PriceFormat price={item.price} />
+                      ) : courseOfUser.status === DA_HOAN_THANH ? (
+                        courseOfUser.status
+                      ) : courseOfUser.status === CHUAN_BI ? (
+                        courseOfUser.status + ' ' + INFO
+                      ) : null}
                     </Text>
                   </View>
                 </View>
@@ -250,6 +275,7 @@ const mapStateToProps = (state) => {
     grades: state.grades.grades,
     coursesOfUser: state.coursesOfUser.coursesOfUser,
     userLogin: state.userLogin.userLogin,
+    navigation: state.navigation.navigation,
   };
 };
 export default connect(mapStateToProps, { fetchGetGrades, fetchGetCourses, fetchGetPackages })(Listing);

@@ -7,8 +7,8 @@ import { DA_HOAN_THANH, CHUAN_BI } from '../../constant/Constant';
 const dataInit = [
   { id: 1, courseId: 1, gradeId: 1, userId: 1, status: DA_HOAN_THANH },
   { id: 2, courseId: 2, gradeId: 1, userId: 1, status: DA_HOAN_THANH },
-  { id: 3, courseId: 3, gradeId: 1, userId: 1, status: DA_HOAN_THANH },
-  { id: 4, courseId: 1, gradeId: 2, userId: 1, status: DA_HOAN_THANH },
+  { id: 3, courseId: 3, gradeId: 1, userId: 1, status: CHUAN_BI },
+  { id: 4, courseId: 6, gradeId: 2, userId: 1, status: DA_HOAN_THANH },
   { id: 5, courseId: 1, gradeId: 3, userId: 1, status: CHUAN_BI },
   { id: 6, courseId: 2, gradeId: 4, userId: 1, status: CHUAN_BI },
   { id: 7, courseId: 1, gradeId: 5, userId: 1, status: CHUAN_BI },

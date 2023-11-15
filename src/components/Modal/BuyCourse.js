@@ -169,11 +169,12 @@ class BuyCourse extends React.Component {
                                     item.contents.length > 0 &&
                                     item.contents.map((content, index) => {
                                       return (
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                                        <View
+                                          key={content.id}
+                                          style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}
+                                        >
                                           <Ionicons style={styles.checkIcon} name="checkmark-outline" />
-                                          <Text key={content.id} style={styles.txtInfo}>
-                                            {content.content}
-                                          </Text>
+                                          <Text style={styles.txtInfo}>{content.content}</Text>
                                         </View>
                                       );
                                     })}

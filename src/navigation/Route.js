@@ -3,6 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import Homepage from '../screens/homepage/Homepage';
 import React from 'react';
 import Splash from '../screens/splash/Splash';
+import LessonsOfCourse from '../screens/lessons/LessonsOfCourse';
 const Stack = createStackNavigator();
 class Route extends React.Component {
   constructor(props) {
@@ -15,6 +16,7 @@ class Route extends React.Component {
         <Stack.Navigator initialRouteName="Splash">
           <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
           <Stack.Screen name="Homepage" component={Homepage} options={{ headerShown: false }} />
+          <Stack.Screen name="LessonsOfCourse" component={LessonsOfCourse} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     );

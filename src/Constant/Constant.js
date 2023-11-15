@@ -5,3 +5,7 @@ export const MOBI = 'MOBI';
 export const VINA = 'VINA';
 export const DA_HOAN_THANH = 'Đã hoàn thành';
 export const CHUAN_BI = 'Chuẩn bị';
+export const LESSON = 'Lesson';
+export const EXERCISE = 'Exercise';
+export const TEST_ONLINE = 'Test online';
+export const DETAILS = 'Details';

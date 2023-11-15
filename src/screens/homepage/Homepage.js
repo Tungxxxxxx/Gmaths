@@ -130,9 +130,9 @@ class Homepage extends React.Component {
                     this.handleScrollBanner(e);
                   }}
                 >
-                  <BannerHero isActiveButtonCTA={this.state.isActiveButtonCTA} />
-                  <BannerHero isActiveButtonCTA={this.state.isActiveButtonCTA} />
-                  <BannerHero isActiveButtonCTA={this.state.isActiveButtonCTA} />
+                  <BannerHero isActiveButtonCTA={this.state.isActiveButtonCTA} updateModal={this.updateModal} />
+                  <BannerHero isActiveButtonCTA={this.state.isActiveButtonCTA} updateModal={this.updateModal} />
+                  <BannerHero isActiveButtonCTA={this.state.isActiveButtonCTA} updateModal={this.updateModal} />
                 </ScrollView>
               </View>
               <View style={styles.listing}>

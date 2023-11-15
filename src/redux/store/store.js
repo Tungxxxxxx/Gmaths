@@ -6,6 +6,8 @@ import {
   getUsersReducer,
   getUserCoursesReducer,
   getUserLoginReducer,
+  getLessonsReducer,
+  getLessonsOfUserReducer,
 } from '../reducers/dataReducers';
 import { setNavigationReducer } from '../reducers/paramReducers';
 import middleware from '../middleware/Middleware';
@@ -18,6 +20,8 @@ const reducers = combineReducers({
   coursesOfUser: getUserCoursesReducer,
   navigation: setNavigationReducer,
   userLogin: getUserLoginReducer,
+  lessons: getLessonsReducer,
+  lessonsOfUser: getLessonsOfUserReducer,
 });
 const store = createStore(reducers, middleware);
 export default store;

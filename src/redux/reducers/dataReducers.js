@@ -101,3 +101,37 @@ export const getUserCoursesReducer = (state = initUserCoursesState, action) => {
       return state;
   }
 };
+const initLessonsState = {
+  lessonsLoading: false,
+  lessons: [],
+  lessonsErrorMess: '',
+};
+export const getLessonsReducer = (state = initLessonsState, action) => {
+  switch (action.type) {
+    case Action.GET_LESSONS_OF_COURSE_REQUEST:
+      return { ...state, lessonsLoading: true, lessons: [], lessonsErrorMess: '' };
+    case Action.GET_LESSONS_OF_COURSE_SUCCESS:
+      return { ...state, lessonsLoading: false, lessons: action.payload, lessonsErrorMess: '' };
+    case Action.GET_LESSONS_OF_COURSE_FAILURE:
+      return { ...state, lessonsLoading: false, lessons: [], lessonsErrorMess: action.payload };
+    default:
+      return state;
+  }
+};
+const initLessonsOfUserState = {
+  lessonsOfUserLoading: false,
+  lessonsOfUser: [],
+  lessonsOfUserErrorMess: '',
+};
+export const getLessonsOfUserReducer = (state = initLessonsOfUserState, action) => {
+  switch (action.type) {
+    case Action.GET_LESSONS_OF_COURSE_REQUEST:
+      return { ...state, lessonsOfUserLoading: true, lessonsOfUser: [], lessonsOfUserErrorMess: '' };
+    case Action.GET_LESSONS_OF_COURSE_SUCCESS:
+      return { ...state, lessonsOfUserLoading: false, lessonsOfUser: action.payload, lessonsOfUserErrorMess: '' };
+    case Action.GET_LESSONS_OF_COURSE_FAILURE:
+      return { ...state, lessonsOfUserLoading: false, lessonsOfUser: [], lessonsOfUserErrorMess: action.payload };
+    default:
+      return state;
+  }
+};
