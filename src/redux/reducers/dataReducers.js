@@ -69,6 +69,24 @@ export const getUsersReducer = (state = initUserState, action) => {
       return state;
   }
 };
+const initUserLoginState = {
+  usersLoading: false,
+  users: [],
+  usersErrorMess: '',
+};
+export const getUsersReducer = (state = initUserState, action) => {
+  console.log('action', action.type);
+  switch (action.type) {
+    case Action.GET_PACKAGES_REQUEST:
+      return { ...state, usersLoading: true, users: [], usersErrorMess: '' };
+    case Action.GET_PACKAGES_SUCCESS:
+      return { ...state, usersLoading: false, users: action.payload, usersErrorMess: '' };
+    case Action.GET_PACKAGES_FAILURE:
+      return { ...state, usersLoading: false, users: [], usersErrorMess: action.payload };
+    default:
+      return state;
+  }
+};
 const initUserCoursesState = {
   usersCoursesLoading: false,
   usersCourses: [],

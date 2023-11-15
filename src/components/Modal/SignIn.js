@@ -21,11 +21,15 @@ import { IN_CORRECT_PASS } from '../../constant/Message';
 import { SIGN_UP } from '../../constant/Constant';
 import { Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
+import { connect } from 'react-redux';
+import { setUserLogin } from '../../redux/actions/setUserLogin';
 const contentWidth = width - 64;
+const USER_NAME = '0986189492';
+const PASS = '123456';
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { visible: false, errorMes: '' };
+    this.state = { visible: false, errorMes: '', username: '', pass: '' };
   }
   showModal = () => {
     this.setState(() => {
@@ -36,6 +40,29 @@ class SignIn extends React.Component {
     this.setState({
       visible: false,
     });
+  };
+  handleChangeUsername = (username) => {
+    this.setState({
+      username: username,
+    });
+  };
+  handleChangePass = (pass) => {
+    this.setState({
+      pass: pass,
+    });
+  };
+  handleLogin = () => {
+    const { username, pass } = this.state;
+
+    if (username === USER_NAME && pass === PASS) {
+      this.setState(() => {
+        return { errorMes: '' };
+      }, this.props.setUserLogin());
+    } else {
+      this.setState({
+        errorMes: IN_CORRECT_PASS,
+      });
+    }
   };
   render() {
     const { visible, errorMes } = this.state;
@@ -78,10 +105,19 @@ class SignIn extends React.Component {
                       <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
                     </View>
                     <View style={styles.signInForm}>
-                      <LeftIconInput name={'person-outline'} transform={[{ rotate: '0deg' }]} />
-                      <PassInput errorMes={errorMes} />
+                      <LeftIconInput
+                        name={'person-outline'}
+                        transform={[{ rotate: '0deg' }]}
+                        handleChangeUsername={this.handleChangeUsername}
+                      />
+                      <PassInput errorMes={errorMes} handleChangePass={this.handleChangePass} />
                       {errorMes !== '' && <Text style={styles.errorMes}>{errorMes}</Text>}
-                      <TouchableOpacity style={styles.buttonContainer}>
+                      <TouchableOpacity
+                        style={styles.buttonContainer}
+                        onPress={() => {
+                          this.handleLogin();
+                        }}
+                      >
                         <Text style={styles.txtButton}>Đăng nhập</Text>
                       </TouchableOpacity>
                       <View style={styles.links}>
@@ -321,4 +357,7 @@ const styles = StyleSheet.create({
   },
   iconContactView: { height: 40, width: 40, borderRadius: 16, padding: 8 },
 });
-export default SignIn;
+const mapStateToProps = (state) => {
+  return { navigation: state.navigation.navigation };
+};
+export default connect(mapStateToProps, { setUserLogin }, null, { forwardRef: true })(SignIn);

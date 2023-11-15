@@ -18,13 +18,8 @@ const { width } = Dimensions.get('window');
 import { connect } from 'react-redux';
 import { fetchGetPackages } from '../../redux/actions/fetchGetPackage';
 import PriceFormat from '../PriceFormat';
-// import { v4 as uuidv4 } from 'uuid';
-// import { v4 as uuidv4 } from 'react-native-get-random-values';
 
 const contentWidth = width - 64;
-const randomKey = () => {
-  return Math.random().toString(36).substring(2, 10);
-};
 class BuyCourse extends React.Component {
   constructor(props) {
     super(props);
@@ -126,6 +121,7 @@ class BuyCourse extends React.Component {
                       <View style={styles.listing}>
                         <FlatList
                           scrollEnabled={false}
+                          showsVerticalScrollIndicator={false}
                           data={packages}
                           numColumns={1}
                           keyExtractor={(item) => item.id.toString()}
@@ -171,12 +167,12 @@ class BuyCourse extends React.Component {
                                 <View style={styles.info}>
                                   {item.contents &&
                                     item.contents.length > 0 &&
-                                    item.contents.map((content) => {
+                                    item.contents.map((content, index) => {
                                       return (
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                                           <Ionicons style={styles.checkIcon} name="checkmark-outline" />
-                                          <Text key={randomKey()} style={styles.txtInfo}>
-                                            {content}
+                                          <Text key={content.id} style={styles.txtInfo}>
+                                            {content.content}
                                           </Text>
                                         </View>
                                       );
@@ -248,6 +244,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   rightContainer: {
+    right: 16,
     width: 32,
     height: 32,
     borderRadius: 16,

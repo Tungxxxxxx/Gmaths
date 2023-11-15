@@ -1,10 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Homepage from '../screens/homepage/Homepage';
 import React from 'react';
+import Splash from '../screens/splash/Splash';
 const Stack = createStackNavigator();
-class Route extends Component {
+class Route extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -13,6 +13,7 @@ class Route extends Component {
     return (
       <NavigationContainer fallback={<></>}>
         <Stack.Navigator initialRouteName="Splash">
+          <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
           <Stack.Screen name="Homepage" component={Homepage} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>

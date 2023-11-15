@@ -17,6 +17,9 @@ class LeftIconInput extends React.Component {
       onFocus: false,
     });
   };
+  handleOnchange = (val) => {
+    this.props.handleChangeUsername(val);
+  };
   render() {
     const { onFocus } = this.state;
     const { name, transform } = this.props;
@@ -44,6 +47,9 @@ class LeftIconInput extends React.Component {
           }}
           onBlur={() => {
             this.onBlur();
+          }}
+          onChangeText={(val) => {
+            this.handleOnchange(val);
           }}
         />
       </View>

@@ -6,6 +6,7 @@ import {
   getUsersReducer,
   getUserCoursesReducer,
 } from '../reducers/dataReducers';
+import { setNavigationReducer } from '../reducers/paramReducers';
 import middleware from '../middleware/Middleware';
 
 const reducers = combineReducers({
@@ -14,6 +15,7 @@ const reducers = combineReducers({
   packages: getPackagesReducer,
   users: getUsersReducer,
   userCourses: getUserCoursesReducer,
+  navigation: setNavigationReducer,
 });
 const store = createStore(reducers, middleware);
 export default store;

@@ -7,7 +7,11 @@ const dataInit = [
     code: 'GM1',
     name: 'Gói ngày',
     price: 5000,
-    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+    contents: [
+      { id: 1, content: '12 bài giảng' },
+      { id: 1, content: '16 bài tập ôn luyện' },
+      { id: 1, content: '8 đề thi nâng cao' },
+    ],
   },
   {
     id: 2,
@@ -15,7 +19,11 @@ const dataInit = [
     code: 'GM7',
     name: 'Gói 7 ngày',
     price: 30000,
-    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+    contents: [
+      { id: 1, content: '12 bài giảng' },
+      { id: 1, content: '16 bài tập ôn luyện' },
+      { id: 1, content: '8 đề thi nâng cao' },
+    ],
   },
   {
     id: 3,
@@ -23,7 +31,11 @@ const dataInit = [
     code: 'GM30',
     name: 'Gói 30 ngày',
     price: 120000,
-    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+    contents: [
+      { id: 1, content: '12 bài giảng' },
+      { id: 1, content: '16 bài tập ôn luyện' },
+      { id: 1, content: '8 đề thi nâng cao' },
+    ],
   },
   {
     id: 4,
@@ -31,7 +43,11 @@ const dataInit = [
     code: 'GM1',
     name: 'Gói ngày',
     price: 5000,
-    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+    contents: [
+      { id: 1, content: '12 bài giảng' },
+      { id: 1, content: '16 bài tập ôn luyện' },
+      { id: 1, content: '8 đề thi nâng cao' },
+    ],
   },
   {
     id: 5,
@@ -39,7 +55,11 @@ const dataInit = [
     code: 'GM1',
     name: 'Gói ngày',
     price: 5000,
-    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+    contents: [
+      { id: 1, content: '12 bài giảng' },
+      { id: 1, content: '16 bài tập ôn luyện' },
+      { id: 1, content: '8 đề thi nâng cao' },
+    ],
   },
   {
     id: 6,
@@ -47,7 +67,11 @@ const dataInit = [
     code: 'GM1',
     name: 'Gói ngày',
     price: 5000,
-    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+    contents: [
+      { id: 1, content: '12 bài giảng' },
+      { id: 1, content: '16 bài tập ôn luyện' },
+      { id: 1, content: '8 đề thi nâng cao' },
+    ],
   },
   {
     id: 7,
@@ -55,7 +79,11 @@ const dataInit = [
     code: 'GM1',
     name: 'Gói ngày',
     price: 5000,
-    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+    contents: [
+      { id: 1, content: '12 bài giảng' },
+      { id: 1, content: '16 bài tập ôn luyện' },
+      { id: 1, content: '8 đề thi nâng cao' },
+    ],
   },
   {
     id: 8,
@@ -63,7 +91,11 @@ const dataInit = [
     code: 'GM1',
     name: 'Gói ngày',
     price: 5000,
-    contents: ['12 bài giảng', '16 bài tập ôn luyện', '8 đề thi nâng cao'],
+    contents: [
+      { id: 1, content: '12 bài giảng' },
+      { id: 1, content: '16 bài tập ôn luyện' },
+      { id: 1, content: '8 đề thi nâng cao' },
+    ],
   },
 ];
 const getPackages = (courseId) => {

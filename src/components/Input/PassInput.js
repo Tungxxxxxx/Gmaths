@@ -23,6 +23,9 @@ class PassInput extends React.Component {
       onFocus: false,
     });
   };
+  handleOnchange = (val) => {
+    this.props.handleChangePass(val);
+  };
   render() {
     const { onFocus, isShowPass } = this.state;
     const { errorMes } = this.props;
@@ -50,6 +53,9 @@ class PassInput extends React.Component {
           }}
           onBlur={() => {
             this.onBlur();
+          }}
+          onChangeText={(val) => {
+            this.handleOnchange(val);
           }}
         />
         <TouchableOpacity

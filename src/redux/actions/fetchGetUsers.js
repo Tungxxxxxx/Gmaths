@@ -1,9 +1,23 @@
-import { GET_USERS_REQUEST, GET_USERS_SUCCESS, GET_USERS_FAILURE } from '../../constant/Action';
+import {
+  GET_USERS_REQUEST,
+  GET_USERS_SUCCESS,
+  GET_USERS_FAILURE,
+  GET_USER_LOGIN_REQUEST,
+  GET_USER_LOGIN_SUCCESS,
+  GET_USER_LOGIN_FAILURE,
+} from '../../constant/Action';
 
 const dataInit = [
-  { id: 1, name: 'Le Van Luyen', phone: '0986189492', pass: '123456' },
-  { id: 2, name: 'Pham Thanh Tung', phone: '0986189491', pass: '123456' },
-  { id: 3, name: 'Lương Văn Can', phone: '0986189493', pass: '123456' },
+  {
+    id: 1,
+    name: 'Le Van Luyen',
+    phone: '0986189492',
+    username: 'tungx1',
+    pass: '123456',
+    avatar: require('../../assets/images/users/tungpt.png'),
+  },
+  { id: 2, name: 'Pham Thanh Tung', phone: '0986189491', pass: '123456', username: 'tungx1' },
+  { id: 3, name: 'Lương Văn Can', phone: '0986189493', pass: '123456', username: 'tungx1' },
 ];
 //phải trả về 1 đối tượng
 export const fetchGetUsersRequest = () => {
@@ -28,4 +42,33 @@ export const fetchGetUsers = () => {
       dispatch(fetchGetUsersFailure(error));
     }
   };
+};
+export const fetchGetUserLoginRequest = () => {
+  return {
+    type: GET_USER_LOGIN_REQUEST,
+  };
+};
+export const fetchGetUserLoginSuccess = (user) => {
+  return { type: GET_USER_LOGIN_SUCCESS, payload: data };
+};
+export const fetchGetUserLoginFailure = (error) => {
+  return { type: GET_USER_LOGIN_FAILURE, payload: error.message };
+};
+export const fetchGetUserLogin = (username, pass) => {
+  return (dispatch) => {
+    dispatch(fetchGetUsersRequest());
+    try {
+      const user = getUserLogin(username, pass);
+      dispatch(fetchGetUsersSuccess(user));
+    } catch (error) {
+      dispatch(fetchGetUsersFailure(error));
+    }
+  };
+};
+
+getUserLogin = (username, pass) => {
+  const userFounds = dataInit.filter(
+    (item) => (item.phone === username || item.username === username) && item.pass === pass,
+  );
+  return userFounds[0];
 };
