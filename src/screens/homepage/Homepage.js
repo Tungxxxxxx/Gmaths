@@ -12,6 +12,8 @@ import SignIn from '../../components/Modal/SignIn';
 import { SIGN_IN, SIGN_UP, BUY_COURSE } from '../../constant/Constant';
 import SignUp from '../../components/Modal/SignUp';
 import BuyCourse from '../../components/Modal/BuyCourse';
+import { connect } from 'react-redux';
+import { Avatar } from 'react-native-paper';
 
 const { width } = Dimensions.get('window');
 const bannerWidth = width - 32;
@@ -84,6 +86,7 @@ class Homepage extends React.Component {
 
   render() {
     const { activeDot, modal } = this.state;
+    const { userLogin } = this.props;
     return (
       <View style={styles.container}>
         <ImageBackground source={BG} style={styles.bgImage}>
@@ -102,7 +105,11 @@ class Homepage extends React.Component {
                 this.showSignInModal();
               }}
             >
-              <MaterialCommunityIcons name="account-circle-outline" size={24} color={'#1565C0'} />
+              {userLogin ? (
+                <Avatar.Image source={userLogin.avatar} size={24} />
+              ) : (
+                <MaterialCommunityIcons name="account-circle-outline" size={24} color={'#1565C0'} />
+              )}
             </TouchableOpacity>
           </View>
           <View style={styles.content}>
@@ -140,7 +147,7 @@ class Homepage extends React.Component {
           {modal === SIGN_IN ? (
             <SignIn ref={this.signInRef} updateModal={this.updateModal} />
           ) : modal === SIGN_UP ? (
-            <SignUp ref={this.signUpRef} />
+            <SignUp ref={this.signUpRef} showSignInModal={this.showSignInModal} />
           ) : (
             <BuyCourse ref={this.buyCourseRef} />
           )}
@@ -149,5 +156,7 @@ class Homepage extends React.Component {
     );
   }
 }
-
-export default Homepage;
+const mapStateToProps = (state) => {
+  return { userLogin: state.userLogin.userLogin };
+};
+export default connect(mapStateToProps)(Homepage);

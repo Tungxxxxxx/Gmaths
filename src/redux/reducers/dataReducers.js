@@ -39,7 +39,6 @@ const initPackageState = {
   packagesErrorMess: '',
 };
 export const getPackagesReducer = (state = initPackageState, action) => {
-  console.log('action', action.type);
   switch (action.type) {
     case Action.GET_PACKAGES_REQUEST:
       return { ...state, packagesLoading: true, packages: [], packagesErrorMess: '' };
@@ -57,50 +56,47 @@ const initUserState = {
   usersErrorMess: '',
 };
 export const getUsersReducer = (state = initUserState, action) => {
-  console.log('action', action.type);
   switch (action.type) {
-    case Action.GET_PACKAGES_REQUEST:
+    case Action.GET_USERS_REQUEST:
       return { ...state, usersLoading: true, users: [], usersErrorMess: '' };
-    case Action.GET_PACKAGES_SUCCESS:
+    case Action.GET_USERS_SUCCESS:
       return { ...state, usersLoading: false, users: action.payload, usersErrorMess: '' };
-    case Action.GET_PACKAGES_FAILURE:
+    case Action.GET_USERS_FAILURE:
       return { ...state, usersLoading: false, users: [], usersErrorMess: action.payload };
     default:
       return state;
   }
 };
 const initUserLoginState = {
-  usersLoading: false,
-  users: [],
-  usersErrorMess: '',
+  userLoginLoading: false,
+  userLogin: null,
+  userLoginErrorMess: '',
 };
-export const getUsersReducer = (state = initUserState, action) => {
-  console.log('action', action.type);
+export const getUserLoginReducer = (state = initUserLoginState, action) => {
   switch (action.type) {
-    case Action.GET_PACKAGES_REQUEST:
-      return { ...state, usersLoading: true, users: [], usersErrorMess: '' };
-    case Action.GET_PACKAGES_SUCCESS:
-      return { ...state, usersLoading: false, users: action.payload, usersErrorMess: '' };
-    case Action.GET_PACKAGES_FAILURE:
-      return { ...state, usersLoading: false, users: [], usersErrorMess: action.payload };
+    case Action.GET_USER_LOGIN_REQUEST:
+      return { ...state, userLoginLoading: true, userLogin: null, userLoginErrorMess: '' };
+    case Action.GET_USER_LOGIN_SUCCESS:
+      return { ...state, userLoginLoading: false, userLogin: action.payload, userLoginErrorMess: '' };
+    case Action.GET_USER_LOGIN_FAILURE:
+      return { ...state, userLoginLoading: false, userLogin: null, userLoginErrorMess: action.payload };
     default:
       return state;
   }
 };
 const initUserCoursesState = {
-  usersCoursesLoading: false,
-  usersCourses: [],
-  usersCoursesErrorMess: '',
+  coursesOfUserLoading: false,
+  coursesOfUser: [],
+  coursesOfUserErrorMess: '',
 };
 export const getUserCoursesReducer = (state = initUserCoursesState, action) => {
-  console.log('action', action.type);
   switch (action.type) {
-    case Action.GET_PACKAGES_REQUEST:
-      return { ...state, usersCoursesLoading: true, usersCourses: [], usersCoursesErrorMess: '' };
-    case Action.GET_PACKAGES_SUCCESS:
-      return { ...state, usersCoursesLoading: false, usersCourses: action.payload, usersCoursesErrorMess: '' };
-    case Action.GET_PACKAGES_FAILURE:
-      return { ...state, usersCoursesLoading: false, usersCourses: [], usersCoursesErrorMess: action.payload };
+    case Action.GET_COURSES_OF_USER_REQUEST:
+      return { ...state, coursesOfUserLoading: true, coursesOfUser: [], coursesOfUserErrorMess: '' };
+    case Action.GET_COURSES_OF_USER_SUCCESS:
+      return { ...state, coursesOfUserLoading: false, coursesOfUser: action.payload, coursesOfUserErrorMess: '' };
+    case Action.GET_COURSES_OF_USER_FAILURE:
+      return { ...state, coursesOfUserLoading: false, coursesOfUser: [], coursesOfUserErrorMess: action.payload };
     default:
       return state;
   }

@@ -27,6 +27,13 @@ class SignUp extends React.Component {
     });
   };
   closeModal = () => {
+    this.setState(() => {
+      return {
+        visible: false,
+      };
+    }, this.props.showSignInModal());
+  };
+  pressOutModal = () => {
     this.setState({
       visible: false,
     });
@@ -47,7 +54,7 @@ class SignUp extends React.Component {
             style={{ flex: 1 }}
             activeOpacity={1}
             onPressOut={() => {
-              this.closeModal();
+              this.pressOutModal();
             }}
           >
             <TouchableWithoutFeedback>

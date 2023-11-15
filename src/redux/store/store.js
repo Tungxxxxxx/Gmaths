@@ -5,6 +5,7 @@ import {
   getPackagesReducer,
   getUsersReducer,
   getUserCoursesReducer,
+  getUserLoginReducer,
 } from '../reducers/dataReducers';
 import { setNavigationReducer } from '../reducers/paramReducers';
 import middleware from '../middleware/Middleware';
@@ -14,8 +15,9 @@ const reducers = combineReducers({
   courses: getCoursesReducer,
   packages: getPackagesReducer,
   users: getUsersReducer,
-  userCourses: getUserCoursesReducer,
+  coursesOfUser: getUserCoursesReducer,
   navigation: setNavigationReducer,
+  userLogin: getUserLoginReducer,
 });
 const store = createStore(reducers, middleware);
 export default store;

@@ -22,14 +22,15 @@ import { SIGN_UP } from '../../constant/Constant';
 import { Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
 import { connect } from 'react-redux';
-import { setUserLogin } from '../../redux/actions/setUserLogin';
+import { fetchGetUserLogin } from '../../redux/actions/fetchGetUsers';
+import { fetchGetCoursesOfUser } from '../../redux/actions/fetchGetUserCourses';
 const contentWidth = width - 64;
 const USER_NAME = '0986189492';
 const PASS = '123456';
 class SignIn extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { visible: false, errorMes: '', username: '', pass: '' };
+    this.state = { visible: false, errorMes: '', username: '0986189492', pass: '123456' };
   }
   showModal = () => {
     this.setState(() => {
@@ -51,13 +52,18 @@ class SignIn extends React.Component {
       pass: pass,
     });
   };
-  handleLogin = () => {
+  handleLogin = async () => {
     const { username, pass } = this.state;
-
-    if (username === USER_NAME && pass === PASS) {
-      this.setState(() => {
-        return { errorMes: '' };
-      }, this.props.setUserLogin());
+    await this.props.fetchGetUserLogin(username, pass);
+    const { userLogin, navigation } = this.props;
+    if (userLogin) {
+      this.setState(
+        () => {
+          return { errorMes: '', visible: false };
+        },
+        navigation.navigate('Homepage'),
+        this.props.fetchGetCoursesOfUser(userLogin.id),
+      );
     } else {
       this.setState({
         errorMes: IN_CORRECT_PASS,
@@ -109,8 +115,9 @@ class SignIn extends React.Component {
                         name={'person-outline'}
                         transform={[{ rotate: '0deg' }]}
                         handleChangeUsername={this.handleChangeUsername}
+                        username={this.state.username}
                       />
-                      <PassInput errorMes={errorMes} handleChangePass={this.handleChangePass} />
+                      <PassInput errorMes={errorMes} handleChangePass={this.handleChangePass} pass={this.state.pass} />
                       {errorMes !== '' && <Text style={styles.errorMes}>{errorMes}</Text>}
                       <TouchableOpacity
                         style={styles.buttonContainer}
@@ -358,6 +365,8 @@ const styles = StyleSheet.create({
   iconContactView: { height: 40, width: 40, borderRadius: 16, padding: 8 },
 });
 const mapStateToProps = (state) => {
-  return { navigation: state.navigation.navigation };
+  return { navigation: state.navigation.navigation, userLogin: state.userLogin.userLogin };
 };
-export default connect(mapStateToProps, { setUserLogin }, null, { forwardRef: true })(SignIn);
+export default connect(mapStateToProps, { fetchGetUserLogin, fetchGetCoursesOfUser }, null, { forwardRef: true })(
+  SignIn,
+);

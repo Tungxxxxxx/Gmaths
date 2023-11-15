@@ -28,7 +28,7 @@ class PassInput extends React.Component {
   };
   render() {
     const { onFocus, isShowPass } = this.state;
-    const { errorMes } = this.props;
+    const { errorMes, pass } = this.props;
     return (
       <View
         style={[
@@ -57,6 +57,7 @@ class PassInput extends React.Component {
           onChangeText={(val) => {
             this.handleOnchange(val);
           }}
+          value={pass}
         />
         <TouchableOpacity
           onPress={() => {

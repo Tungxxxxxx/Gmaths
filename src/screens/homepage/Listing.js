@@ -6,7 +6,8 @@ import { fetchGetPackages } from '../../redux/actions/fetchGetPackage';
 import { StyleSheet, View, TouchableOpacity, Text, FlatList, Image } from 'react-native';
 import PriceFormat from '../../components/PriceFormat';
 import AntDesign from 'react-native-vector-icons/AntDesign';
-import { BUY_COURSE } from '../../constant/Constant';
+import { BUY_COURSE, DA_HOAN_THANH, CHUAN_BI } from '../../constant/Constant';
+import * as colors from '../../color/Color';
 class Listing extends React.Component {
   constructor(props) {
     super(props);
@@ -34,9 +35,20 @@ class Listing extends React.Component {
       return;
     }
   };
-
+  courseOfUser = (course) => {
+    const { userLogin, coursesOfUser } = this.props;
+    let coursesFound = null;
+    if (userLogin) {
+      coursesFound = coursesOfUser.filter((item) => item.courseId === course.id && item.gradeId === course.gradeId);
+    }
+    if (coursesFound && coursesFound.length > 0) {
+      return coursesFound[0];
+    }
+    return null;
+  };
   render() {
-    const { grades, courses } = this.props;
+    const { grades, courses, coursesOfUser, userLogin } = this.props;
+    console.log('coursesOfUser', coursesOfUser);
     const { activeId } = this.state;
     // Sắp xếp mảng tăng dần theo name
     grades.sort((a, b) => {
@@ -80,36 +92,63 @@ class Listing extends React.Component {
           data={courses}
           numColumns={1}
           keyExtractor={(item) => item.id.toString()}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
-              style={styles.childCourses}
-              onPress={() => {
-                this.props.fetchGetPackages(item.id);
-                this.props.updateModal(BUY_COURSE);
-              }}
-            >
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View style={styles.courseTxtAvatar}>
-                  <Text
+          renderItem={({ item, index }) => {
+            const courseOfUser = this.courseOfUser(item);
+            const check = userLogin && courseOfUser;
+            return (
+              <TouchableOpacity
+                style={styles.childCourses}
+                onPress={() => {
+                  this.props.fetchGetPackages(item.id);
+                  this.props.updateModal(BUY_COURSE);
+                }}
+              >
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View
                     style={[
-                      styles.txtAvatar,
-                      { color: index === 0 || index === 1 ? '#42A5F5' : index === 2 ? '#1976D2' : '#1565C0' },
+                      styles.courseTxtAvatar,
+                      {
+                        backgroundColor: !check
+                          ? colors.coursesNotRegisteredBg
+                          : courseOfUser.status === DA_HOAN_THANH
+                          ? colors.coursesCompleted
+                          : courseOfUser.status === CHUAN_BI
+                          ? colors.coursesPreparingBg
+                          : null,
+                        borderColor: !check
+                          ? colors.coursesNotRegisteredBorder
+                          : courseOfUser.status === DA_HOAN_THANH
+                          ? colors.coursesCompletedBorder
+                          : courseOfUser.status === CHUAN_BI
+                          ? colors.coursesPreparingBorder
+                          : null,
+                      },
                     ]}
                   >
-                    {this.getGradeById(item.gradeId).name}
-                  </Text>
-                </View>
-                <View style={styles.courseDetails}>
-                  <Text style={styles.courseTitle}>{this.getGradeById(item.gradeId).fullname + ' - ' + item.name}</Text>
+                    <Text
+                      style={[
+                        styles.txtAvatar,
+                        { color: index === 0 || index === 1 ? '#42A5F5' : index === 2 ? '#1976D2' : '#1565C0' },
+                      ]}
+                    >
+                      {this.getGradeById(item.gradeId).name}
+                    </Text>
+                  </View>
 
-                  <Text style={styles.coursePrice}>
-                    <PriceFormat price={item.price} />
-                  </Text>
+                  <View style={styles.courseDetails}>
+                    <Text style={styles.courseTitle}>
+                      {this.getGradeById(item.gradeId).fullname + ' - ' + item.name}
+                    </Text>
+
+                    <Text style={styles.coursePrice}>
+                      <PriceFormat price={item.price} />
+                    </Text>
+                  </View>
                 </View>
-              </View>
-              <AntDesign name="right" size={16} style={styles.chevronRight} />
-            </TouchableOpacity>
-          )}
+                <AntDesign name="right" size={16} style={styles.chevronRight} />
+              </TouchableOpacity>
+            );
+          }}
         />
       </>
     );
@@ -169,9 +208,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderWidth: 1,
-    borderColor: 'rgba(0, 122, 255, 0.1)',
     marginRight: 8,
-    backgroundColor: 'rgba(255, 255, 255, 1)',
     borderRadius: 6,
   },
   txtAvatar: {
@@ -182,6 +219,7 @@ const styles = StyleSheet.create({
     lineHeight: 32,
     letterSpacing: -0.4,
   },
+
   courseDetails: {
     width: '70%',
   },
@@ -206,6 +244,12 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = (state) => {
-  return { grades: state.grades.grades, courses: state.courses.courses, grades: state.grades.grades };
+  return {
+    grades: state.grades.grades,
+    courses: state.courses.courses,
+    grades: state.grades.grades,
+    coursesOfUser: state.coursesOfUser.coursesOfUser,
+    userLogin: state.userLogin.userLogin,
+  };
 };
 export default connect(mapStateToProps, { fetchGetGrades, fetchGetCourses, fetchGetPackages })(Listing);

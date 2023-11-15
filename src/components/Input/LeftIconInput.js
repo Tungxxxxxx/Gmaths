@@ -22,7 +22,7 @@ class LeftIconInput extends React.Component {
   };
   render() {
     const { onFocus } = this.state;
-    const { name, transform } = this.props;
+    const { name, transform, username } = this.props;
     return (
       <View style={[styles.container, onFocus ? styles.focusInput : styles.normalInput]}>
         <Ionicons
@@ -51,6 +51,7 @@ class LeftIconInput extends React.Component {
           onChangeText={(val) => {
             this.handleOnchange(val);
           }}
+          value={username}
         />
       </View>
     );

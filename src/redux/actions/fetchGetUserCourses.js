@@ -3,14 +3,15 @@ import {
   GET_COURSES_OF_USER_SUCCESS,
   GET_COURSES_OF_USER_FAILURE,
 } from '../../constant/Action';
-
+import { DA_HOAN_THANH, CHUAN_BI } from '../../constant/Constant';
 const dataInit = [
-  { id: 1, courseId: 1, gradeId: 1, userId: 1, status: 'Đã hoàn thành' },
-  { id: 2, courseId: 2, gradeId: 1, userId: 1, status: 'Đã hoàn thành' },
-  { id: 3, courseId: 1, gradeId: 2, userId: 1, status: 'Chuẩn bị' },
-  { id: 4, courseId: 1, gradeId: 1, userId: 2, status: 'Chuẩn bị' },
-  { id: 5, courseId: 2, gradeId: 1, userId: 2, status: 'Chuẩn bị' },
-  { id: 6, courseId: 1, gradeId: 2, userId: 2, status: 'Chuẩn bị' },
+  { id: 1, courseId: 1, gradeId: 1, userId: 1, status: DA_HOAN_THANH },
+  { id: 2, courseId: 2, gradeId: 1, userId: 1, status: DA_HOAN_THANH },
+  { id: 3, courseId: 3, gradeId: 1, userId: 1, status: DA_HOAN_THANH },
+  { id: 4, courseId: 1, gradeId: 2, userId: 1, status: DA_HOAN_THANH },
+  { id: 5, courseId: 1, gradeId: 3, userId: 1, status: CHUAN_BI },
+  { id: 6, courseId: 2, gradeId: 4, userId: 1, status: CHUAN_BI },
+  { id: 7, courseId: 1, gradeId: 5, userId: 1, status: CHUAN_BI },
 ];
 const getCoursesOfUser = (userId) => {
   return dataInit.filter((item) => item.userId === userId);
@@ -30,7 +31,7 @@ export const fetchGetCoursesOfUser = (userId) => {
   return (dispatch) => {
     dispatch(fetchGetCoursesOfUserRequest());
     try {
-      const coursesOfUser = userId || userId === 0 ? [] : getCourses(userId);
+      const coursesOfUser = !userId || userId === 0 ? [] : getCoursesOfUser(userId);
       dispatch(fetchGetCoursesOfUserSuccess(coursesOfUser));
     } catch (error) {
       dispatch(fetchGetCoursesOfUserFailure(error));

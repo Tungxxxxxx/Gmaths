@@ -20,15 +20,15 @@ const dataInit = [
   { id: 3, name: 'Lương Văn Can', phone: '0986189493', pass: '123456', username: 'tungx1' },
 ];
 //phải trả về 1 đối tượng
-export const fetchGetUsersRequest = () => {
+const fetchGetUsersRequest = () => {
   return {
     type: GET_USERS_REQUEST,
   };
 };
-export const fetchGetUsersSuccess = (data) => {
+const fetchGetUsersSuccess = (data) => {
   return { type: GET_USERS_SUCCESS, payload: data };
 };
-export const fetchGetUsersFailure = (error) => {
+const fetchGetUsersFailure = (error) => {
   return { type: GET_USERS_FAILURE, payload: error.message };
 };
 
@@ -43,25 +43,27 @@ export const fetchGetUsers = () => {
     }
   };
 };
-export const fetchGetUserLoginRequest = () => {
+const fetchGetUserLoginRequest = () => {
   return {
     type: GET_USER_LOGIN_REQUEST,
   };
 };
-export const fetchGetUserLoginSuccess = (user) => {
-  return { type: GET_USER_LOGIN_SUCCESS, payload: data };
+const fetchGetUserLoginSuccess = (user) => {
+  return { type: GET_USER_LOGIN_SUCCESS, payload: user };
 };
-export const fetchGetUserLoginFailure = (error) => {
+const fetchGetUserLoginFailure = (error) => {
   return { type: GET_USER_LOGIN_FAILURE, payload: error.message };
 };
 export const fetchGetUserLogin = (username, pass) => {
-  return (dispatch) => {
-    dispatch(fetchGetUsersRequest());
+  return async (dispatch) => {
+    dispatch(fetchGetUserLoginRequest());
     try {
-      const user = getUserLogin(username, pass);
-      dispatch(fetchGetUsersSuccess(user));
+      const user = await getUserLogin(username, pass);
+      if (user) {
+        dispatch(fetchGetUserLoginSuccess(user));
+      }
     } catch (error) {
-      dispatch(fetchGetUsersFailure(error));
+      dispatch(fetchGetUserLoginFailure(error));
     }
   };
 };
@@ -70,5 +72,8 @@ getUserLogin = (username, pass) => {
   const userFounds = dataInit.filter(
     (item) => (item.phone === username || item.username === username) && item.pass === pass,
   );
-  return userFounds[0];
+  if (userFounds) {
+    return userFounds[0];
+  }
+  return null;
 };
