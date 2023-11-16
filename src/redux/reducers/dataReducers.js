@@ -125,12 +125,66 @@ const initLessonsOfUserState = {
 };
 export const getLessonsOfUserReducer = (state = initLessonsOfUserState, action) => {
   switch (action.type) {
-    case Action.GET_LESSONS_OF_COURSE_REQUEST:
+    case Action.GET_LESSONS_OF_USER_REQUEST:
       return { ...state, lessonsOfUserLoading: true, lessonsOfUser: [], lessonsOfUserErrorMess: '' };
-    case Action.GET_LESSONS_OF_COURSE_SUCCESS:
+    case Action.GET_LESSONS_OF_USER_SUCCESS:
       return { ...state, lessonsOfUserLoading: false, lessonsOfUser: action.payload, lessonsOfUserErrorMess: '' };
-    case Action.GET_LESSONS_OF_COURSE_FAILURE:
+    case Action.GET_LESSONS_OF_USER_FAILURE:
       return { ...state, lessonsOfUserLoading: false, lessonsOfUser: [], lessonsOfUserErrorMess: action.payload };
+    default:
+      return state;
+  }
+};
+const initExercisesOfCourseState = {
+  exercisesOfCourseLoading: false,
+  exercisesOfCourse: [],
+  exercisesOfCourseErrorMess: '',
+};
+export const getExercisesOfCourseReducer = (state = initExercisesOfCourseState, action) => {
+  switch (action.type) {
+    case Action.GET_EXERCISES_OF_COURSE_REQUEST:
+      return { ...state, exercisesOfCourseLoading: true, exercisesOfCourse: [], exercisesOfCourseErrorMess: '' };
+    case Action.GET_EXERCISES_OF_COURSE_SUCCESS:
+      return {
+        ...state,
+        exercisesOfCourseLoading: false,
+        exercisesOfCourse: action.payload,
+        exercisesOfCourseErrorMess: '',
+      };
+    case Action.GET_EXERCISES_OF_COURSE_FAILURE:
+      return {
+        ...state,
+        exercisesOfCourseLoading: false,
+        exercisesOfCourse: [],
+        exercisesOfCourseErrorMess: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+const initExercisesOfUserState = {
+  exercisesOfUserLoading: false,
+  exercisesOfUser: [],
+  exercisesOfUserErrorMess: '',
+};
+export const getExercisesOfUserReducer = (state = initExercisesOfUserState, action) => {
+  switch (action.type) {
+    case Action.GET_EXERCISES_OF_USER_REQUEST:
+      return { ...state, exercisesOfUserLoading: true, exercisesOfUser: [], exercisesOfUserErrorMess: '' };
+    case Action.GET_EXERCISES_OF_USER_SUCCESS:
+      return {
+        ...state,
+        exercisesOfUserLoading: false,
+        exercisesOfUser: action.payload,
+        exercisesOfUserErrorMess: '',
+      };
+    case Action.GET_EXERCISES_OF_USER_FAILURE:
+      return {
+        ...state,
+        exercisesOfUserLoading: false,
+        exercisesOfUser: [],
+        exercisesOfUserErrorMess: action.payload,
+      };
     default:
       return state;
   }

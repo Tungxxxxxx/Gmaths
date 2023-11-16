@@ -140,6 +140,3 @@ export const styles = StyleSheet.create({
     paddingVertical: 24,
   },
 });
-
-export const radialColor = ['rgba(66, 165, 245, 1)', 'rgba(25, 118, 210, 1)', 'rgba(21, 101, 192, 1)'];
-export const radialStops = [0, 0.7419, 1];

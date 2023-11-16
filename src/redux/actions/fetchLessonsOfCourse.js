@@ -5,9 +5,10 @@ import {
 } from '../../constant/Action';
 
 const dataInit = [
-  { id: 1, courseId: 7, gradeId: 3, name: 'Lesson 1', free: true, title: '3-digits numbers', content: '' },
+  { id: 1, code: 'L1', courseId: 7, gradeId: 3, name: 'Lesson 1', free: true, title: '3-digits numbers', content: '' },
   {
     id: 2,
+    code: 'L2',
     courseId: 7,
     gradeId: 3,
     name: 'Lesson 2',
@@ -17,6 +18,7 @@ const dataInit = [
   },
   {
     id: 3,
+    code: 'L3',
     courseId: 7,
     gradeId: 3,
     name: 'Lesson 3',
@@ -26,6 +28,7 @@ const dataInit = [
   },
   {
     id: 4,
+    code: 'L4',
     courseId: 7,
     gradeId: 3,
     name: 'Lesson 4',
@@ -35,6 +38,7 @@ const dataInit = [
   },
   {
     id: 5,
+    code: 'L5',
     courseId: 7,
     gradeId: 3,
     name: 'Lesson 5',
@@ -42,10 +46,11 @@ const dataInit = [
     title: 'Multiplication: 2-digits number by 1-digit number',
     content: '',
   },
-  { id: 6, courseId: 7, gradeId: 3, name: 'Lesson 6', free: false, title: 'Division', content: '' },
-  { id: 7, courseId: 7, gradeId: 3, name: 'Lesson 7', free: false, title: 'Factions', content: '' },
+  { id: 6, code: 'L6', courseId: 7, gradeId: 3, name: 'Lesson 6', free: false, title: 'Division', content: '' },
+  { id: 7, code: 'L7', courseId: 7, gradeId: 3, name: 'Lesson 7', free: false, title: 'Factions', content: '' },
   {
     id: 8,
+    code: 'L1',
     courseId: 1,
     gradeId: 1,
     name: 'Lesson 1',
@@ -55,6 +60,7 @@ const dataInit = [
   },
   {
     id: 9,
+    code: 'L2',
     courseId: 1,
     gradeId: 1,
     name: 'Lesson 2',
@@ -64,6 +70,7 @@ const dataInit = [
   },
   {
     id: 10,
+    code: 'L3',
     courseId: 1,
     gradeId: 1,
     name: 'Lesson 3',
@@ -71,8 +78,18 @@ const dataInit = [
     title: 'Multiplication: 2-digits number by 1-digit number',
     content: '',
   },
-  { id: 11, courseId: 1, gradeId: 1, name: 'Lesson 4', free: true, title: 'Division', content: '' },
-  { id: 12, courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 11, code: 'L4', courseId: 1, gradeId: 1, name: 'Lesson 4', free: true, title: 'Division', content: '' },
+  { id: 13, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 14, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 15, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 16, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 17, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 18, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 19, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 20, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 21, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 22, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 23, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
 ];
 const getLessons = (courseId) => {
   return dataInit.filter((item) => item.courseId === courseId);

@@ -1,7 +1,8 @@
 import React from 'react';
 import { View, Image, TouchableOpacity, Text } from 'react-native';
 import RadialGradient from 'react-native-radial-gradient';
-import { styles, radialColor, radialStops } from './Styles';
+import { styles } from './Styles';
+import { radialColor, radialStops } from '../../color/Color';
 import { logo, Rectangle1 } from '../../assets/images/index';
 import { connect } from 'react-redux';
 import { fetchGetPackages } from '../../redux/actions/fetchGetPackage';

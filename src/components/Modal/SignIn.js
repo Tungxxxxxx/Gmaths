@@ -15,15 +15,15 @@ import PassInput from '../Input/PassInput';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { SvgXml } from 'react-native-svg';
-import { zaloIcon, messenger, phone, logo } from '../../assets/images/index';
-import { IN_CORRECT_PASS } from '../../constant/Message';
+import { logo } from '../../assets/images/index';
+import { IN_CORRECT_PASS, LOGIN_CONTACT_1, LOGIN_CONTACT_2 } from '../../constant/Message';
 import { SIGN_UP } from '../../constant/Constant';
 import { Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
 import { connect } from 'react-redux';
 import { fetchGetUserLogin } from '../../redux/actions/fetchGetUsers';
 import { fetchGetCoursesOfUser } from '../../redux/actions/fetchGetUserCourses';
+import Contact from '../Contact';
 const contentWidth = width - 64;
 const USER_NAME = '0986189492';
 const PASS = '123456';
@@ -149,7 +149,6 @@ class SignIn extends React.Component {
                     ) : (
                       <View style={styles.dividerFull}></View>
                     )}
-
                     <View style={styles.authAcc}>
                       <View style={styles.CTA}>
                         <AntDesign style={styles.socialIcon} name="apple1" />
@@ -161,19 +160,7 @@ class SignIn extends React.Component {
                         <FontAwesome style={[styles.socialIcon, { paddingLeft: 5 }]} name="facebook" />
                       </View>
                     </View>
-                    <Text style={styles.txtContact}>Không thể đăng nhập?</Text>
-                    <Text style={styles.txtContact}>Liên hệ với Gmaths để nhận được sự trợ giúp kịp thời</Text>
-                    <View style={styles.contact}>
-                      <View style={styles.iconContactView}>
-                        <SvgXml xml={phone} style={styles.iconContact} />
-                      </View>
-                      <View style={styles.iconContactView}>
-                        <SvgXml xml={zaloIcon} style={styles.iconContact} />
-                      </View>
-                      <View style={styles.iconContactView}>
-                        <SvgXml xml={messenger} style={styles.iconContact} />
-                      </View>
-                    </View>
+                    <Contact contentContact1={LOGIN_CONTACT_1} contentContact2={LOGIN_CONTACT_2} />
                   </View>
                 </View>
               </ScrollView>
@@ -227,7 +214,7 @@ const styles = StyleSheet.create({
   },
   close: { fontFamily: 'SF Pro', fontWeight: '900', lineHeight: 16, fontSize: 16, color: 'rgba(0, 0, 0, 1)' },
   grabber: { width: '11.58%', height: 5, backgroundColor: 'rgba(60, 60, 67, 0.3)', borderRadius: 100, top: 5 },
-  content: { width: '100%', flex: 1, paddingHorizontal: 32, paddingTop: 24, alignItems: 'center' },
+  content: { width: '100%', flex: 1, paddingHorizontal: 32, paddingVertical: 24, alignItems: 'center' },
   logoView: { width: '100%', height: 116, alignItems: 'center', marginBottom: 24 },
   logoTitle: {
     fontFamily: 'SF Pro',
@@ -337,32 +324,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 24,
   },
-  contact: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    width: 144,
-    justifyContent: 'space-between',
-    marginBottom: 24,
-  },
-  txtContact: {
-    fontFamily: 'SF Pro',
-    fontWeight: '400',
-    fontSize: 12,
-    lineHeight: 16,
-    letterSpacing: -0.4,
-    color: 'rgba(60, 60, 67, 0.6)',
-  },
-  iconContact: {
-    width: 24,
-    height: 24,
-    fontFamily: 'SF Pro',
-    fontWeight: '900',
-    fontSize: 20,
-    lineHeight: 20,
-    color: 'rgba(60, 60, 67, 0.6)',
-    marginTop: 12,
-  },
-  iconContactView: { height: 40, width: 40, borderRadius: 16, padding: 8 },
 });
 const mapStateToProps = (state) => {
   return { navigation: state.navigation.navigation, userLogin: state.userLogin.userLogin };
