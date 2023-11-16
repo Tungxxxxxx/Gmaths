@@ -13,49 +13,9 @@ import { LESSON, EXERCISE, TEST_ONLINE, DETAILS } from '../../constant/Constant'
 class LessonList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      dataOfCourse: this.props.lessons,
-      dataOfUser: this.props.lessonsOfUser,
-    };
+    this.state = {};
   }
-  async componentDidMount() {
-    const { courseId, userLogin, cateActive } = this.props;
-    console.log('componentDidMount', cateActive);
-    if (cateActive === LESSON) {
-      await this.props.fetchGetLessons(courseId);
-      await this.props.fetchGetLessonsOfUser(userLogin.id);
-      this.setState({
-        dataOfCourse: this.props.lessons,
-        dataOfUser: this.props.lessonsOfUser,
-      });
-    }
-    if (cateActive === EXERCISE) {
-      await this.props.fetchGetExercisesOfCourse(courseId);
-      await this.props.fetchGetExercisesOfUser(userLogin.id);
-      this.setState({
-        dataOfCourse: this.props.exercisesOfCourse,
-        dataOfUser: this.props.exercisesOfUser,
-      });
-    }
-  }
-  setCateActive = async (cateActive, courseId, userId) => {
-    if (cateActive === LESSON) {
-      await this.props.fetchGetLessons(courseId);
-      await this.props.fetchGetLessonsOfUser(userId);
-      this.setState({
-        dataOfCourse: this.props.lessons,
-        dataOfUser: this.props.lessonsOfUser,
-      });
-    }
-    if (cateActive === EXERCISE) {
-      await this.props.fetchGetExercisesOfCourse(courseId);
-      await this.props.fetchGetExercisesOfUser(userId);
-      this.setState({
-        dataOfCourse: this.props.exercisesOfCourse,
-        dataOfUser: this.props.exercisesOfUser,
-      });
-    }
-  };
+
   getLessonOfUser = (lesson) => {
     const { userLogin, lessonsOfUser } = this.props;
     let lessonsFound = null;
@@ -68,16 +28,14 @@ class LessonList extends React.Component {
     return null;
   };
   render() {
-    const { lessons, userLogin, cateActive, courseId } = this.props;
-    const { dataOfCourse, dataOfUser } = this.state;
-    // this.setCateActive(cateActive, userLogin.id, courseId);
-    console.log('>>>>render cateActive:', cateActive);
-    console.log('');
-    console.log('>>>>render dataOfCourse:', dataOfCourse);
-    console.log('');
-    console.log('>>>>render dataOfUser:', dataOfUser);
-    console.log('');
-    console.log('');
+    const { lessons, userLogin, cateActive, courseId, dataOfCourse, dataOfUser } = this.props;
+    // console.log('>>>>render cateActive:', cateActive);
+    // console.log('');
+    // console.log('>>>>render dataOfCourse:', dataOfCourse);
+    // console.log('');
+    // console.log('>>>>render dataOfUser:', dataOfUser);
+    // console.log('');
+    // console.log('');
     return (
       <FlatList
         showsVerticalScrollIndicator={false}
