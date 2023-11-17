@@ -90,8 +90,8 @@ class SignIn extends React.Component {
               this.closeModal();
             }}
           >
-            <TouchableWithoutFeedback>
-              <ScrollView contentContainerStyle={{ flex: 1 }} directionalLockEnabled={true}>
+            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+              <TouchableWithoutFeedback>
                 <View style={styles.modalContainer}>
                   <View style={styles.grabber}></View>
                   <View style={styles.titleContainer}>
@@ -141,30 +141,32 @@ class SignIn extends React.Component {
                       </View>
                     </View>
                     {errorMes === '' ? (
-                      <View style={styles.orSignIn}>
-                        <View style={styles.divider}></View>
-                        <Text style={styles.txtOrSignIn}>hoặc</Text>
-                        <View style={styles.divider}></View>
-                      </View>
+                      <>
+                        <View style={styles.orSignIn}>
+                          <View style={styles.divider}></View>
+                          <Text style={styles.txtOrSignIn}>hoặc</Text>
+                          <View style={styles.divider}></View>
+                        </View>
+                        <View style={styles.authAcc}>
+                          <View style={styles.CTA}>
+                            <AntDesign style={styles.socialIcon} name="apple1" />
+                          </View>
+                          <View style={styles.CTA}>
+                            <AntDesign style={styles.socialIcon} name="google" />
+                          </View>
+                          <View style={styles.CTA}>
+                            <FontAwesome style={[styles.socialIcon, { paddingLeft: 5 }]} name="facebook" />
+                          </View>
+                        </View>
+                      </>
                     ) : (
                       <View style={styles.dividerFull}></View>
                     )}
-                    <View style={styles.authAcc}>
-                      <View style={styles.CTA}>
-                        <AntDesign style={styles.socialIcon} name="apple1" />
-                      </View>
-                      <View style={styles.CTA}>
-                        <AntDesign style={styles.socialIcon} name="google" />
-                      </View>
-                      <View style={styles.CTA}>
-                        <FontAwesome style={[styles.socialIcon, { paddingLeft: 5 }]} name="facebook" />
-                      </View>
-                    </View>
                     <Contact contentContact1={LOGIN_CONTACT_1} contentContact2={LOGIN_CONTACT_2} />
                   </View>
                 </View>
-              </ScrollView>
-            </TouchableWithoutFeedback>
+              </TouchableWithoutFeedback>
+            </ScrollView>
           </TouchableOpacity>
         </Modal>
       </View>
@@ -172,7 +174,7 @@ class SignIn extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  container: { flex: 1, borderWidth: 1 },
+  container: { borderWidth: 1 },
   modalContainer: {
     position: 'absolute',
     bottom: 0,
@@ -214,8 +216,8 @@ const styles = StyleSheet.create({
   },
   close: { fontFamily: 'SF Pro', fontWeight: '900', lineHeight: 16, fontSize: 16, color: 'rgba(0, 0, 0, 1)' },
   grabber: { width: '11.58%', height: 5, backgroundColor: 'rgba(60, 60, 67, 0.3)', borderRadius: 100, top: 5 },
-  content: { width: '100%', flex: 1, paddingHorizontal: 32, paddingVertical: 24, alignItems: 'center' },
-  logoView: { width: '100%', height: 116, alignItems: 'center', marginBottom: 24 },
+  content: { flex: 1, width: '100%', paddingHorizontal: 32, paddingVertical: 24, alignItems: 'center' },
+  logoView: { flex: 1, width: '100%', height: 116, alignItems: 'center', marginBottom: 24 },
   logoTitle: {
     fontFamily: 'SF Pro',
     fontWeight: '500',

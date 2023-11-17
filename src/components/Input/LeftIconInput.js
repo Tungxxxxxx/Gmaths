@@ -59,7 +59,6 @@ class LeftIconInput extends React.Component {
 }
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     flexDirection: 'row',
     alignItems: 'center',
     borderRadius: 12,

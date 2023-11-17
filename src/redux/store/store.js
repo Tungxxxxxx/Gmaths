@@ -10,6 +10,8 @@ import {
   getLessonsOfUserReducer,
   getExercisesOfCourseReducer,
   getExercisesOfUserReducer,
+  getTestsOnlineOfCourseReducer,
+  getTestsOnlineOfUserReducer,
 } from '../reducers/dataReducers';
 import { setNavigationReducer } from '../reducers/paramReducers';
 import middleware from '../middleware/Middleware';
@@ -26,6 +28,8 @@ const reducers = combineReducers({
   lessonsOfUser: getLessonsOfUserReducer,
   exercisesOfCourse: getExercisesOfCourseReducer,
   exercisesOfUser: getExercisesOfUserReducer,
+  testsOnlineOfCourse: getTestsOnlineOfCourseReducer,
+  testsOnlineOfUser: getTestsOnlineOfUserReducer,
 });
 const store = createStore(reducers, middleware);
 export default store;

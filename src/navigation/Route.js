@@ -5,6 +5,7 @@ import React from 'react';
 import Splash from '../screens/splash/Splash';
 import LessonsOfCourse from '../screens/lessons/LessonsOfCourse';
 import LessonDetail from '../screens/lessons/LessonDetail';
+import DetailsOfCourse from '../screens/lessons/DetailsOfCourse';
 const Stack = createStackNavigator();
 class Route extends React.Component {
   constructor(props) {
@@ -19,6 +20,7 @@ class Route extends React.Component {
           <Stack.Screen name="Homepage" component={Homepage} options={{ headerShown: false }} />
           <Stack.Screen name="LessonsOfCourse" component={LessonsOfCourse} options={{ headerShown: false }} />
           <Stack.Screen name="LessonDetail" component={LessonDetail} options={{ headerShown: false }} />
+          <Stack.Screen name="DetailsOfCourse" component={DetailsOfCourse} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     );

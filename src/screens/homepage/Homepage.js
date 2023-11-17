@@ -148,9 +148,9 @@ class Homepage extends React.Component {
             <SignIn ref={this.signInRef} updateModal={this.updateModal} />
           ) : modal === SIGN_UP ? (
             <SignUp ref={this.signUpRef} showSignInModal={this.showSignInModal} />
-          ) : (
+          ) : modal === BUY_COURSE ? (
             <BuyCourse ref={this.buyCourseRef} />
-          )}
+          ) : null}
         </ImageBackground>
       </View>
     );

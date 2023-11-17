@@ -189,3 +189,57 @@ export const getExercisesOfUserReducer = (state = initExercisesOfUserState, acti
       return state;
   }
 };
+const initTestsOnlineOfCourseState = {
+  testsOnlineOfCourseLoading: false,
+  testsOnlineOfCourse: [],
+  testsOnlineOfCourseErrorMess: '',
+};
+export const getTestsOnlineOfCourseReducer = (state = initTestsOnlineOfCourseState, action) => {
+  switch (action.type) {
+    case Action.GET_TESTS_ONLINE_OF_COURSE_REQUEST:
+      return { ...state, testsOnlineOfCourseLoading: true, testsOnlineOfCourse: [], testsOnlineOfCourseErrorMess: '' };
+    case Action.GET_TESTS_ONLINE_OF_COURSE_SUCCESS:
+      return {
+        ...state,
+        testsOnlineOfCourseLoading: false,
+        testsOnlineOfCourse: action.payload,
+        testsOnlineOfCourseErrorMess: '',
+      };
+    case Action.GET_TESTS_ONLINE_OF_COURSE_FAILURE:
+      return {
+        ...state,
+        testsOnlineOfCourseLoading: false,
+        testsOnlineOfCourse: [],
+        testsOnlineOfCourseErrorMess: action.payload,
+      };
+    default:
+      return state;
+  }
+};
+const initTestsOnlineOfUserState = {
+  testsOnlineOfUserLoading: false,
+  testsOnlineOfUser: [],
+  testsOnlineOfUserErrorMess: '',
+};
+export const getTestsOnlineOfUserReducer = (state = initTestsOnlineOfUserState, action) => {
+  switch (action.type) {
+    case Action.GET_TESTS_ONLINE_OF_USER_REQUEST:
+      return { ...state, testsOnlineOfUserLoading: true, testsOnlineOfUser: [], testsOnlineOfUserErrorMess: '' };
+    case Action.GET_TESTS_ONLINE_OF_USER_SUCCESS:
+      return {
+        ...state,
+        testsOnlineOfUserLoading: false,
+        testsOnlineOfUser: action.payload,
+        testsOnlineOfUserErrorMess: '',
+      };
+    case Action.GET_TESTS_ONLINE_OF_USER_FAILURE:
+      return {
+        ...state,
+        testsOnlineOfUserLoading: false,
+        testsOnlineOfUser: [],
+        testsOnlineOfUserErrorMess: action.payload,
+      };
+    default:
+      return state;
+  }
+};

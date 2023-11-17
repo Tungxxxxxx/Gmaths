@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { DA_HOAN_THANH, CHUAN_BI } from '../../constant/Constant';
+import { DA_HOAN_THANH, CHUAN_BI, PENDING } from '../../constant/Constant';
 import { fetchGetLessons } from '../../redux/actions/fetchLessonsOfCourse';
 import { fetchGetLessonsOfUser } from '../../redux/actions/fetchGetLessonsOfUser';
 import { fetchGetExercisesOfCourse } from '../../redux/actions/fetchGetExercisesOfCourse';
@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import * as colors from '../../color/Color';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/FontAwesome6';
 import { LESSON, EXERCISE, TEST_ONLINE, DETAILS } from '../../constant/Constant';
 class LessonList extends React.Component {
   constructor(props) {
@@ -16,35 +17,43 @@ class LessonList extends React.Component {
     this.state = {};
   }
 
-  getLessonOfUser = (lesson) => {
-    const { userLogin, lessonsOfUser } = this.props;
-    let lessonsFound = null;
-    if (userLogin) {
-      lessonsFound = lessonsOfUser.filter((item) => item.lessonId === lesson.id && item.courseId === lesson.courseId);
+  getDataSingleOfUser = (dataSingleOfCourse) => {
+    const { userLogin, dataOfUser, cateActive } = this.props;
+    let dataFound = null;
+    if (userLogin && dataOfUser && dataSingleOfCourse) {
+      if (cateActive === LESSON) {
+        dataFound = dataOfUser.filter(
+          (item) => item.lessonId === dataSingleOfCourse.id && item.courseId === dataSingleOfCourse.courseId,
+        );
+      }
+      if (cateActive === EXERCISE) {
+        dataFound = dataOfUser.filter(
+          (item) => item.exerciseId === dataSingleOfCourse.id && item.courseId === dataSingleOfCourse.courseId,
+        );
+      }
+      if (cateActive === TEST_ONLINE) {
+        dataFound = dataOfUser.filter(
+          (item) => item.testOnlineId === dataSingleOfCourse.id && item.courseId === dataSingleOfCourse.courseId,
+        );
+      }
     }
-    if (lessonsFound && lessonsFound.length > 0) {
-      return lessonsFound[0];
+    if (dataFound && dataFound.length > 0) {
+      return dataFound[0];
     }
     return null;
   };
   render() {
-    const { lessons, userLogin, cateActive, courseId, dataOfCourse, dataOfUser } = this.props;
-    // console.log('>>>>render cateActive:', cateActive);
-    // console.log('');
-    // console.log('>>>>render dataOfCourse:', dataOfCourse);
-    // console.log('');
-    // console.log('>>>>render dataOfUser:', dataOfUser);
-    // console.log('');
-    // console.log('');
+    const { userLogin, dataOfCourse } = this.props;
     return (
       <FlatList
+        style={{ paddingHorizontal: 16 }}
         showsVerticalScrollIndicator={false}
-        data={lessons}
+        data={dataOfCourse}
         numColumns={1}
         keyExtractor={(item) => item.id.toString()}
         renderItem={({ item, index }) => {
-          const lessonOfUser = this.getLessonOfUser(item);
-          const check = userLogin && lessonOfUser;
+          const dataSingleOfCourse = this.getDataSingleOfUser(item);
+          const check = userLogin && dataSingleOfCourse;
           return (
             <TouchableOpacity
               style={styles.childCourses}
@@ -72,16 +81,16 @@ class LessonList extends React.Component {
                     {
                       backgroundColor: !check
                         ? colors.coursesNotRegisteredBg
-                        : lessonOfUser.status === DA_HOAN_THANH
+                        : dataSingleOfCourse.status === DA_HOAN_THANH
                         ? colors.coursesCompleted
-                        : lessonOfUser.status === CHUAN_BI
+                        : dataSingleOfCourse.status === CHUAN_BI || dataSingleOfCourse.status === PENDING
                         ? colors.coursesPreparingBg
                         : null,
                       borderColor: !check
                         ? colors.coursesNotRegisteredBorder
-                        : lessonOfUser.status === DA_HOAN_THANH
+                        : dataSingleOfCourse.status === DA_HOAN_THANH
                         ? colors.coursesCompletedBorder
-                        : lessonOfUser.status === CHUAN_BI
+                        : dataSingleOfCourse.status === CHUAN_BI || dataSingleOfCourse.status === PENDING
                         ? colors.coursesPreparingBorder
                         : null,
                     },
@@ -91,10 +100,12 @@ class LessonList extends React.Component {
                     <Text style={[styles.txtAvatar, { color: [0, 1, 2, 3].includes(index) ? '#42A5F5' : '#1976D2' }]}>
                       {item.code}
                     </Text>
-                  ) : lessonOfUser.status === DA_HOAN_THANH ? (
+                  ) : dataSingleOfCourse.status === DA_HOAN_THANH ? (
                     <Ionicons style={styles.checkIcon} size={24} color={'#34C759'} name="checkmark-sharp" />
-                  ) : lessonOfUser.status === CHUAN_BI ? (
+                  ) : dataSingleOfCourse.status === CHUAN_BI ? (
                     <Ionicons style={styles.checkIcon} size={24} color={'#FF9500'} name="play" />
+                  ) : dataSingleOfCourse.status === PENDING ? (
+                    <Icon style={styles.checkIcon} size={24} color={'#FF9500'} name="pause" />
                   ) : null}
                 </View>
 

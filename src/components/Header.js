@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   barContainer: {
     height: 56,
     width: '100%',
-    paddingHorizontal: 4,
+    paddingHorizontal: 20,
     paddingVertical: 14,
     // gap: 12,
     flexDirection: 'row',

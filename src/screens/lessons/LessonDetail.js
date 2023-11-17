@@ -17,7 +17,7 @@ import { radialColor, radialStops } from '../../color/Color';
 import { logo, Rectangle1 } from '../../assets/images/index';
 import Contact from '../../components/Contact';
 import { LESSON_CONTACT_1, LESSON_CONTACT_2 } from '../../constant/Message';
-
+import { lessonStyles } from './Style';
 import { Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
 const bannerWidth = width - 32;
@@ -30,48 +30,44 @@ class LessonDetail extends React.Component {
   render() {
     const { avatar, title, content } = this.props.route.params;
     return (
-      <View style={styles.container}>
-        <ImageBackground source={BG} style={styles.bgImage}>
+      <View style={lessonStyles.container}>
+        <ImageBackground source={BG} style={lessonStyles.bgImage}>
           <HeaderBar avatar={avatar} title={title} isAvatar={true} />
-          <View style={styles.content}>
-            <View style={styles.bannerContainer}>
-              <RadialGradient style={styles.bannerHero} colors={radialColor} stops={radialStops}>
-                <Image source={Rectangle1} style={styles.rectangle1Image} />
+          <ScrollView showsVerticalScrollIndicator={false}>
+            <View style={styles.content}>
+              <View style={styles.bannerContainer}>
+                <RadialGradient style={styles.bannerHero} colors={radialColor} stops={radialStops}>
+                  <Image source={Rectangle1} style={styles.rectangle1Image} />
 
-                <View style={{ flex: 67 }} />
-                <TouchableOpacity
-                  style={styles.buttonCTA}
-                  disabled={!this.props.isActiveButtonCTA}
-                  onPress={() => {
-                    this.props.fetchGetPackages();
-                    this.props.updateModal(BUY_COURSE);
-                  }}
-                >
-                  <Text style={styles.labelButtonCTA}>Đăng ký gói cước ngay</Text>
-                </TouchableOpacity>
-                <View style={{ flex: 87 }} />
-              </RadialGradient>
+                  <View style={{ flex: 67 }} />
+                  <TouchableOpacity
+                    style={styles.buttonCTA}
+                    disabled={!this.props.isActiveButtonCTA}
+                    onPress={() => {
+                      this.props.fetchGetPackages();
+                      this.props.updateModal(BUY_COURSE);
+                    }}
+                  >
+                    <Text style={styles.labelButtonCTA}>Đăng ký gói cước ngay</Text>
+                  </TouchableOpacity>
+                  <View style={{ flex: 87 }} />
+                </RadialGradient>
+              </View>
+              <View style={styles.info}>
+                <Text style={styles.titleInfo}>Thông tin hướng dẫn</Text>
+                <Text style={styles.contentInfo}>{content}</Text>
+              </View>
+              <View style={styles.dividerFull}></View>
+              <Contact contentContact1={LESSON_CONTACT_1} contentContact2={LESSON_CONTACT_2} />
             </View>
-            <View style={styles.info}>
-              <Text style={styles.titleInfo}>Thông tin hướng dẫn</Text>
-              <Text style={styles.contentInfo}>{content}</Text>
-            </View>
-            <View style={styles.dividerFull}></View>
-            <Contact contentContact1={LESSON_CONTACT_1} contentContact2={LESSON_CONTACT_2} />
-          </View>
+          </ScrollView>
         </ImageBackground>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  container: { flex: 1 },
-  bgImage: {
-    flex: 1,
-    resizeMode: 'cover',
-    paddingHorizontal: 16,
-  },
-  content: { flex: 1, paddingTop: 12, paddingBottom: 40 },
+  content: { flex: 1, paddingTop: 12, paddingBottom: 40, paddingHorizontal: 16 },
   bannerContainer: {
     width: '100%',
     height: (210 * bannerWidth) / 343,
