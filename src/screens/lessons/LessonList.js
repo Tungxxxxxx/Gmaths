@@ -11,9 +11,11 @@ import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome6';
 import { LESSON, EXERCISE, TEST_ONLINE, DETAILS } from '../../constant/Constant';
+import Loading from '../../components/Loading';
 class LessonList extends React.Component {
   constructor(props) {
     super(props);
+
     this.state = {};
   }
 
@@ -42,82 +44,103 @@ class LessonList extends React.Component {
     }
     return null;
   };
+  replaceString = (parentString, searchString, replacementString) => {
+    return parentString.replace(new RegExp(searchString, 'g'), replacementString);
+  };
+  handleGoDetail = (name, title, content) => {
+    const { cateActive, userLogin } = this.props;
+    if (userLogin) {
+      const params = { title: name + ': ' + title, content: content };
+      if (cateActive === LESSON) {
+        this.props.navigation.navigate('LessonDetail', params);
+      }
+      if (cateActive === EXERCISE) {
+        this.props.navigation.navigate('ExerciseDetail', params);
+      }
+      if (cateActive === TEST_ONLINE) {
+        const paramsTestOnline = {
+          title: this.replaceString(name, 'Test Online', 'Exercise') + ': ' + title,
+          isTestOnline: true,
+        };
+        this.props.navigation.navigate('ExerciseDetail', paramsTestOnline);
+      }
+    } else {
+      // this.props.updateModal(BUY_COURSE);
+      return;
+    }
+  };
+
   render() {
     const { userLogin, dataOfCourse } = this.props;
-    return (
-      <FlatList
-        style={{ paddingHorizontal: 16 }}
-        showsVerticalScrollIndicator={false}
-        data={dataOfCourse}
-        numColumns={1}
-        keyExtractor={(item) => item.id.toString()}
-        renderItem={({ item, index }) => {
-          const dataSingleOfCourse = this.getDataSingleOfUser(item);
-          const check = userLogin && dataSingleOfCourse;
-          return (
-            <TouchableOpacity
-              style={styles.childCourses}
-              onPress={() => {
-                if (userLogin) {
-                  this.props.navigation.navigate('LessonDetail', {
-                    title: item.name + ': ' + item.title,
-                    avatar: userLogin.avatar,
-                    content: item.content,
-                  });
-                } else {
-                  // this.props.fetchGetPackages();
-                }
-              }}
-            >
-              {item.free && (
-                <View style={styles.freeContainer}>
-                  <Text style={styles.txtFree}>FREE</Text>
-                </View>
-              )}
-              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <View
-                  style={[
-                    styles.courseTxtAvatar,
-                    {
-                      backgroundColor: !check
-                        ? colors.coursesNotRegisteredBg
-                        : dataSingleOfCourse.status === DA_HOAN_THANH
-                        ? colors.coursesCompleted
-                        : dataSingleOfCourse.status === CHUAN_BI || dataSingleOfCourse.status === PENDING
-                        ? colors.coursesPreparingBg
-                        : null,
-                      borderColor: !check
-                        ? colors.coursesNotRegisteredBorder
-                        : dataSingleOfCourse.status === DA_HOAN_THANH
-                        ? colors.coursesCompletedBorder
-                        : dataSingleOfCourse.status === CHUAN_BI || dataSingleOfCourse.status === PENDING
-                        ? colors.coursesPreparingBorder
-                        : null,
-                    },
-                  ]}
-                >
-                  {!check ? (
-                    <Text style={[styles.txtAvatar, { color: [0, 1, 2, 3].includes(index) ? '#42A5F5' : '#1976D2' }]}>
-                      {item.code}
-                    </Text>
-                  ) : dataSingleOfCourse.status === DA_HOAN_THANH ? (
-                    <Ionicons style={styles.checkIcon} size={24} color={'#34C759'} name="checkmark-sharp" />
-                  ) : dataSingleOfCourse.status === CHUAN_BI ? (
-                    <Ionicons style={styles.checkIcon} size={24} color={'#FF9500'} name="play" />
-                  ) : dataSingleOfCourse.status === PENDING ? (
-                    <Icon style={styles.checkIcon} size={24} color={'#FF9500'} name="pause" />
-                  ) : null}
-                </View>
 
-                <View style={styles.courseDetails}>
-                  <Text style={styles.courseTitle}>{item.name + ': ' + item.title}</Text>
+    return (
+      <>
+        <FlatList
+          style={{ paddingHorizontal: 16 }}
+          showsVerticalScrollIndicator={false}
+          data={dataOfCourse}
+          numColumns={1}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item, index }) => {
+            const dataSingleOfCourse = this.getDataSingleOfUser(item);
+            const check = userLogin && dataSingleOfCourse;
+            return (
+              <TouchableOpacity
+                style={styles.childCourses}
+                onPress={() => {
+                  this.handleGoDetail(item.name, item.title, item.content);
+                }}
+              >
+                {item.free && (
+                  <View style={styles.freeContainer}>
+                    <Text style={styles.txtFree}>FREE</Text>
+                  </View>
+                )}
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <View
+                    style={[
+                      styles.courseTxtAvatar,
+                      {
+                        backgroundColor: !check
+                          ? colors.coursesNotRegisteredBg
+                          : dataSingleOfCourse.status === DA_HOAN_THANH
+                          ? colors.coursesCompleted
+                          : dataSingleOfCourse.status === CHUAN_BI || dataSingleOfCourse.status === PENDING
+                          ? colors.coursesPreparingBg
+                          : null,
+                        borderColor: !check
+                          ? colors.coursesNotRegisteredBorder
+                          : dataSingleOfCourse.status === DA_HOAN_THANH
+                          ? colors.coursesCompletedBorder
+                          : dataSingleOfCourse.status === CHUAN_BI || dataSingleOfCourse.status === PENDING
+                          ? colors.coursesPreparingBorder
+                          : null,
+                      },
+                    ]}
+                  >
+                    {!check ? (
+                      <Text style={[styles.txtAvatar, { color: [0, 1, 2, 3].includes(index) ? '#42A5F5' : '#1976D2' }]}>
+                        {item.code}
+                      </Text>
+                    ) : dataSingleOfCourse.status === DA_HOAN_THANH ? (
+                      <Ionicons style={styles.checkIcon} size={24} color={'#34C759'} name="checkmark-sharp" />
+                    ) : dataSingleOfCourse.status === CHUAN_BI ? (
+                      <Ionicons style={styles.checkIcon} size={24} color={'#FF9500'} name="play" />
+                    ) : dataSingleOfCourse.status === PENDING ? (
+                      <Icon style={styles.checkIcon} size={24} color={'#FF9500'} name="pause" />
+                    ) : null}
+                  </View>
+
+                  <View style={styles.courseDetails}>
+                    <Text style={styles.courseTitle}>{item.name + ': ' + item.title}</Text>
+                  </View>
                 </View>
-              </View>
-              <AntDesign name="right" size={16} style={styles.chevronRight} />
-            </TouchableOpacity>
-          );
-        }}
-      />
+                <AntDesign name="right" size={16} style={styles.chevronRight} />
+              </TouchableOpacity>
+            );
+          }}
+        />
+      </>
     );
   }
 }
@@ -204,6 +227,10 @@ const mapStateToProps = (state) => {
     lessonsOfUser: state.lessonsOfUser.lessonsOfUser,
     exercisesOfCourse: state.exercisesOfCourse.exercisesOfCourse,
     exercisesOfUser: state.exercisesOfUser.exercisesOfUser,
+    exercisesOfCourseLoading: state.exercisesOfCourse.exercisesOfCourseLoading,
+    lessonsOfUserLoading: state.lessonsOfUser.lessonsOfUserLoading,
+    lessonsLoading: state.lessons.lessonsLoading,
+    exercisesOfUserLoading: state.exercisesOfUser.exercisesOfUserLoading,
   };
 };
 export default connect(mapStateToProps, {

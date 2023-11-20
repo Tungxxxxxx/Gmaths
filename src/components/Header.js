@@ -14,7 +14,7 @@ class HeaderBar extends React.Component {
     this.state = {};
   }
   render() {
-    const { title, avatar, isAvatar, navigation } = this.props;
+    const { title, userLogin, isAvatar, navigation } = this.props;
     return (
       <>
         <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} translucent />
@@ -28,12 +28,13 @@ class HeaderBar extends React.Component {
             >
               <Ionicons name="chevron-back-sharp" style={styles.backIcon} size={24} />
             </TouchableOpacity>
+            <View style={styles.gapHorizontal_8} />
             <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
               {title}
             </Text>
           </View>
           {isAvatar ? (
-            <Avatar.Image source={avatar} size={24} />
+            <Avatar.Image source={userLogin.avatar} size={24} />
           ) : (
             <Ionicons name="bookmark-outline" style={styles.backIcon} size={24} />
           )}
@@ -66,8 +67,11 @@ const styles = StyleSheet.create({
     width: titleWidth,
     overflow: 'hidden',
   },
+  gapHorizontal_8: {
+    width: 8,
+  },
 });
 const mapStateToProps = (state) => {
-  return { navigation: state.navigation.navigation };
+  return { navigation: state.navigation.navigation, userLogin: state.userLogin.userLogin };
 };
 export default connect(mapStateToProps)(HeaderBar);

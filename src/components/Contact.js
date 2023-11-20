@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, Platform, Linking } from 'react-native';
+import { PHONE_NUMBER_ANDROID, PHONE_NUMBER_IOS } from '../constant/Constant';
 import { SvgXml } from 'react-native-svg';
 import { zaloIcon, messenger, phone } from '../assets/images/index';
 class Contact extends React.Component {
@@ -7,6 +8,18 @@ class Contact extends React.Component {
     super(props);
     this.state = {};
   }
+  handleMakeCall = () => {
+    let phoneNumber = '';
+    if (Platform.OS === 'android') {
+      phoneNumber = PHONE_NUMBER_ANDROID;
+    } else {
+      phoneNumber = PHONE_NUMBER_IOS;
+    }
+    Linking.openURL(phoneNumber);
+  };
+  handleOpenUrl = (url) => {
+    Linking.openURL(url);
+  };
   render() {
     const { contentContact1, contentContact2 } = this.props;
     return (
@@ -14,15 +27,20 @@ class Contact extends React.Component {
         <Text style={styles.txtContact}>{contentContact1}</Text>
         <Text style={styles.txtContact}>{contentContact2}</Text>
         <View style={styles.contact}>
-          <View style={styles.iconContactView}>
+          <TouchableOpacity
+            style={styles.iconContactView}
+            onPress={() => {
+              this.handleMakeCall();
+            }}
+          >
             <SvgXml xml={phone} style={styles.iconContact} />
-          </View>
-          <View style={styles.iconContactView}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconContactView} onPress={() => {}}>
             <SvgXml xml={zaloIcon} style={styles.iconContact} />
-          </View>
-          <View style={styles.iconContactView}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.iconContactView}>
             <SvgXml xml={messenger} style={styles.iconContact} />
-          </View>
+          </TouchableOpacity>
         </View>
       </View>
     );

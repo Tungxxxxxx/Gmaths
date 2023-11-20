@@ -10,3 +10,7 @@ export const LESSON = 'Lesson';
 export const EXERCISE = 'Exercise';
 export const TEST_ONLINE = 'Test online';
 export const DETAILS = 'Details';
+export const CORRECT = 'Correct';
+export const IN_CORRECT = 'Incorrect';
+export const PHONE_NUMBER_ANDROID = 'tel:${0986189492}';
+export const PHONE_NUMBER_IOS = 'telprompt:${0986189492}';

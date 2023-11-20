@@ -12,7 +12,7 @@ import { fetchGetExercisesOfUser } from '../../redux/actions/fetGetExercisesOfUs
 import { fetchGetTestsOnlineOfCourse } from '../../redux/actions/fetchGetTestsOnlineOfCourse';
 import { fetchGetTestsOnlineOfUser } from '../../redux/actions/fetchGetTestsOnlineOfUser';
 import { lessonStyles } from './Style';
-import DetailsOfCourse from './DetailsOfCourse';
+import DetailsOfCourse from '../details/DetailsOfCourse';
 class LessonsOfCourse extends React.Component {
   constructor(props) {
     super(props);
@@ -84,12 +84,12 @@ class LessonsOfCourse extends React.Component {
     });
   }
   render() {
-    const { avatar, title, courseId } = this.props.route.params;
-    const { cateActive, dataOfCourse, dataOfuser } = this.state;
+    const { title, courseId } = this.props.route.params;
+    const { cateActive } = this.state;
     return (
       <View style={lessonStyles.container}>
         <ImageBackground source={BG} style={lessonStyles.bgImage}>
-          <HeaderBar avatar={avatar} title={title} isAvatar={true} />
+          <HeaderBar title={title} isAvatar={true} />
           <View style={styles.category}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <TouchableOpacity
@@ -188,6 +188,10 @@ const mapStateToProps = (state) => {
     exercisesOfUser: state.exercisesOfUser.exercisesOfUser,
     testsOnlineOfCourse: state.testsOnlineOfCourse.testsOnlineOfCourse,
     testsOnlineOfUser: state.testsOnlineOfUser.testsOnlineOfUser,
+    exercisesOfCourseLoading: state.exercisesOfCourse.exercisesOfCourseLoading,
+    lessonsOfUserLoading: state.lessonsOfUser.lessonsOfUserLoading,
+    lessonsLoading: state.lessons.lessonsLoading,
+    exercisesOfUserLoading: state.exercisesOfUser.exercisesOfUserLoading,
   };
 };
 export default connect(mapStateToProps, {

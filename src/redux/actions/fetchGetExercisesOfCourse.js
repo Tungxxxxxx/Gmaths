@@ -117,6 +117,7 @@ const fetchGetExercisesOfCourseFailure = (error) => {
 export const fetchGetExercisesOfCourse = (courseId) => {
   return (dispatch) => {
     dispatch(fetchGetExercisesOfCourseRequest());
+
     try {
       const exercises = getExercisesOfCourse(courseId);
       dispatch(fetchGetExercisesOfCourseSuccess(exercises));

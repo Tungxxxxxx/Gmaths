@@ -7,7 +7,7 @@ import { StyleSheet, View, TouchableOpacity, Text, FlatList, Image } from 'react
 import PriceFormat from '../../components/PriceFormat';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { BUY_COURSE, DA_HOAN_THANH, CHUAN_BI } from '../../constant/Constant';
+import { BUY_COURSE, DA_HOAN_THANH, CHUAN_BI, LESSON, EXERCISE } from '../../constant/Constant';
 import * as colors from '../../color/Color';
 const INFO = '• 19:35 - 10/12/2023';
 class Listing extends React.Component {
@@ -51,6 +51,16 @@ class Listing extends React.Component {
   getGradenameById = (id) => {
     const { grades } = this.props;
     return grades.filter((item) => item.id === id)[0].fullname;
+  };
+  handleGoDetail = (gradeId, courseName, courseId) => {
+    const { userLogin } = this.props;
+    if (userLogin) {
+      const params = { title: this.getGradenameById(gradeId) + ' - ' + courseName, courseId: courseId };
+      this.props.navigation.navigate('LessonsOfCourse', params);
+    } else {
+      this.props.fetchGetPackages();
+      this.props.updateModal(BUY_COURSE);
+    }
   };
   render() {
     const { grades, courses, userLogin } = this.props;
@@ -104,16 +114,7 @@ class Listing extends React.Component {
               <TouchableOpacity
                 style={styles.childCourses}
                 onPress={() => {
-                  if (userLogin) {
-                    this.props.navigation.navigate('LessonsOfCourse', {
-                      title: this.getGradenameById(item.gradeId) + ' - ' + item.name,
-                      avatar: userLogin.avatar,
-                      courseId: item.id,
-                    });
-                  } else {
-                    this.props.fetchGetPackages();
-                    this.props.updateModal(BUY_COURSE);
-                  }
+                  this.handleGoDetail(item.gradeId, item.name, item.id);
                 }}
               >
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>

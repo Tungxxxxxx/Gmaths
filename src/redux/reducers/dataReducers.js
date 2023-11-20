@@ -151,6 +151,7 @@ export const getExercisesOfCourseReducer = (state = initExercisesOfCourseState, 
         exercisesOfCourse: action.payload,
         exercisesOfCourseErrorMess: '',
       };
+
     case Action.GET_EXERCISES_OF_COURSE_FAILURE:
       return {
         ...state,

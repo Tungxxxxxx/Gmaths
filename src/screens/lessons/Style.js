@@ -5,4 +5,11 @@ export const lessonStyles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
   },
+  content: { flex: 1, paddingTop: 12, paddingBottom: 40, paddingHorizontal: 16 },
+  answersContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    gap: 8,
+  },
 });

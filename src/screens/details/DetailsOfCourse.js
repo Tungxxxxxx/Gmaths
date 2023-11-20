@@ -272,6 +272,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
     letterSpacing: -0.4,
     color: '#22313F',
+    textAlign: 'center',
   },
   teacherJob: {
     fontFamily: 'SF Pro',
@@ -280,6 +281,7 @@ const styles = StyleSheet.create({
     lineHeight: 20,
     letterSpacing: -0.4,
     color: '#22313F',
+    textAlign: 'center',
   },
   addContainer: {
     marginTop: 16,

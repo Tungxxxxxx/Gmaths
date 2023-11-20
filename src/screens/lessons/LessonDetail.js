@@ -1,26 +1,11 @@
-import {
-  ImageBackground,
-  StatusBar,
-  Text,
-  View,
-  TouchableOpacity,
-  ScrollView,
-  StyleSheet,
-  FlatList,
-  Image,
-} from 'react-native';
+import { ImageBackground, Text, View, ScrollView, StyleSheet } from 'react-native';
 import { BG } from '../../assets/images/index';
 import HeaderBar from '../../components/Header';
 import React from 'react';
-import RadialGradient from 'react-native-radial-gradient';
-import { radialColor, radialStops } from '../../color/Color';
-import { logo, Rectangle1 } from '../../assets/images/index';
 import Contact from '../../components/Contact';
 import { LESSON_CONTACT_1, LESSON_CONTACT_2 } from '../../constant/Message';
 import { lessonStyles } from './Style';
-import { Dimensions } from 'react-native';
-const { width } = Dimensions.get('window');
-const bannerWidth = width - 32;
+import BannerPackage from './BannerPackage';
 
 class LessonDetail extends React.Component {
   constructor(props) {
@@ -28,31 +13,14 @@ class LessonDetail extends React.Component {
     this.state = {};
   }
   render() {
-    const { avatar, title, content } = this.props.route.params;
+    const { title, content } = this.props.route.params;
     return (
       <View style={lessonStyles.container}>
         <ImageBackground source={BG} style={lessonStyles.bgImage}>
-          <HeaderBar avatar={avatar} title={title} isAvatar={true} />
+          <HeaderBar title={title} isAvatar={false} />
           <ScrollView showsVerticalScrollIndicator={false}>
-            <View style={styles.content}>
-              <View style={styles.bannerContainer}>
-                <RadialGradient style={styles.bannerHero} colors={radialColor} stops={radialStops}>
-                  <Image source={Rectangle1} style={styles.rectangle1Image} />
-
-                  <View style={{ flex: 67 }} />
-                  <TouchableOpacity
-                    style={styles.buttonCTA}
-                    disabled={!this.props.isActiveButtonCTA}
-                    onPress={() => {
-                      this.props.fetchGetPackages();
-                      this.props.updateModal(BUY_COURSE);
-                    }}
-                  >
-                    <Text style={styles.labelButtonCTA}>Đăng ký gói cước ngay</Text>
-                  </TouchableOpacity>
-                  <View style={{ flex: 87 }} />
-                </RadialGradient>
-              </View>
+            <View style={lessonStyles.content}>
+              <BannerPackage isActiveButtonCTA={this.props.isActiveButtonCTA} />
               <View style={styles.info}>
                 <Text style={styles.titleInfo}>Thông tin hướng dẫn</Text>
                 <Text style={styles.contentInfo}>{content}</Text>
@@ -67,47 +35,6 @@ class LessonDetail extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  content: { flex: 1, paddingTop: 12, paddingBottom: 40, paddingHorizontal: 16 },
-  bannerContainer: {
-    width: '100%',
-    height: (210 * bannerWidth) / 343,
-    marginBottom: 12,
-  },
-  bannerHero: {
-    flex: 1,
-    borderRadius: 16,
-    overflow: 'hidden',
-    alignItems: 'center',
-    shadowColor: 'rgba(25, 118, 210, 0.3)',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 1,
-    shadowRadius: 16,
-  },
-
-  buttonCTA: {
-    width: '57%',
-    flex: 56,
-    borderRadius: 50,
-    backgroundColor: '#FFFFFF',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginBottom: 8,
-  },
-  labelButtonCTA: {
-    fontFamily: 'SF Pro',
-    fontWeight: '500',
-    fontSize: 16,
-    lineHeight: 24,
-    letterSpacing: -0.4,
-    color: '#004390',
-  },
-  rectangle1Image: {
-    resizeMode: 'stretch',
-    position: 'absolute',
-    bottom: 0,
-    alignSelf: 'center',
-    width: '100%',
-  },
   info: { paddingBottom: 24, paddingTop: 12, marginBottom: 24 },
   titleInfo: {
     fontFamily: 'SF Pro',

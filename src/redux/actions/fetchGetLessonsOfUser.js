@@ -7,7 +7,7 @@ import { DA_HOAN_THANH, CHUAN_BI } from '../../constant/Constant';
 const dataInit = [
   { id: 1, lessonId: 1, courseId: 7, gradeId: 3, userId: 1, status: DA_HOAN_THANH },
   { id: 2, lessonId: 2, courseId: 7, gradeId: 3, userId: 1, status: CHUAN_BI },
-  { id: 2, lessonId: 2, courseId: 7, gradeId: 3, userId: 2, status: CHUAN_BI },
+  { id: 3, lessonId: 2, courseId: 7, gradeId: 3, userId: 2, status: CHUAN_BI },
 ];
 const getLessonsOfUser = (userId) => {
   return dataInit.filter((item) => item.userId === userId);
