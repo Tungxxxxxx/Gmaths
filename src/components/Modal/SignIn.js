@@ -1,15 +1,5 @@
 import React from 'react';
-import {
-  Image,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  TouchableWithoutFeedback,
-  View,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import LeftIconInput from '../Input/LeftIconInput';
 import PassInput from '../Input/PassInput';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -85,83 +75,87 @@ class SignIn extends React.Component {
             }}
             contentContainerStyle={styles.modalContainer}
           >
-            <KeyboardAvoidingView style={{ flex: 1, width: '100%' }}>
-              <ScrollView style={{ flex: 1, width: '100%' }}>
-                <View style={{ alignItems: 'center', flex: 1 }}>
-                  <View style={styles.grabber}></View>
-                  <View style={styles.titleContainer}>
-                    <Text style={styles.title}>Đăng nhập</Text>
+            <KeyboardAwareScrollView
+              style={{ flex: 1, width: '100%' }}
+              extraScrollHeight={400}
+              showsVerticalScrollIndicator={false}
+            >
+              {/* <ScrollView style={{ flex: 1, width: '100%' }} showsVerticalScrollIndicator={false}> */}
+              <View style={{ alignItems: 'center', flex: 1 }}>
+                <View style={styles.grabber}></View>
+                <View style={styles.titleContainer}>
+                  <Text style={styles.title}>Đăng nhập</Text>
+                  <TouchableOpacity
+                    style={styles.closeContainer}
+                    onPress={() => {
+                      this.closeModal();
+                    }}
+                  >
+                    <Ionicons name="close" size={16} style={styles.close} />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.content}>
+                  <View style={styles.logoView}>
+                    <Image source={logo} style={{ width: 80, height: 80 }} />
+                    <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
+                  </View>
+                  <View style={styles.signInForm}>
+                    <LeftIconInput
+                      name={'person-outline'}
+                      transform={[{ rotate: '0deg' }]}
+                      handleChangeUsername={this.handleChangeUsername}
+                      username={this.state.username}
+                    />
+                    <PassInput errorMes={errorMes} handleChangePass={this.handleChangePass} pass={this.state.pass} />
+                    {errorMes !== '' && <Text style={styles.errorMes}>{errorMes}</Text>}
                     <TouchableOpacity
-                      style={styles.closeContainer}
+                      style={styles.buttonContainer}
                       onPress={() => {
-                        this.closeModal();
+                        this.handleLogin();
                       }}
                     >
-                      <Ionicons name="close" size={16} style={styles.close} />
+                      <Text style={styles.txtButton}>Đăng nhập</Text>
                     </TouchableOpacity>
-                  </View>
-                  <View style={styles.content}>
-                    <View style={styles.logoView}>
-                      <Image source={logo} style={{ width: 80, height: 80 }} />
-                      <Text style={styles.logoTitle}>GMATHS EDUCATION</Text>
-                    </View>
-                    <View style={styles.signInForm}>
-                      <LeftIconInput
-                        name={'person-outline'}
-                        transform={[{ rotate: '0deg' }]}
-                        handleChangeUsername={this.handleChangeUsername}
-                        username={this.state.username}
-                      />
-                      <PassInput errorMes={errorMes} handleChangePass={this.handleChangePass} pass={this.state.pass} />
-                      {errorMes !== '' && <Text style={styles.errorMes}>{errorMes}</Text>}
+                    <View style={styles.links}>
+                      <TouchableOpacity>
+                        <Text style={styles.forgetPass}>Quên mật khẩu?</Text>
+                      </TouchableOpacity>
                       <TouchableOpacity
-                        style={styles.buttonContainer}
                         onPress={() => {
-                          this.handleLogin();
+                          this.props.updateModal(SIGN_UP);
                         }}
                       >
-                        <Text style={styles.txtButton}>Đăng nhập</Text>
+                        <Text style={styles.forgetPass}>Đăng ký</Text>
                       </TouchableOpacity>
-                      <View style={styles.links}>
-                        <TouchableOpacity>
-                          <Text style={styles.forgetPass}>Quên mật khẩu?</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this.props.updateModal(SIGN_UP);
-                          }}
-                        >
-                          <Text style={styles.forgetPass}>Đăng ký</Text>
-                        </TouchableOpacity>
-                      </View>
                     </View>
-                    {errorMes === '' ? (
-                      <>
-                        <View style={styles.orSignIn}>
-                          <View style={styles.divider}></View>
-                          <Text style={styles.txtOrSignIn}>hoặc</Text>
-                          <View style={styles.divider}></View>
-                        </View>
-                        <View style={styles.authAcc}>
-                          <View style={styles.CTA}>
-                            <AntDesign style={styles.socialIcon} name="apple1" />
-                          </View>
-                          <View style={styles.CTA}>
-                            <AntDesign style={styles.socialIcon} name="google" />
-                          </View>
-                          <View style={styles.CTA}>
-                            <FontAwesome style={[styles.socialIcon, { paddingLeft: 5 }]} name="facebook" />
-                          </View>
-                        </View>
-                      </>
-                    ) : (
-                      <View style={styles.dividerFull}></View>
-                    )}
-                    <Contact contentContact1={LOGIN_CONTACT_1} contentContact2={LOGIN_CONTACT_2} />
                   </View>
+                  {errorMes === '' ? (
+                    <>
+                      <View style={styles.orSignIn}>
+                        <View style={styles.divider}></View>
+                        <Text style={styles.txtOrSignIn}>hoặc</Text>
+                        <View style={styles.divider}></View>
+                      </View>
+                      <View style={styles.authAcc}>
+                        <View style={styles.CTA}>
+                          <AntDesign style={styles.socialIcon} name="apple1" />
+                        </View>
+                        <View style={styles.CTA}>
+                          <AntDesign style={styles.socialIcon} name="google" />
+                        </View>
+                        <View style={styles.CTA}>
+                          <FontAwesome style={[styles.socialIcon, { paddingLeft: 5 }]} name="facebook" />
+                        </View>
+                      </View>
+                    </>
+                  ) : (
+                    <View style={styles.dividerFull}></View>
+                  )}
+                  <Contact contentContact1={LOGIN_CONTACT_1} contentContact2={LOGIN_CONTACT_2} />
                 </View>
-              </ScrollView>
-            </KeyboardAvoidingView>
+              </View>
+              {/* </ScrollView> */}
+            </KeyboardAwareScrollView>
           </ModalPaper>
         </Portal>
       </View>
@@ -174,10 +168,11 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    height: 500,
+    height: '88%',
     alignItems: 'center',
     backgroundColor: 'rgba(242, 242, 247, 1)',
-    borderRadius: 12,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
     shadowColor: 'rgba(0, 0, 0, 0.2)',
     shadowOffset: { width: 0, height: 0 },
     shadowOpacity: 1,

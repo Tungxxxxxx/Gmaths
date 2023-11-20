@@ -1,19 +1,12 @@
 import React from 'react';
-import {
-  Image,
-  Modal,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  TouchableWithoutFeedback,
-} from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View, TouchableWithoutFeedback } from 'react-native';
 import LeftIconInput from '../Input/LeftIconInput';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import { SvgXml } from 'react-native-svg';
 import { zaloIcon, messenger, phone, logo } from '../../assets/images/index';
 import { Dimensions } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Portal, Modal as ModalPaper } from 'react-native-paper';
 const { width } = Dimensions.get('window');
 const contentWidth = width - 64;
 class SignUp extends React.Component {
@@ -42,23 +35,21 @@ class SignUp extends React.Component {
     const { visible } = this.state;
     return (
       <View style={styles.container}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={visible}
-          onRequestClose={() => {
-            this.closeModal();
-          }}
-        >
-          <TouchableOpacity
-            style={{ flex: 1 }}
-            activeOpacity={1}
-            onPressOut={() => {
-              this.pressOutModal();
+        <Portal>
+          <ModalPaper
+            animationType="slide"
+            visible={visible}
+            onDismiss={() => {
+              this.closeModal();
             }}
+            contentContainerStyle={styles.modalContainer}
           >
-            <TouchableWithoutFeedback>
-              <View style={styles.modalContainer}>
+            <KeyboardAwareScrollView
+              style={{ flex: 1, width: '100%' }}
+              extraScrollHeight={50}
+              showsVerticalScrollIndicator={false}
+            >
+              <View style={{ flex: 1 }}>
                 <View style={styles.grabber}></View>
                 <View style={styles.titleContainer}>
                   <Text style={styles.title}>Đăng ký</Text>
@@ -121,9 +112,9 @@ class SignUp extends React.Component {
                   </View>
                 </View>
               </View>
-            </TouchableWithoutFeedback>
-          </TouchableOpacity>
-        </Modal>
+            </KeyboardAwareScrollView>
+          </ModalPaper>
+        </Portal>
       </View>
     );
   }

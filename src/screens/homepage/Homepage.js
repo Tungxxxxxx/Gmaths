@@ -75,10 +75,10 @@ class Homepage extends React.Component {
       }),
       () => {
         if (this.signUpRef.current) {
+          console.log('Homepage', modalName);
           this.signUpRef.current.showModal();
         }
         if (this.buyCourseRef.current) {
-          console.log('Homepage', modalName);
           this.buyCourseRef.current.showModal();
         }
       },
