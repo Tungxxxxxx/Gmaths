@@ -23,6 +23,8 @@ const { width } = Dimensions.get('window');
 import { connect } from 'react-redux';
 import { fetchGetUserLogin } from '../../redux/actions/fetchGetUsers';
 import { fetchGetCoursesOfUser } from '../../redux/actions/fetchGetUserCourses';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { Portal, Modal as ModalPaper } from 'react-native-paper';
 import Contact from '../Contact';
 const contentWidth = width - 64;
 const USER_NAME = '0986189492';
@@ -75,24 +77,17 @@ class SignIn extends React.Component {
     console.log('SignIn', visible);
     return (
       <View style={styles.container}>
-        <Modal
-          animationType="slide"
-          transparent={true}
-          visible={visible}
-          onRequestClose={() => {
-            this.closeModal();
-          }}
-        >
-          <TouchableOpacity
-            style={{ flex: 1 }}
-            activeOpacity={1}
-            onPressOut={() => {
+        <Portal>
+          <ModalPaper
+            visible={visible}
+            onDismiss={() => {
               this.closeModal();
             }}
+            contentContainerStyle={styles.modalContainer}
           >
-            <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-              <TouchableWithoutFeedback>
-                <View style={styles.modalContainer}>
+            <KeyboardAvoidingView style={{ flex: 1, width: '100%' }}>
+              <ScrollView style={{ flex: 1, width: '100%' }}>
+                <View style={{ alignItems: 'center', flex: 1 }}>
                   <View style={styles.grabber}></View>
                   <View style={styles.titleContainer}>
                     <Text style={styles.title}>Đăng nhập</Text>
@@ -165,21 +160,21 @@ class SignIn extends React.Component {
                     <Contact contentContact1={LOGIN_CONTACT_1} contentContact2={LOGIN_CONTACT_2} />
                   </View>
                 </View>
-              </TouchableWithoutFeedback>
-            </ScrollView>
-          </TouchableOpacity>
-        </Modal>
+              </ScrollView>
+            </KeyboardAvoidingView>
+          </ModalPaper>
+        </Portal>
       </View>
     );
   }
 }
 const styles = StyleSheet.create({
-  container: { borderWidth: 1 },
+  container: { flex: 1 },
   modalContainer: {
     position: 'absolute',
     bottom: 0,
     width: '100%',
-    // height: '88%',
+    height: 500,
     alignItems: 'center',
     backgroundColor: 'rgba(242, 242, 247, 1)',
     borderRadius: 12,

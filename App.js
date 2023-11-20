@@ -2,9 +2,8 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import store from './src/redux/store/store';
-import Splash from './src/screens/splash/Splash';
-import Homepage from './src/screens/homepage/Homepage';
 import Route from './src/navigation/Route';
+import { Provider as ProviderPaper } from 'react-native-paper';
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -13,9 +12,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <Provider store={store}>
-        <Route />
-      </Provider>
+      <ProviderPaper>
+        <Provider store={store}>
+          <Route />
+        </Provider>
+      </ProviderPaper>
     );
   }
 }

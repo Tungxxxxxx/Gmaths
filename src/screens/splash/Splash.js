@@ -3,6 +3,7 @@ import { Text, View, ImageBackground, StatusBar, Image } from 'react-native';
 import { BG, logo } from '../../assets/images/index';
 import { connect } from 'react-redux';
 import { setNavigation } from '../../redux/actions/setNavigation';
+import NetInfo from '@react-native-community/netinfo';
 import * as styles from './Styles';
 class Splash extends React.Component {
   constructor(props) {

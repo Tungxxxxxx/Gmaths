@@ -14,6 +14,7 @@ import SignUp from '../../components/Modal/SignUp';
 import BuyCourse from '../../components/Modal/BuyCourse';
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-paper';
+import { GapVertical } from '../../components/GapComponent';
 
 const { width } = Dimensions.get('window');
 const bannerWidth = width - 32;
@@ -91,8 +92,7 @@ class Homepage extends React.Component {
       <View style={styles.container}>
         <ImageBackground source={BG} style={styles.bgImage}>
           <StatusBar translucent barStyle={'dark-content'} backgroundColor={'transparent'} />
-
-          <View style={styles.top}></View>
+          <GapVertical height={26} />
           <View style={styles.navTop}>
             <Icon name="bars" size={24} style={styles.barIcon} color="#1565C0" />
             <View style={styles.title}>

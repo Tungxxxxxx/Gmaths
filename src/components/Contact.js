@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, Platform, Linking } from 'react-native';
-import { PHONE_NUMBER_ANDROID, PHONE_NUMBER_IOS } from '../constant/Constant';
+import { CALL_IOS, CALL_ANDROID, MESSENGER_URL_1, MESSENGER_URL_2, ZALO_URL } from '../constant/Constant';
 import { SvgXml } from 'react-native-svg';
 import { zaloIcon, messenger, phone } from '../assets/images/index';
 class Contact extends React.Component {
@@ -11,9 +11,9 @@ class Contact extends React.Component {
   handleMakeCall = () => {
     let phoneNumber = '';
     if (Platform.OS === 'android') {
-      phoneNumber = PHONE_NUMBER_ANDROID;
+      phoneNumber = CALL_ANDROID;
     } else {
-      phoneNumber = PHONE_NUMBER_IOS;
+      phoneNumber = CALL_IOS;
     }
     Linking.openURL(phoneNumber);
   };
@@ -35,10 +35,20 @@ class Contact extends React.Component {
           >
             <SvgXml xml={phone} style={styles.iconContact} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconContactView} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.iconContactView}
+            onPress={() => {
+              this.handleOpenUrl(ZALO_URL);
+            }}
+          >
             <SvgXml xml={zaloIcon} style={styles.iconContact} />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.iconContactView}>
+          <TouchableOpacity
+            style={styles.iconContactView}
+            onPress={() => {
+              this.handleOpenUrl(MESSENGER_URL_1);
+            }}
+          >
             <SvgXml xml={messenger} style={styles.iconContact} />
           </TouchableOpacity>
         </View>

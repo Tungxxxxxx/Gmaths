@@ -5,6 +5,7 @@ import { Avatar } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 import { Dimensions } from 'react-native';
+import { GapVertical } from './GapComponent';
 const { width } = Dimensions.get('window');
 const titleWidth = width - 52 - 56;
 
@@ -18,7 +19,7 @@ class HeaderBar extends React.Component {
     return (
       <>
         <StatusBar barStyle={'dark-content'} backgroundColor={'transparent'} translucent />
-        <View style={styles.top}></View>
+        <GapVertical height={26} />
         <View style={styles.barContainer}>
           <View style={styles.titleContainer}>
             <TouchableOpacity
@@ -44,7 +45,7 @@ class HeaderBar extends React.Component {
   }
 }
 const styles = StyleSheet.create({
-  top: { width: '100%', height: 46 },
+  // top: { width: '100%', height: '5.665%' },
   barContainer: {
     height: 56,
     width: '100%',
