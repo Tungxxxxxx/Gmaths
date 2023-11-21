@@ -32,7 +32,7 @@ class BannerHero extends React.Component {
         </View>
         <TouchableOpacity
           style={styles.buttonCTA}
-          disabled={!this.props.isActiveButtonCTA}
+          // disabled={!this.props.isActiveButtonCTA}
           onPress={() => {
             this.props.fetchGetPackages();
             this.props.updateModal(BUY_COURSE);

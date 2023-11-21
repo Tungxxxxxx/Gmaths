@@ -111,6 +111,7 @@ export const getLessonsReducer = (state = initLessonsState, action) => {
     case Action.GET_LESSONS_OF_COURSE_REQUEST:
       return { ...state, lessonsLoading: true, lessons: [], lessonsErrorMess: '' };
     case Action.GET_LESSONS_OF_COURSE_SUCCESS:
+      console.log('GET_LESSONS_OF_COURSE_REQUEST', state.lessonsLoading);
       return { ...state, lessonsLoading: false, lessons: action.payload, lessonsErrorMess: '' };
     case Action.GET_LESSONS_OF_COURSE_FAILURE:
       return { ...state, lessonsLoading: false, lessons: [], lessonsErrorMess: action.payload };

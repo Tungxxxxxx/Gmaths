@@ -78,21 +78,33 @@ const dataInit = [
     title: 'Multiplication: 2-digits number by 1-digit number',
     content: '',
   },
-  { id: 11, code: 'L4', courseId: 1, gradeId: 1, name: 'Lesson 4', free: true, title: 'Division', content: '' },
-  { id: 13, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 14, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 15, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 16, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 17, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 18, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 19, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 20, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 21, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 22, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
-  { id: 23, code: 'L5', courseId: 1, gradeId: 1, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 11, code: 'L4', courseId: 7, gradeId: 3, name: 'Lesson 4', free: true, title: 'Division', content: '' },
+  { id: 13, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 14, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 15, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 16, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 17, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 18, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 19, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 20, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 21, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 22, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 23, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 24, code: 'L4', courseId: 7, gradeId: 3, name: 'Lesson 4', free: true, title: 'Division', content: '' },
+  { id: 25, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 26, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 27, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 28, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 29, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 30, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 31, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 32, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 33, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 34, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
+  { id: 35, code: 'L5', courseId: 7, gradeId: 3, name: 'Lesson 5', free: false, title: 'Factions', content: '' },
 ];
-const getLessons = (courseId) => {
-  return dataInit.filter((item) => item.courseId === courseId);
+const getLessons = (courseId, startIndex, numberOfElement) => {
+  return dataInit.filter((item) => item.courseId === courseId).slice(startIndex, startIndex + numberOfElement);
 };
 export const fetchGetLessonsRequest = () => {
   return { type: GET_LESSONS_OF_COURSE_REQUEST };
@@ -105,11 +117,11 @@ export const fetchGetLessonsFailure = (error) => {
 };
 
 //trả về 1 dispatch
-export const fetchGetLessons = (courseId) => {
+export const fetchGetLessons = (courseId, startIndex, numberOfElement) => {
   return (dispatch) => {
     dispatch(fetchGetLessonsRequest());
     try {
-      const lessons = getLessons(courseId);
+      const lessons = getLessons(courseId, startIndex, numberOfElement);
       dispatch(fetchGetLessonsSuccess(lessons));
     } catch (error) {
       dispatch(fetchGetLessonsFailure(error));

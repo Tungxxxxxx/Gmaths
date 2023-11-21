@@ -10,13 +10,13 @@ import * as colors from '../../color/Color';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { LESSON, EXERCISE, TEST_ONLINE, DETAILS } from '../../constant/Constant';
+import { LESSON, EXERCISE, TEST_ONLINE } from '../../constant/Constant';
 import Loading from '../../components/Loading';
 class LessonList extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {};
+    this.state = { lessons: [], isFetchData: false };
   }
 
   getDataSingleOfUser = (dataSingleOfCourse) => {
@@ -69,9 +69,14 @@ class LessonList extends React.Component {
       return;
     }
   };
-
+  handleOnEndReached = () => {
+    this.setState({ isFetchData: true }, () => {
+      this.props.updateStartIndex();
+    });
+  };
   render() {
-    const { userLogin, dataOfCourse } = this.props;
+    const { userLogin, dataOfCourse, lessonsLoading } = this.props;
+    console.log(lessonsLoading);
 
     return (
       <>
@@ -139,6 +144,12 @@ class LessonList extends React.Component {
               </TouchableOpacity>
             );
           }}
+          onEndReachedThreshold={0}
+          onEndReached={() => {
+            console.log('onEndReached');
+            this.handleOnEndReached();
+          }}
+          ListFooterComponent={this.state.isFetchData && <Loading />}
         />
       </>
     );

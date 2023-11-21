@@ -17,3 +17,4 @@ export const MESSENGER_URL_2 = 'fb-messenger://user/{100005081770621}';
 export const CALL_IOS = 'telprompt:${0986189492}';
 export const CALL_ANDROID = 'tel:${0986189492}';
 export const ZALO_URL = 'https://zalo.me/0986189492';
+export const NUMBER_OF_LESSON = 10;
