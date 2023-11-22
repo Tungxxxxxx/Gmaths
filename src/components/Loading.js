@@ -6,7 +6,7 @@ export default function Loading() {
         width: 100,
         height: 100,
         position: 'absolute',
-        top: 50,
+        top: 300,
         alignSelf: 'center',
         justifyContent: 'flex-start',
         backgroundColor: 'transparent',

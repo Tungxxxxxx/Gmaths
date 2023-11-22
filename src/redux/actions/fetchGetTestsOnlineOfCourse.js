@@ -3,10 +3,17 @@ import {
   GET_TESTS_ONLINE_OF_COURSE_SUCCESS,
   GET_TESTS_ONLINE_OF_COURSE_FAILURE,
 } from '../../constant/Action';
+import { DA_HOAN_THANH, CHUAN_BI, PENDING } from '../../constant/Constant';
+const dataOfUserInit = [
+  { id: 1, testOnlineId: 1, courseId: 7, gradeId: 3, userId: 1, status: DA_HOAN_THANH },
+  { id: 2, testOnlineId: 2, courseId: 7, gradeId: 3, userId: 1, status: PENDING },
+  { id: 2, testOnlineId: 2, courseId: 7, gradeId: 3, userId: 2, status: CHUAN_BI },
+];
 
-const dataInit = [
+const dataOfCourseInit = [
   {
     id: 1,
+    dataOfUser: null,
     code: 'T1',
     courseId: 7,
     gradeId: 3,
@@ -17,6 +24,7 @@ const dataInit = [
   },
   {
     id: 2,
+    dataOfUser: null,
     code: 'T2',
     courseId: 7,
     gradeId: 3,
@@ -27,6 +35,7 @@ const dataInit = [
   },
   {
     id: 3,
+    dataOfUser: null,
     code: 'T3',
     courseId: 7,
     gradeId: 3,
@@ -37,6 +46,7 @@ const dataInit = [
   },
   {
     id: 4,
+    dataOfUser: null,
     code: 'T4',
     courseId: 7,
     gradeId: 3,
@@ -47,6 +57,7 @@ const dataInit = [
   },
   {
     id: 5,
+    dataOfUser: null,
     code: 'T5',
     courseId: 7,
     gradeId: 3,
@@ -55,10 +66,31 @@ const dataInit = [
     title: 'Multiplication: 2-digits number by 1-digit number',
     content: '',
   },
-  { id: 6, code: 'T6', courseId: 7, gradeId: 3, name: 'Test Online 6', free: false, title: 'Division', content: '' },
-  { id: 7, code: 'T7', courseId: 7, gradeId: 3, name: 'Test Online 7', free: false, title: 'Factions', content: '' },
+  {
+    id: 6,
+    dataOfUser: null,
+    code: 'T6',
+    courseId: 7,
+    gradeId: 3,
+    name: 'Test Online 6',
+    free: false,
+    title: 'Division',
+    content: '',
+  },
+  {
+    id: 7,
+    dataOfUser: null,
+    code: 'T7',
+    courseId: 7,
+    gradeId: 3,
+    name: 'Test Online 7',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
   {
     id: 8,
+    dataOfUser: null,
     code: 'T1',
     courseId: 1,
     gradeId: 1,
@@ -69,6 +101,7 @@ const dataInit = [
   },
   {
     id: 9,
+    dataOfUser: null,
     code: 'T2',
     courseId: 1,
     gradeId: 1,
@@ -79,6 +112,7 @@ const dataInit = [
   },
   {
     id: 10,
+    dataOfUser: null,
     code: 'T3',
     courseId: 1,
     gradeId: 1,
@@ -87,21 +121,157 @@ const dataInit = [
     title: 'Multiplication: 2-digits number by 1-digit number',
     content: '',
   },
-  { id: 11, code: 'T4', courseId: 1, gradeId: 1, name: 'Test Online 4', free: true, title: 'Division', content: '' },
-  { id: 13, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 14, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 15, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 16, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 17, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 18, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 19, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 20, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 21, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 22, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
-  { id: 23, code: 'T5', courseId: 1, gradeId: 1, name: 'Test Online 5', free: false, title: 'Factions', content: '' },
+  {
+    id: 11,
+    dataOfUser: null,
+    code: 'T4',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 4',
+    free: true,
+    title: 'Division',
+    content: '',
+  },
+  {
+    id: 13,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 14,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 15,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 16,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 17,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 18,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 19,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 20,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 21,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 22,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
+  {
+    id: 23,
+    dataOfUser: null,
+    code: 'T5',
+    courseId: 1,
+    gradeId: 1,
+    name: 'Test Online 5',
+    free: false,
+    title: 'Factions',
+    content: '',
+  },
 ];
 const getTestsOnlineOfCourse = (courseId) => {
-  return dataInit.filter((item) => item.courseId === courseId);
+  return dataOfCourseInit.filter((item) => item.courseId === courseId);
+};
+const getTestsOnlineOfUser = (userId) => {
+  return dataOfUserInit.filter((item) => item.userId === userId);
+};
+const getTestsOnline = (courseId, userId) => {
+  let testsOnlineOfCourse = getTestsOnlineOfCourse(courseId);
+  const testsOnlineOfUser = getTestsOnlineOfUser(userId);
+
+  for (let i = 0; i < testsOnlineOfUser.length; i++) {
+    for (let j = 0; j < testsOnlineOfCourse.length; j++) {
+      if (testsOnlineOfUser[i].testOnlineId === testsOnlineOfCourse[j].id) {
+        testsOnlineOfCourse[j].dataOfUser = testsOnlineOfUser[i];
+      }
+    }
+  }
+  return testsOnlineOfCourse;
 };
 const fetchGetTestsOnlineOfCourseRequest = () => {
   return { type: GET_TESTS_ONLINE_OF_COURSE_REQUEST };
@@ -114,11 +284,13 @@ const fetchGetTestsOnlineOfCourseFailure = (error) => {
 };
 
 //trả về 1 dispatch
-export const fetchGetTestsOnlineOfCourse = (courseId) => {
-  return (dispatch) => {
-    dispatch(fetchGetTestsOnlineOfCourseRequest());
+export const fetchGetTestsOnlineOfCourse = (courseId, userId) => {
+  return async (dispatch) => {
+    await dispatch(fetchGetTestsOnlineOfCourseRequest());
     try {
-      const testsOnline = getTestsOnlineOfCourse(courseId);
+      // Giả lập thời gian tốn thời gian
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const testsOnline = getTestsOnline(courseId, userId);
       dispatch(fetchGetTestsOnlineOfCourseSuccess(testsOnline));
     } catch (error) {
       dispatch(fetchGetTestsOnlineOfCourseFailure(error));

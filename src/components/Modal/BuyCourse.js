@@ -320,6 +320,6 @@ const styles = StyleSheet.create({
 });
 // sử dụng BuyCourse thông qua connect, điều này có thể tạo ra một functional component (do connect có thể trả về một functional component) => cần sử dụng forwardRef
 const mapStateToProps = (state) => {
-  return { packages: state.packages.packages };
+  return { packages: state.data.packages };
 };
 export default connect(mapStateToProps, { fetchGetPackages }, null, { forwardRef: true })(BuyCourse);

@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = (state) => {
-  return { navigation: state.navigation.navigation, userLogin: state.userLogin.userLogin };
+  return { navigation: state.navigation.navigation, userLogin: state.data.userLogin };
 };
 export default connect(mapStateToProps)(HeaderBar);

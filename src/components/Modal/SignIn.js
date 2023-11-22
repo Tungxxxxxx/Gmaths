@@ -59,7 +59,6 @@ class SignIn extends React.Component {
   };
   render() {
     const { visible, errorMes } = this.state;
-    console.log('SignIn', visible);
     return (
       <View style={modalStyles.container}>
         <Portal>
@@ -177,7 +176,7 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = (state) => {
-  return { navigation: state.navigation.navigation, userLogin: state.userLogin.userLogin };
+  return { navigation: state.navigation.navigation, userLogin: state.data.userLogin };
 };
 export default connect(mapStateToProps, { fetchGetUserLogin, fetchGetCoursesOfUser }, null, { forwardRef: true })(
   SignIn,

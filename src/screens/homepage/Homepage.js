@@ -157,6 +157,6 @@ class Homepage extends React.Component {
   }
 }
 const mapStateToProps = (state) => {
-  return { userLogin: state.userLogin.userLogin };
+  return { userLogin: state.data.userLogin };
 };
 export default connect(mapStateToProps)(Homepage);

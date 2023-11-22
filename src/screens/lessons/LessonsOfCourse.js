@@ -6,70 +6,53 @@ import HeaderBar from '../../components/Header';
 import { connect } from 'react-redux';
 import LessonList from './LessonList';
 import { fetchGetLessons } from '../../redux/actions/fetchLessonsOfCourse';
-import { fetchGetLessonsOfUser } from '../../redux/actions/fetchGetLessonsOfUser';
 import { fetchGetExercisesOfCourse } from '../../redux/actions/fetchGetExercisesOfCourse';
-import { fetchGetExercisesOfUser } from '../../redux/actions/fetGetExercisesOfUser';
 import { fetchGetTestsOnlineOfCourse } from '../../redux/actions/fetchGetTestsOnlineOfCourse';
-import { fetchGetTestsOnlineOfUser } from '../../redux/actions/fetchGetTestsOnlineOfUser';
 import { lessonStyles } from './Style';
 import DetailsOfCourse from '../details/DetailsOfCourse';
+import Loading from '../../components/Loading';
 class LessonsOfCourse extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cateActive: LESSON, dataOfCourse: [], dataOfUser: [], courseId: null, hasData: false };
-    this.startIndex = 0;
+    this.state = { cateActive: LESSON, dataOfCourse: [], courseId: null, hasData: false };
+    this.lessonsListRef = React.createRef();
   }
+  setCateActive = (cateActive) => {
+    this.setState({
+      cateActive: cateActive,
+    });
+  };
   handleLesson = async () => {
-    const { courseId, cateActive } = this.state;
+    const { cateActive } = this.state;
     if (cateActive === LESSON) {
       return;
     }
-    this.startIndex = 0;
-    const { userLogin, fetchGetLessons, fetchGetLessonsOfUser } = this.props;
-
-    await fetchGetLessons(courseId, this.startIndex, NUMBER_OF_LESSON);
-    await fetchGetLessonsOfUser(userLogin.id);
-    const { lessons, lessonsOfUser } = this.props;
-    this.setState((prevState) => {
-      return {
-        cateActive: LESSON,
-        dataOfCourse: lessons,
-        dataOfUser: lessonsOfUser,
-      };
+    this.setState({
+      cateActive: LESSON,
     });
+    this.lessonsListRef.showLessons();
   };
   handleExercise = async () => {
-    const { courseId, cateActive } = this.state;
+    const { cateActive } = this.state;
     if (cateActive === EXERCISE) {
       return;
     }
-    this.startIndex = 0;
-    const { userLogin, fetchGetExercisesOfCourse, fetchGetExercisesOfUser } = this.props;
-    await fetchGetExercisesOfCourse(courseId);
-    await fetchGetExercisesOfUser(userLogin.id);
-    const { exercisesOfCourse, exercisesOfUser } = this.props;
     this.setState({
       cateActive: EXERCISE,
-      dataOfCourse: exercisesOfCourse,
-      dataOfUser: exercisesOfUser,
     });
+    this.lessonsListRef.showExercises();
   };
   handleTestOnline = async () => {
-    const { courseId, cateActive } = this.state;
+    const { cateActive } = this.state;
     if (cateActive === TEST_ONLINE) {
       return;
     }
-    this.startIndex = 0;
-    const { userLogin, fetchGetTestsOnlineOfCourse, fetchGetTestsOnlineOfUser } = this.props;
-    await fetchGetTestsOnlineOfCourse(courseId);
-    await fetchGetTestsOnlineOfUser(userLogin.id);
-    const { testsOnlineOfCourse, testsOnlineOfUser } = this.props;
     this.setState({
       cateActive: TEST_ONLINE,
-      dataOfCourse: testsOnlineOfCourse,
-      dataOfUser: testsOnlineOfUser,
     });
+    this.lessonsListRef.showTestsOnline();
   };
+
   handleDetails = () => {
     this.setState(() => {
       return { cateActive: DETAILS };
@@ -77,11 +60,15 @@ class LessonsOfCourse extends React.Component {
   };
   updateStartIndex = async () => {
     const { courseId, cateActive } = this.state;
+    const { userLogin } = this.props;
     console.log(this.startIndex);
     this.startIndex = this.startIndex + NUMBER_OF_LESSON;
     if (cateActive === LESSON) {
-      await this.props.fetchGetLessons(courseId, this.startIndex, NUMBER_OF_LESSON);
+      await this.props.fetchGetLessons(courseId, this.startIndex, NUMBER_OF_LESSON, userLogin.id);
       const { lessons } = this.props;
+      if (!lessons) {
+        return;
+      }
       this.setState((prevState) => {
         return {
           dataOfCourse: prevState.dataOfCourse.concat(lessons),
@@ -89,28 +76,20 @@ class LessonsOfCourse extends React.Component {
       });
     }
   };
-  async componentDidMount() {
-    const { userLogin } = this.props;
-    const { courseId } = this.props.route.params;
+  componentDidMount() {
     this.setState({
-      courseId: courseId,
-    });
-    await this.props.fetchGetLessons(courseId, this.startIndex, NUMBER_OF_LESSON);
-    await this.props.fetchGetLessonsOfUser(userLogin.id);
-
-    const { lessons, lessonsOfUser } = this.props;
-    this.setState({
-      dataOfCourse: lessons,
-      dataOfUser: lessonsOfUser,
+      cateActive: LESSON,
     });
   }
   render() {
     const { title, courseId } = this.props.route.params;
     const { cateActive } = this.state;
+    const { loading } = this.props;
     return (
       <View style={lessonStyles.container}>
         <ImageBackground source={BG} style={lessonStyles.bgImage}>
           <HeaderBar title={title} isAvatar={true} />
+          {loading ? <Loading /> : null}
           <View style={styles.category}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <TouchableOpacity
@@ -168,8 +147,9 @@ class LessonsOfCourse extends React.Component {
                 courseId={courseId}
                 cateActive={cateActive}
                 dataOfCourse={this.state.dataOfCourse}
-                dataOfUser={this.state.dataOfUser}
                 updateStartIndex={this.updateStartIndex}
+                setCateActive={this.setCateActive}
+                ref={this.lessonsListRef}
               />
             ) : (
               <DetailsOfCourse />
@@ -203,24 +183,16 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = (state) => {
   return {
-    userLogin: state.userLogin.userLogin,
-    lessons: state.lessons.lessons,
-    lessonsOfUser: state.lessonsOfUser.lessonsOfUser,
-    exercisesOfCourse: state.exercisesOfCourse.exercisesOfCourse,
-    exercisesOfUser: state.exercisesOfUser.exercisesOfUser,
-    testsOnlineOfCourse: state.testsOnlineOfCourse.testsOnlineOfCourse,
-    testsOnlineOfUser: state.testsOnlineOfUser.testsOnlineOfUser,
-    exercisesOfCourseLoading: state.exercisesOfCourse.exercisesOfCourseLoading,
-    lessonsOfUserLoading: state.lessonsOfUser.lessonsOfUserLoading,
-    lessonsLoading: state.lessons.lessonsLoading,
-    exercisesOfUserLoading: state.exercisesOfUser.exercisesOfUserLoading,
+    state: state,
+    userLogin: state.data.userLogin,
+    lessons: state.data.lessons,
+    exercisesOfCourse: state.data.exercisesOfCourse,
+    testsOnlineOfCourse: state.data.testsOnlineOfCourse,
+    loading: state.data.loading,
   };
 };
 export default connect(mapStateToProps, {
   fetchGetLessons,
-  fetchGetLessonsOfUser,
   fetchGetExercisesOfCourse,
-  fetchGetExercisesOfUser,
   fetchGetTestsOnlineOfCourse,
-  fetchGetTestsOnlineOfUser,
 })(LessonsOfCourse);

@@ -2,9 +2,8 @@ import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
 import { DA_HOAN_THANH, CHUAN_BI, PENDING } from '../../constant/Constant';
 import { fetchGetLessons } from '../../redux/actions/fetchLessonsOfCourse';
-import { fetchGetLessonsOfUser } from '../../redux/actions/fetchGetLessonsOfUser';
 import { fetchGetExercisesOfCourse } from '../../redux/actions/fetchGetExercisesOfCourse';
-import { fetchGetExercisesOfUser } from '../../redux/actions/fetGetExercisesOfUser';
+import { fetchGetTestsOnlineOfCourse } from '../../redux/actions/fetchGetTestsOnlineOfCourse';
 import { connect } from 'react-redux';
 import * as colors from '../../color/Color';
 import AntDesign from 'react-native-vector-icons/AntDesign';
@@ -15,35 +14,10 @@ import Loading from '../../components/Loading';
 class LessonList extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = { lessons: [], isFetchData: false };
+    this.state = { lessons: [], isFetchData: false, dataOfCourse: [] };
+    this.startIndex = 0;
   }
 
-  getDataSingleOfUser = (dataSingleOfCourse) => {
-    const { userLogin, dataOfUser, cateActive } = this.props;
-    let dataFound = null;
-    if (userLogin && dataOfUser && dataSingleOfCourse) {
-      if (cateActive === LESSON) {
-        dataFound = dataOfUser.filter(
-          (item) => item.lessonId === dataSingleOfCourse.id && item.courseId === dataSingleOfCourse.courseId,
-        );
-      }
-      if (cateActive === EXERCISE) {
-        dataFound = dataOfUser.filter(
-          (item) => item.exerciseId === dataSingleOfCourse.id && item.courseId === dataSingleOfCourse.courseId,
-        );
-      }
-      if (cateActive === TEST_ONLINE) {
-        dataFound = dataOfUser.filter(
-          (item) => item.testOnlineId === dataSingleOfCourse.id && item.courseId === dataSingleOfCourse.courseId,
-        );
-      }
-    }
-    if (dataFound && dataFound.length > 0) {
-      return dataFound[0];
-    }
-    return null;
-  };
   replaceString = (parentString, searchString, replacementString) => {
     return parentString.replace(new RegExp(searchString, 'g'), replacementString);
   };
@@ -74,9 +48,51 @@ class LessonList extends React.Component {
       this.props.updateStartIndex();
     });
   };
+  showLessons = async () => {
+    const { courseId } = this.props;
+    const { userLogin, fetchGetLessons } = this.props;
+    await fetchGetLessons(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
+    const { lessons } = this.props;
+    this.setState((prevState) => {
+      return {
+        dataOfCourse: lessons,
+      };
+    });
+  };
+  showExercises = async () => {
+    const { courseId } = this.props;
+    const { userLogin, fetchGetExercisesOfCourse } = this.props;
+    await fetchGetExercisesOfCourse(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
+    const { exercisesOfCourse } = this.props;
+    this.setState((prevState) => {
+      return {
+        dataOfCourse: exercisesOfCourse,
+      };
+    });
+  };
+  showTestsOnline = async () => {
+    const { courseId } = this.props;
+    const { userLogin, fetchGetTestsOnlineOfCourse } = this.props;
+    await fetchGetTestsOnlineOfCourse(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
+    const { testsOnlineOfCourse } = this.props;
+    this.setState((prevState) => {
+      return {
+        dataOfCourse: testsOnlineOfCourse,
+      };
+    });
+  };
+  async componentDidMount() {
+    const { userLogin, courseId, fetchGetLessons } = this.props;
+    await fetchGetLessons(courseId, this.startIndex, NUMBER_OF_LESSON, userLogin.id);
+    const { lessons } = this.props;
+    this.setState({
+      dataOfCourse: lessons,
+    });
+  }
   render() {
-    const { userLogin, dataOfCourse, lessonsLoading } = this.props;
-    console.log(lessonsLoading);
+    const { loading } = this.props;
+    const { dataOfCourse } = this.state;
+    console.log('loading', loading);
 
     return (
       <>
@@ -87,8 +103,7 @@ class LessonList extends React.Component {
           numColumns={1}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item, index }) => {
-            const dataSingleOfCourse = this.getDataSingleOfUser(item);
-            const check = userLogin && dataSingleOfCourse;
+            const dataSingleOfCourse = item.dataOfUser;
             return (
               <TouchableOpacity
                 style={styles.childCourses}
@@ -106,14 +121,14 @@ class LessonList extends React.Component {
                     style={[
                       styles.courseTxtAvatar,
                       {
-                        backgroundColor: !check
+                        backgroundColor: !dataSingleOfCourse
                           ? colors.coursesNotRegisteredBg
                           : dataSingleOfCourse.status === DA_HOAN_THANH
                           ? colors.coursesCompleted
                           : dataSingleOfCourse.status === CHUAN_BI || dataSingleOfCourse.status === PENDING
                           ? colors.coursesPreparingBg
                           : null,
-                        borderColor: !check
+                        borderColor: !dataSingleOfCourse
                           ? colors.coursesNotRegisteredBorder
                           : dataSingleOfCourse.status === DA_HOAN_THANH
                           ? colors.coursesCompletedBorder
@@ -123,7 +138,7 @@ class LessonList extends React.Component {
                       },
                     ]}
                   >
-                    {!check ? (
+                    {!dataSingleOfCourse ? (
                       <Text style={[styles.txtAvatar, { color: [0, 1, 2, 3].includes(index) ? '#42A5F5' : '#1976D2' }]}>
                         {item.code}
                       </Text>
@@ -233,20 +248,16 @@ const styles = StyleSheet.create({
 const mapStateToProps = (state) => {
   return {
     navigation: state.navigation.navigation,
-    userLogin: state.userLogin.userLogin,
-    lessons: state.lessons.lessons,
-    lessonsOfUser: state.lessonsOfUser.lessonsOfUser,
-    exercisesOfCourse: state.exercisesOfCourse.exercisesOfCourse,
-    exercisesOfUser: state.exercisesOfUser.exercisesOfUser,
-    exercisesOfCourseLoading: state.exercisesOfCourse.exercisesOfCourseLoading,
-    lessonsOfUserLoading: state.lessonsOfUser.lessonsOfUserLoading,
-    lessonsLoading: state.lessons.lessonsLoading,
-    exercisesOfUserLoading: state.exercisesOfUser.exercisesOfUserLoading,
+    userLogin: state.data.userLogin,
+    lessons: state.data.lessons,
+    exercisesOfCourse: state.data.exercisesOfCourse,
+    testsOnlineOfCourse: state.data.testsOnlineOfCourse,
+    loading: state.data.loading,
   };
 };
-export default connect(mapStateToProps, {
-  fetchGetLessons,
-  fetchGetLessonsOfUser,
-  fetchGetExercisesOfCourse,
-  fetchGetExercisesOfUser,
-})(LessonList);
+export default connect(
+  mapStateToProps,
+  { fetchGetLessons, fetchGetExercisesOfCourse, fetchGetTestsOnlineOfCourse },
+  null,
+  { forwardRef: true },
+)(LessonList);

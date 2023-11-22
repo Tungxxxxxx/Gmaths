@@ -271,11 +271,11 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = (state) => {
   return {
-    grades: state.grades.grades,
-    courses: state.courses.courses,
-    grades: state.grades.grades,
-    coursesOfUser: state.coursesOfUser.coursesOfUser,
-    userLogin: state.userLogin.userLogin,
+    grades: state.data.grades,
+    courses: state.data.courses,
+    grades: state.data.grades,
+    coursesOfUser: state.data.coursesOfUser,
+    userLogin: state.data.userLogin,
     navigation: state.navigation.navigation,
   };
 };
