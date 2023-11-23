@@ -254,14 +254,14 @@ const dataOfCourseInit = [
     content: '',
   },
 ];
-const getTestsOnlineOfCourse = (courseId) => {
-  return dataOfCourseInit.filter((item) => item.courseId === courseId);
+const getTestsOnlineOfCourse = (courseId, startIndex, numberOfElement) => {
+  return dataOfCourseInit.filter((item) => item.courseId === courseId).splice(startIndex, startIndex + numberOfElement);
 };
 const getTestsOnlineOfUser = (userId) => {
   return dataOfUserInit.filter((item) => item.userId === userId);
 };
-const getTestsOnline = (courseId, userId) => {
-  let testsOnlineOfCourse = getTestsOnlineOfCourse(courseId);
+const getTestsOnline = (courseId, startIndex, numberOfElement, userId) => {
+  let testsOnlineOfCourse = getTestsOnlineOfCourse(courseId, startIndex, numberOfElement);
   const testsOnlineOfUser = getTestsOnlineOfUser(userId);
 
   for (let i = 0; i < testsOnlineOfUser.length; i++) {
@@ -284,13 +284,13 @@ const fetchGetTestsOnlineOfCourseFailure = (error) => {
 };
 
 //trả về 1 dispatch
-export const fetchGetTestsOnlineOfCourse = (courseId, userId) => {
+export const fetchGetTestsOnlineOfCourse = (courseId, startIndex, numberOfElement, userId) => {
   return async (dispatch) => {
     await dispatch(fetchGetTestsOnlineOfCourseRequest());
     try {
       // Giả lập thời gian tốn thời gian
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      const testsOnline = getTestsOnline(courseId, userId);
+      //  await new Promise((resolve) => setTimeout(resolve, 500));
+      const testsOnline = getTestsOnline(courseId, startIndex, numberOfElement, userId);
       dispatch(fetchGetTestsOnlineOfCourseSuccess(testsOnline));
     } catch (error) {
       dispatch(fetchGetTestsOnlineOfCourseFailure(error));

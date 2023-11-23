@@ -3,7 +3,7 @@ import {
   GET_EXERCISES_OF_COURSE_SUCCESS,
   GET_EXERCISES_OF_COURSE_FAILURE,
 } from '../../constant/Action';
-import { DA_HOAN_THANH, CHUAN_BI, PENDING } from '../../constant/Constant';
+import { DA_HOAN_THANH, CHUAN_BI, PENDING, NUMBER_OF_LESSON } from '../../constant/Constant';
 const dataOfUserInit = [
   { id: 1, exerciseId: 1, courseId: 7, gradeId: 3, userId: 1, status: DA_HOAN_THANH },
   { id: 2, exerciseId: 2, courseId: 7, gradeId: 3, userId: 1, status: PENDING },
@@ -254,14 +254,14 @@ const dataOfCourseInit = [
     content: '',
   },
 ];
-const getExercisesOfCourse = (courseId) => {
-  return dataOfCourseInit.filter((item) => item.courseId === courseId);
+const getExercisesOfCourse = (courseId, startIndex, numberOfElement) => {
+  return dataOfCourseInit.filter((item) => item.courseId === courseId).splice(startIndex, startIndex + numberOfElement);
 };
 const getExercisesOfUser = (userId) => {
   return dataOfUserInit.filter((item) => item.userId === userId);
 };
-const getExercises = (courseId, userId) => {
-  let exercisesOfCourse = getExercisesOfCourse(courseId);
+const getExercises = (courseId, startIndex, numberOfElement, userId) => {
+  let exercisesOfCourse = getExercisesOfCourse(courseId, startIndex, numberOfElement);
   const exercisesOfUser = getExercisesOfUser(userId);
 
   for (let i = 0; i < exercisesOfUser.length; i++) {
@@ -284,14 +284,14 @@ const fetchGetExercisesOfCourseFailure = (error) => {
 };
 
 //trả về 1 dispatch
-export const fetchGetExercisesOfCourse = (courseId, userId) => {
+export const fetchGetExercisesOfCourse = (courseId, startIndex, numberOfElement, userId) => {
   return async (dispatch) => {
     await dispatch(fetchGetExercisesOfCourseRequest());
 
     try {
       // Giả lập thời gian tốn thời gian
-      await new Promise((resolve) => setTimeout(resolve, 500));
-      const exercises = getExercises(courseId, userId);
+      // await new Promise((resolve) => setTimeout(resolve, 500));
+      const exercises = getExercises(courseId, startIndex, numberOfElement, userId);
       dispatch(fetchGetExercisesOfCourseSuccess(exercises));
     } catch (error) {
       dispatch(fetchGetExercisesOfCourseFailure(error));

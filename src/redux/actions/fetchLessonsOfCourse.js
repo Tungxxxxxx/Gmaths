@@ -8,7 +8,7 @@ const dataOfUserInit = [
   { id: 1, lessonId: 1, courseId: 7, gradeId: 3, userId: 1, status: DA_HOAN_THANH },
   { id: 2, lessonId: 2, courseId: 7, gradeId: 3, userId: 1, status: CHUAN_BI },
   { id: 3, lessonId: 2, courseId: 7, gradeId: 3, userId: 2, status: CHUAN_BI },
-  { id: 4, lessonId: 35, courseId: 7, gradeId: 3, userId: 2, status: CHUAN_BI },
+  { id: 4, lessonId: 35, courseId: 7, gradeId: 3, userId: 1, status: CHUAN_BI },
 ];
 const dataOfCourseInit = [
   {
@@ -398,7 +398,7 @@ const getLessons = (courseId, startIndex, numberOfElement, userId) => {
   for (let i = 0; i < lessonsOfUser.length; i++) {
     for (let j = 0; j < lessonsOfCourse.length; j++) {
       if (lessonsOfUser[i].lessonId === lessonsOfCourse[j].id) {
-        lessonsOfCourse[i].dataOfUser = lessonsOfUser[j];
+        lessonsOfCourse[j].dataOfUser = lessonsOfUser[i];
       }
     }
   }
@@ -420,7 +420,7 @@ export const fetchGetLessons = (courseId, startIndex, numberOfElement, userId) =
     await dispatch(fetchGetLessonsRequest());
     try {
       // Giả lập thời gian tốn thời gian
-      await new Promise((resolve) => setTimeout(resolve, 500));
+      // await new Promise((resolve) => setTimeout(resolve, 500));
       const lessons = getLessons(courseId, startIndex, numberOfElement, userId);
 
       dispatch(fetchGetLessonsSuccess(lessons));

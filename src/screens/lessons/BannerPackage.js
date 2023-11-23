@@ -1,36 +1,47 @@
 import React from 'react';
 import { Text, View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { connect } from 'react-redux';
+import { fetchGetPackages } from '../../redux/actions/fetchGetPackage';
 import RadialGradient from 'react-native-radial-gradient';
 import { radialColor, radialStops } from '../../color/Color';
 import { Rectangle1 } from '../../assets/images/index';
 import { Dimensions } from 'react-native';
+import BuyCourse from '../../components/Modal/BuyCourse';
 const { width } = Dimensions.get('window');
 const bannerWidth = width - 32;
 class BannerPackage extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { visible: false };
+    this.buyCourseRef = React.createRef();
   }
+  showBuyCourses = () => {
+    if (this.buyCourseRef.current) {
+      this.buyCourseRef.current.showModal();
+    }
+  };
   render() {
     return (
-      <View style={styles.bannerContainer}>
-        <RadialGradient style={styles.bannerHero} colors={radialColor} stops={radialStops}>
-          <Image source={Rectangle1} style={styles.rectangle1Image} />
+      <>
+        <BuyCourse ref={this.buyCourseRef} />
+        <View style={styles.bannerContainer}>
+          <RadialGradient style={styles.bannerHero} colors={radialColor} stops={radialStops}>
+            <Image source={Rectangle1} style={styles.rectangle1Image} />
 
-          <View style={{ flex: 67 }} />
-          <TouchableOpacity
-            style={styles.buttonCTA}
-            disabled={!this.props.isActiveButtonCTA}
-            onPress={() => {
-              this.props.fetchGetPackages();
-              this.props.updateModal(BUY_COURSE);
-            }}
-          >
-            <Text style={styles.labelButtonCTA}>Đăng ký gói cước ngay</Text>
-          </TouchableOpacity>
-          <View style={{ flex: 87 }} />
-        </RadialGradient>
-      </View>
+            <View style={{ flex: 67 }} />
+            <TouchableOpacity
+              style={styles.buttonCTA}
+              onPress={() => {
+                this.props.fetchGetPackages();
+                this.showBuyCourses();
+              }}
+            >
+              <Text style={styles.labelButtonCTA}>Đăng ký gói cước ngay</Text>
+            </TouchableOpacity>
+            <View style={{ flex: 87 }} />
+          </RadialGradient>
+        </View>
+      </>
     );
   }
 }
@@ -76,4 +87,4 @@ const styles = StyleSheet.create({
     color: '#004390',
   },
 });
-export default BannerPackage;
+export default connect(null, { fetchGetPackages })(BannerPackage);

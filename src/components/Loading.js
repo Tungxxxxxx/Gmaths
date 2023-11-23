@@ -10,6 +10,7 @@ export default function Loading() {
         alignSelf: 'center',
         justifyContent: 'flex-start',
         backgroundColor: 'transparent',
+        zIndex: 99999,
       }}
     >
       <ActivityIndicator size="large" color="#1565C0" />

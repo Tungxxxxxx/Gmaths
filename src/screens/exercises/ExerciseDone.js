@@ -25,7 +25,7 @@ class ExerciseDone extends React.Component {
   }
 
   render() {
-    const { question, totalQuestion, result, answerOfUser, answerList, title } = this.props.route.params;
+    const { title } = this.props.route.params;
     return (
       <View style={lessonStyles.container}>
         <ImageBackground source={BG} style={lessonStyles.bgImage}>

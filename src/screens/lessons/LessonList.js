@@ -1,6 +1,14 @@
 import React from 'react';
-import { Text, View, TouchableOpacity, StyleSheet, FlatList } from 'react-native';
-import { DA_HOAN_THANH, CHUAN_BI, PENDING } from '../../constant/Constant';
+import { Text, View, TouchableOpacity, StyleSheet, FlatList, RefreshControl, ActivityIndicator } from 'react-native';
+import {
+  DA_HOAN_THANH,
+  CHUAN_BI,
+  PENDING,
+  NUMBER_OF_LESSON,
+  LESSON,
+  EXERCISE,
+  TEST_ONLINE,
+} from '../../constant/Constant';
 import { fetchGetLessons } from '../../redux/actions/fetchLessonsOfCourse';
 import { fetchGetExercisesOfCourse } from '../../redux/actions/fetchGetExercisesOfCourse';
 import { fetchGetTestsOnlineOfCourse } from '../../redux/actions/fetchGetTestsOnlineOfCourse';
@@ -9,12 +17,11 @@ import * as colors from '../../color/Color';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/FontAwesome6';
-import { LESSON, EXERCISE, TEST_ONLINE } from '../../constant/Constant';
-import Loading from '../../components/Loading';
+import LoadingModal from '../../components/loading/LoadingModal';
 class LessonList extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { lessons: [], isFetchData: false, dataOfCourse: [] };
+    this.state = { isFetchData: false, dataOfCourse: [], refreshing: false, isLoading: false };
     this.startIndex = 0;
   }
 
@@ -43,65 +50,115 @@ class LessonList extends React.Component {
       return;
     }
   };
-  handleOnEndReached = () => {
+  handleOnEndReached = async () => {
     this.setState({ isFetchData: true }, () => {
-      this.props.updateStartIndex();
+      this.updateStartIndex().then(() => {
+        this.setState({ isFetchData: false });
+      });
     });
   };
-  showLessons = async () => {
-    const { courseId } = this.props;
-    const { userLogin, fetchGetLessons } = this.props;
-    await fetchGetLessons(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
-    const { lessons } = this.props;
+  resetStartIndex = () => {
+    this.startIndex = 0;
+  };
+  updateStartIndex = async () => {
+    const { userLogin, cateActive, courseId } = this.props;
+    this.startIndex = this.startIndex + NUMBER_OF_LESSON;
+    let concatData = [];
+    if (cateActive === LESSON) {
+      await this.props.fetchGetLessons(courseId, this.startIndex, NUMBER_OF_LESSON, userLogin.id);
+      concatData = this.props.lessons;
+    }
+    if (cateActive === EXERCISE) {
+      await this.props.fetchGetExercisesOfCourse(courseId, this.startIndex, NUMBER_OF_LESSON, userLogin.id);
+      concatData = this.props.exercisesOfCourse;
+    }
+    if (cateActive === TEST_ONLINE) {
+      await this.props.fetchGetTestsOnlineOfCourse(courseId, this.startIndex, NUMBER_OF_LESSON, userLogin.id);
+      concatData = this.props.testsOnlineOfCourse;
+    }
+    if (!concatData || concatData.length < 1) {
+      return;
+    }
     this.setState((prevState) => {
       return {
-        dataOfCourse: lessons,
+        dataOfCourse: prevState.dataOfCourse.concat(concatData),
       };
     });
   };
-  showExercises = async () => {
-    const { courseId } = this.props;
-    const { userLogin, fetchGetExercisesOfCourse } = this.props;
-    await fetchGetExercisesOfCourse(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
-    const { exercisesOfCourse } = this.props;
-    this.setState((prevState) => {
-      return {
-        dataOfCourse: exercisesOfCourse,
-      };
+
+  showDataList = async () => {
+    const { courseId, cateActive } = this.props;
+    const { userLogin, fetchGetLessons, fetchGetExercisesOfCourse, fetchGetTestsOnlineOfCourse } = this.props;
+    let data = [];
+    if (cateActive === LESSON) {
+      await fetchGetLessons(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
+      data = this.props.lessons;
+    }
+    if (cateActive === EXERCISE) {
+      await fetchGetExercisesOfCourse(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
+      data = this.props.exercisesOfCourse;
+    }
+    if (cateActive === TEST_ONLINE) {
+      await fetchGetTestsOnlineOfCourse(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
+      data = this.props.testsOnlineOfCourse;
+    }
+    this.setState({
+      dataOfCourse: data,
     });
   };
-  showTestsOnline = async () => {
-    const { courseId } = this.props;
-    const { userLogin, fetchGetTestsOnlineOfCourse } = this.props;
-    await fetchGetTestsOnlineOfCourse(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
-    const { testsOnlineOfCourse } = this.props;
-    this.setState((prevState) => {
-      return {
-        dataOfCourse: testsOnlineOfCourse,
-      };
-    });
+  handleOnRefresh = () => {
+    this.resetStartIndex();
+    this.setState(
+      {
+        refreshing: true,
+      },
+      () => {
+        this.showDataList().then(() => {
+          this.setState({
+            refreshing: false,
+          });
+        });
+      },
+    );
   };
   async componentDidMount() {
-    const { userLogin, courseId, fetchGetLessons } = this.props;
-    await fetchGetLessons(courseId, this.startIndex, NUMBER_OF_LESSON, userLogin.id);
-    const { lessons } = this.props;
+    const { userLogin, courseId, fetchGetLessons, cateActive } = this.props;
+    let data = [];
+    if (cateActive === LESSON) {
+      await fetchGetLessons(courseId, 0, NUMBER_OF_LESSON, userLogin.id);
+      data = this.props.lessons;
+    }
     this.setState({
-      dataOfCourse: lessons,
+      dataOfCourse: data,
     });
   }
   render() {
     const { loading } = this.props;
-    const { dataOfCourse } = this.state;
-    console.log('loading', loading);
-
+    const { dataOfCourse, refreshing, isFetchData } = this.state;
     return (
       <>
+        {/* {loading && !refreshing && !isFetchData ? : null} */}
+        <LoadingModal visible={loading && !refreshing && !isFetchData} />
         <FlatList
-          style={{ paddingHorizontal: 16 }}
+          style={{ flex: 1, paddingHorizontal: 16 }}
           showsVerticalScrollIndicator={false}
           data={dataOfCourse}
           numColumns={1}
           keyExtractor={(item) => item.id.toString()}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={() => {
+                this.handleOnRefresh();
+              }}
+            />
+          }
+          onEndReached={() => {
+            console.log('onEndReached');
+            this.handleOnEndReached();
+          }}
+          onEndReachedThreshold={0.1}
+          // ListFooterComponent={<LoadingModal visible={isFetchData} />}
           renderItem={({ item, index }) => {
             const dataSingleOfCourse = item.dataOfUser;
             return (
@@ -159,12 +216,6 @@ class LessonList extends React.Component {
               </TouchableOpacity>
             );
           }}
-          onEndReachedThreshold={0}
-          onEndReached={() => {
-            console.log('onEndReached');
-            this.handleOnEndReached();
-          }}
-          ListFooterComponent={this.state.isFetchData && <Loading />}
         />
       </>
     );

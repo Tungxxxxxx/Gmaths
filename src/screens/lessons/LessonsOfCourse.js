@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageBackground, StatusBar, Text, View, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
+import { ImageBackground, Text, View, TouchableOpacity, ScrollView, StyleSheet } from 'react-native';
 import { LESSON, EXERCISE, TEST_ONLINE, DETAILS, NUMBER_OF_LESSON } from '../../constant/Constant';
 import { BG } from '../../assets/images/index';
 import HeaderBar from '../../components/Header';
@@ -10,11 +10,10 @@ import { fetchGetExercisesOfCourse } from '../../redux/actions/fetchGetExercises
 import { fetchGetTestsOnlineOfCourse } from '../../redux/actions/fetchGetTestsOnlineOfCourse';
 import { lessonStyles } from './Style';
 import DetailsOfCourse from '../details/DetailsOfCourse';
-import Loading from '../../components/Loading';
 class LessonsOfCourse extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { cateActive: LESSON, dataOfCourse: [], courseId: null, hasData: false };
+    this.state = { cateActive: LESSON, courseId: null, hasData: false, isClick: false };
     this.lessonsListRef = React.createRef();
   }
   setCateActive = (cateActive) => {
@@ -22,35 +21,71 @@ class LessonsOfCourse extends React.Component {
       cateActive: cateActive,
     });
   };
-  handleLesson = async () => {
+  setIsClick = (isClick) => {
+    this.setState({
+      isClick: isClick,
+    });
+  };
+  handleLesson = () => {
     const { cateActive } = this.state;
     if (cateActive === LESSON) {
       return;
     }
-    this.setState({
-      cateActive: LESSON,
-    });
-    this.lessonsListRef.showLessons();
+    if (this.lessonsListRef.current) {
+      this.lessonsListRef.current.resetStartIndex();
+    }
+    this.setState(
+      {
+        cateActive: LESSON,
+        isClick: true,
+      },
+      async () => {
+        if (this.lessonsListRef.current) {
+          await this.lessonsListRef.current.showDataList();
+        }
+      },
+    );
   };
-  handleExercise = async () => {
+  handleExercise = () => {
     const { cateActive } = this.state;
     if (cateActive === EXERCISE) {
       return;
     }
-    this.setState({
-      cateActive: EXERCISE,
-    });
-    this.lessonsListRef.showExercises();
+
+    if (this.lessonsListRef.current) {
+      this.lessonsListRef.current.resetStartIndex();
+    }
+    this.setState(
+      {
+        cateActive: EXERCISE,
+        isClick: true,
+      },
+      async () => {
+        if (this.lessonsListRef.current) {
+          await this.lessonsListRef.current.showDataList();
+        }
+      },
+    );
   };
-  handleTestOnline = async () => {
+  handleTestOnline = () => {
     const { cateActive } = this.state;
     if (cateActive === TEST_ONLINE) {
       return;
     }
-    this.setState({
-      cateActive: TEST_ONLINE,
-    });
-    this.lessonsListRef.showTestsOnline();
+    if (this.lessonsListRef.current) {
+      this.lessonsListRef.current.resetStartIndex();
+    }
+    this.setState(
+      {
+        cateActive: TEST_ONLINE,
+        isClick: true,
+      },
+      async () => {
+        if (this.lessonsListRef.current) {
+          await this.lessonsListRef.current.showDataList();
+        }
+      },
+    );
   };
 
   handleDetails = () => {
@@ -58,24 +93,7 @@ class LessonsOfCourse extends React.Component {
       return { cateActive: DETAILS };
     });
   };
-  updateStartIndex = async () => {
-    const { courseId, cateActive } = this.state;
-    const { userLogin } = this.props;
-    console.log(this.startIndex);
-    this.startIndex = this.startIndex + NUMBER_OF_LESSON;
-    if (cateActive === LESSON) {
-      await this.props.fetchGetLessons(courseId, this.startIndex, NUMBER_OF_LESSON, userLogin.id);
-      const { lessons } = this.props;
-      if (!lessons) {
-        return;
-      }
-      this.setState((prevState) => {
-        return {
-          dataOfCourse: prevState.dataOfCourse.concat(lessons),
-        };
-      });
-    }
-  };
+
   componentDidMount() {
     this.setState({
       cateActive: LESSON,
@@ -84,12 +102,10 @@ class LessonsOfCourse extends React.Component {
   render() {
     const { title, courseId } = this.props.route.params;
     const { cateActive } = this.state;
-    const { loading } = this.props;
     return (
       <View style={lessonStyles.container}>
         <ImageBackground source={BG} style={lessonStyles.bgImage}>
           <HeaderBar title={title} isAvatar={true} />
-          {loading ? <Loading /> : null}
           <View style={styles.category}>
             <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
               <TouchableOpacity
@@ -145,11 +161,10 @@ class LessonsOfCourse extends React.Component {
             {cateActive !== DETAILS ? (
               <LessonList
                 courseId={courseId}
-                cateActive={cateActive}
-                dataOfCourse={this.state.dataOfCourse}
-                updateStartIndex={this.updateStartIndex}
-                setCateActive={this.setCateActive}
+                cateActive={this.state.cateActive}
                 ref={this.lessonsListRef}
+                setIsClick={this.setIsClick}
+                isClick={this.state.isClick}
               />
             ) : (
               <DetailsOfCourse />
