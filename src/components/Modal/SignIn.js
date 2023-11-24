@@ -57,6 +57,7 @@ class SignIn extends React.Component {
       });
     }
   };
+
   render() {
     const { visible, errorMes } = this.state;
     return (
@@ -130,7 +131,7 @@ class SignIn extends React.Component {
                         <Text style={styles.txtOrSignIn}>hoặc</Text>
                         <View style={modalStyles.divider}></View>
                       </View>
-                      <AuthAcc />
+                      <AuthAcc closeModal={this.closeModal} />
                     </>
                   ) : (
                     <View style={modalStyles.dividerFull}></View>
@@ -176,8 +177,8 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = (state) => {
-  return { navigation: state.navigation.navigation, userLogin: state.data.userLogin };
+  return { navigation: state.params.navigation, userLogin: state.data.userLogin };
 };
-export default connect(mapStateToProps, { fetchGetUserLogin, fetchGetCoursesOfUser }, null, { forwardRef: true })(
-  SignIn,
-);
+export default connect(mapStateToProps, { fetchGetUserLogin, fetchGetCoursesOfUser }, null, {
+  forwardRef: true,
+})(SignIn);

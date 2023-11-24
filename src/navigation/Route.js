@@ -9,12 +9,19 @@ import DetailsOfCourse from '../screens/details/DetailsOfCourse';
 import ExerciseDetail from '../screens/exercises/ExerciseDetail';
 import ExcerciseFeedback from '../screens/exercises/ExcerciseFeedback';
 import ExerciseDone from '../screens/exercises/ExerciseDone';
+import Browser from '../screens/browser/Browser';
 const Stack = createStackNavigator();
 class Route extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
+    this.homeRef = React.createRef();
   }
+  showSignInModal = () => {
+    if (this.homeRef.current) {
+      this.homeRef.current.showSignInModal();
+    }
+  };
   render() {
     return (
       <NavigationContainer fallback={<></>}>
@@ -27,6 +34,7 @@ class Route extends React.Component {
           <Stack.Screen name="ExerciseDetail" component={ExerciseDetail} options={{ headerShown: false }} />
           <Stack.Screen name="ExcerciseFeedback" component={ExcerciseFeedback} options={{ headerShown: false }} />
           <Stack.Screen name="ExerciseDone" component={ExerciseDone} options={{ headerShown: false }} />
+          <Stack.Screen name="Browser" component={Browser} options={{ headerShown: false }} />
         </Stack.Navigator>
       </NavigationContainer>
     );

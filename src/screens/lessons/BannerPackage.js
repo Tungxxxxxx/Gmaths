@@ -27,18 +27,19 @@ class BannerPackage extends React.Component {
         <View style={styles.bannerContainer}>
           <RadialGradient style={styles.bannerHero} colors={radialColor} stops={radialStops}>
             <Image source={Rectangle1} style={styles.rectangle1Image} />
-
-            <View style={{ flex: 67 }} />
-            <TouchableOpacity
-              style={styles.buttonCTA}
-              onPress={() => {
-                this.props.fetchGetPackages();
-                this.showBuyCourses();
-              }}
-            >
-              <Text style={styles.labelButtonCTA}>Đăng ký gói cước ngay</Text>
-            </TouchableOpacity>
-            <View style={{ flex: 87 }} />
+            <View style={styles.overlayContainer}>
+              <View style={{ flex: 67 }} />
+              <TouchableOpacity
+                style={styles.buttonCTA}
+                onPress={() => {
+                  this.props.fetchGetPackages();
+                  this.showBuyCourses();
+                }}
+              >
+                <Text style={styles.labelButtonCTA}>Đăng ký gói cước ngay</Text>
+              </TouchableOpacity>
+              <View style={{ flex: 87 }} />
+            </View>
           </RadialGradient>
         </View>
       </>
@@ -68,6 +69,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     alignSelf: 'center',
     width: '100%',
+  },
+  overlayContainer: {
+    flex: 1,
+    width: '100%',
+    backgroundColor: 'rgba(0,0,0,0.3)',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   buttonCTA: {
     width: '57%',

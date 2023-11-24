@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, Platform, Linking } from 'rea
 import { CALL_IOS, CALL_ANDROID, MESSENGER_URL_1, MESSENGER_URL_2, ZALO_URL } from '../constant/Constant';
 import { SvgXml } from 'react-native-svg';
 import { zaloIcon, messenger, phone } from '../assets/images/index';
+import { connect } from 'react-redux';
 class Contact extends React.Component {
   constructor(props) {
     super(props);
@@ -18,7 +19,7 @@ class Contact extends React.Component {
     Linking.openURL(phoneNumber);
   };
   handleOpenUrl = (url) => {
-    Linking.openURL(url);
+    this.props.navigation.navigate('Browser', { uri: url });
   };
   render() {
     const { contentContact1, contentContact2 } = this.props;
@@ -85,4 +86,7 @@ const styles = StyleSheet.create({
   },
   iconContactView: { height: 40, width: 40, borderRadius: 16, padding: 8 },
 });
-export default Contact;
+const mapStateToProps = (state) => {
+  return { navigation: state.params.navigation };
+};
+export default connect(mapStateToProps)(Contact);

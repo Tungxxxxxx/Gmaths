@@ -298,7 +298,7 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = (state) => {
   return {
-    navigation: state.navigation.navigation,
+    navigation: state.params.navigation,
     userLogin: state.data.userLogin,
     lessons: state.data.lessons,
     exercisesOfCourse: state.data.exercisesOfCourse,

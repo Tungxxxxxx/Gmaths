@@ -34,7 +34,7 @@ class HeaderBar extends React.Component {
               {title}
             </Text>
           </View>
-          {isAvatar ? (
+          {isAvatar && userLogin ? (
             <Avatar.Image source={userLogin.avatar} size={24} />
           ) : (
             <Ionicons name="bookmark-outline" style={styles.backIcon} size={24} />
@@ -73,6 +73,6 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = (state) => {
-  return { navigation: state.navigation.navigation, userLogin: state.data.userLogin };
+  return { navigation: state.params.navigation, userLogin: state.data.userLogin };
 };
 export default connect(mapStateToProps)(HeaderBar);

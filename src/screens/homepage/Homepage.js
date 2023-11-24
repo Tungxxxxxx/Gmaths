@@ -15,6 +15,7 @@ import BuyCourse from '../../components/Modal/BuyCourse';
 import { connect } from 'react-redux';
 import { Avatar } from 'react-native-paper';
 import { GapVertical } from '../../components/GapComponent';
+import { setShowSignInModal } from '../../redux/actions/setShowSignInModal';
 
 const { width } = Dimensions.get('window');
 const bannerWidth = width - 32;
@@ -53,12 +54,14 @@ class Homepage extends React.Component {
       // console.log('>>>>Check event scroll', check);
     }
   };
+
   setActiveButtonCTA = (flag) => {
     this.setState({
       isActiveButtonCTA: flag,
     });
   };
   showSignInModal = () => {
+    console.log('showSignInModal');
     this.setState(
       () => ({ modal: SIGN_IN }),
       () => {
@@ -75,7 +78,6 @@ class Homepage extends React.Component {
       }),
       () => {
         if (this.signUpRef.current) {
-          console.log('Homepage', modalName);
           this.signUpRef.current.showModal();
         }
         if (this.buyCourseRef.current) {
@@ -84,7 +86,9 @@ class Homepage extends React.Component {
       },
     );
   };
-
+  componentDidMount() {
+    this.props.setShowSignInModal(this.showSignInModal);
+  }
   render() {
     const { activeDot, modal } = this.state;
     const { userLogin } = this.props;
@@ -159,4 +163,4 @@ class Homepage extends React.Component {
 const mapStateToProps = (state) => {
   return { userLogin: state.data.userLogin };
 };
-export default connect(mapStateToProps)(Homepage);
+export default connect(mapStateToProps, { setShowSignInModal }, null, { forwardRef: true })(Homepage);

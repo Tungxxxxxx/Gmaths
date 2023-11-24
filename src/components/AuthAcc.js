@@ -2,11 +2,18 @@ import React from 'react';
 import { View, StyleSheet, TouchableOpacity } from 'react-native';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { URI_FB_LOGIN } from '../constant/Constant';
+import { connect } from 'react-redux';
 class AuthAcc extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
   }
+  handleFbLogin = () => {
+    const { navigation, closeModal } = this.props;
+    closeModal();
+    navigation.navigate('Browser', { uri: URI_FB_LOGIN });
+  };
   render() {
     return (
       <View style={styles.authAcc}>
@@ -16,7 +23,12 @@ class AuthAcc extends React.Component {
         <TouchableOpacity style={styles.CTA}>
           <AntDesign style={styles.socialIcon} name="google" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.CTA}>
+        <TouchableOpacity
+          style={styles.CTA}
+          onPress={() => {
+            this.handleFbLogin();
+          }}
+        >
           <FontAwesome style={[styles.socialIcon, { paddingLeft: 5 }]} name="facebook" />
         </TouchableOpacity>
       </View>
@@ -49,4 +61,7 @@ const styles = StyleSheet.create({
     lineHeight: 24,
   },
 });
-export default AuthAcc;
+const mapStateToProps = (state) => {
+  return { navigation: state.params.navigation };
+};
+export default connect(mapStateToProps, null)(AuthAcc);

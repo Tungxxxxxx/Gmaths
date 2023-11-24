@@ -12,11 +12,11 @@ class App extends React.Component {
 
   render() {
     return (
-      <ProviderPaper>
-        <Provider store={store}>
+      <Provider store={store}>
+        <ProviderPaper>
           <Route />
-        </Provider>
-      </ProviderPaper>
+        </ProviderPaper>
+      </Provider>
     );
   }
 }

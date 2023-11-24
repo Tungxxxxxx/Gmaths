@@ -276,7 +276,7 @@ const mapStateToProps = (state) => {
     grades: state.data.grades,
     coursesOfUser: state.data.coursesOfUser,
     userLogin: state.data.userLogin,
-    navigation: state.navigation.navigation,
+    navigation: state.params.navigation,
   };
 };
 export default connect(mapStateToProps, { fetchGetGrades, fetchGetCourses, fetchGetPackages })(Listing);

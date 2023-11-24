@@ -312,6 +312,6 @@ const styles = StyleSheet.create({
   },
 });
 const mapStateToProps = (state) => {
-  return { navigation: state.navigation.navigation };
+  return { navigation: state.params.navigation };
 };
 export default connect(mapStateToProps, null)(ExerciseDetail);

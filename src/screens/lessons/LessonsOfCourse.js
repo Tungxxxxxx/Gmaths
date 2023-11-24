@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
 });
 const mapStateToProps = (state) => {
   return {
-    state: state,
+    // state: state,
     userLogin: state.data.userLogin,
     lessons: state.data.lessons,
     exercisesOfCourse: state.data.exercisesOfCourse,
