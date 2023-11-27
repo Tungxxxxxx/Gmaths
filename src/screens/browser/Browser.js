@@ -5,6 +5,8 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { GapHorizontal, GapVertical } from '../../components/GapComponent';
 import { connect } from 'react-redux';
 import { Dimensions } from 'react-native';
+import { LoginButton, AccessToken, LoginManager } from 'react-native-fbsdk-next';
+import InAppBrowser from 'react-native-inappbrowser-reborn';
 const { width } = Dimensions.get('window');
 const titleWidth = width - 52 - 56;
 // import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -30,6 +32,25 @@ class Browser extends React.Component {
       error: syntheticEvent.nativeEvent.description,
     });
   };
+  onFacebookLogin = async () => {
+    try {
+      const result = await LoginManager.logInWithPermissions(['public_profile', 'email']);
+      if (result.isCancelled) {
+        console.log('Login cancelled');
+      } else {
+        const data = await AccessToken.getCurrentAccessToken();
+        if (data) {
+          console.log('Logged in:', data.accessToken);
+          // Gọi hàm xử lý sau khi đăng nhập thành công
+        }
+      }
+    } catch (error) {
+      console.error('Facebook login error:', error);
+    }
+  };
+  componentDidMount() {
+    this.onFacebookLogin();
+  }
   render() {
     const uri = this.props.route.params.uri;
     const { currentUrl, error } = this.state;
@@ -54,22 +75,18 @@ class Browser extends React.Component {
           </View>
         </View>
         <View style={styles.contentContainer}>
-          <WebView
-            style={styles.webView}
-            source={{ uri: uri }}
-            onNavigationStateChange={(navState) => {
-              this.handleUrlChange(navState);
+          {/* <LoginButton
+            onLoginFinished={(error, result) => {
+              if (error) {
+                console.error('Facebook login error:', error);
+              } else if (result.isCancelled) {
+                console.log('Login cancelled');
+              } else {
+                this.onFacebookLogin();
+              }
             }}
-            // onError={(syntheticEvent) => {
-            //   this.handleLoadError(syntheticEvent);
-            // }}
-            onHttpError={(syntheticEvent) => {
-              const { nativeEvent } = syntheticEvent;
-              console.log('WebView received error status code: ', nativeEvent.statusCode);
-            }}
-            renderError={(errorName) => <Error name={errorName} />}
-            onError={(error) => console.error('WebView error:', error)}
-          />
+            onLogoutFinished={() => console.log('User logged out')}
+          /> */}
         </View>
       </View>
     );

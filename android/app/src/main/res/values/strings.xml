@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Gmaths</string>
     <string name="facebook_app_id">1029292911713708</string>
+    <string name="facebook_client_token">09c934be13610bb723e8755946aef506</string>
 </resources>
