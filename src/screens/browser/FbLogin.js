@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { LoginButton, AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import { URI_FB_LOGIN } from '../../constant/Constant';
+import { Dimensions } from 'react-native';
+const { width } = Dimensions.get('window');
+const titleWidth = width - 52 - 56;
 
 class FBLogin extends Component {
   onFacebookLogin = async () => {

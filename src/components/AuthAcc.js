@@ -20,35 +20,19 @@ class AuthAcc extends React.Component {
     closeModal();
     navigation.navigate('Browser', { uri: URI_FB_LOGIN });
   };
-  handleApleLogin = async () => {
-    console.log(InAppBrowser);
-    if (InAppBrowser) {
-      try {
-        const url = 'https://www.24h.com.vn';
-        const result = await InAppBrowser.open(url, {
-          showTitle: true,
-          toolbarColor: '#6200EE',
-          secondaryToolbarColor: 'black',
-          navigationBarColor: 'black',
-          navigationBarDividerColor: 'white',
-          enableUrlBarHiding: true,
-          enableDefaultShare: true,
-          forceCloseOnRedirection: false,
-        });
 
-        console.log(result);
-      } catch (error) {
-        console.error(error.message);
-      }
-    }
+  handleAppleLogin = () => {
+    const { navigation, closeModal } = this.props;
+    closeModal();
   };
+
   render() {
     return (
       <View style={styles.authAcc}>
         <TouchableOpacity
           style={styles.CTA}
           onPress={() => {
-            this.handleApleLogin();
+            this.handleAppleLogin();
           }}
         >
           <AntDesign style={styles.socialIcon} name="apple1" />

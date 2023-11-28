@@ -70,9 +70,11 @@ def jscFlavor = 'org.webkit:android-jsc:+'
 
 android {
     ndkVersion rootProject.ext.ndkVersion
-
     compileSdkVersion rootProject.ext.compileSdkVersion
-
+    //thêm custom tab
+    // compileSdkVersion 25
+    // buildToolsVersion "25.0.1"
+    // end thêm custom tab
     namespace "com.gmaths"
     defaultConfig {
         applicationId "com.gmaths"
@@ -120,6 +122,10 @@ dependencies {
         implementation jscFlavor
     }
     implementation project(':react-native-vector-icons')
+
+    //Thêm customtab
+    //  compile "com.android.support:appcompat-v7:25.0.1"
+     //end thêm customtab
 
 }
 

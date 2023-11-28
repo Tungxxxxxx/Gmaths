@@ -4,9 +4,9 @@ import { WebView } from 'react-native-webview';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { GapHorizontal, GapVertical } from '../../components/GapComponent';
 import { connect } from 'react-redux';
-import { Dimensions } from 'react-native';
 import { LoginButton, AccessToken, LoginManager } from 'react-native-fbsdk-next';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
+import { Dimensions } from 'react-native';
 const { width } = Dimensions.get('window');
 const titleWidth = width - 52 - 56;
 // import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -70,7 +70,7 @@ class Browser extends React.Component {
             </TouchableOpacity>
             <GapHorizontal width={8} />
             <Text style={styles.title} numberOfLines={1} ellipsizeMode="tail">
-              {currentUrl}
+              {currentUrl.replace(('https://', ''))}
             </Text>
           </View>
         </View>

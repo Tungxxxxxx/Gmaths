@@ -16,6 +16,9 @@ buildscript {
     repositories {
         google()
         mavenCentral()
+        //Thêm custom tab
+        // maven { url "https://jitpack.io" }
+        //End Thêm custom tab
     }
     dependencies {
         classpath("com.android.tools.build:gradle")
