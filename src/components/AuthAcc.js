@@ -5,6 +5,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { URI_FB_LOGIN } from '../constant/Constant';
 import { connect } from 'react-redux';
 import InAppBrowser from 'react-native-inappbrowser-reborn';
+import { LoginManager } from 'react-native-fbsdk-next';
 class AuthAcc extends React.Component {
   constructor(props) {
     super(props);
@@ -13,7 +14,19 @@ class AuthAcc extends React.Component {
   handleFbLogin = () => {
     const { navigation, closeModal } = this.props;
     closeModal();
-    navigation.navigate('FBLogin', { uri: URI_FB_LOGIN });
+    const r = LoginManager.logInWithPermissions(['public_profile', 'user_birthday', 'user_location']).then((res) => {
+      console.log(r);
+      console.log(res);
+      if (res.error) {
+        console.log('error');
+      } else {
+        if (res.isCancelled) {
+          console.log('isCancelled');
+        } else {
+          console.log('success');
+        }
+      }
+    });
   };
   handleGGLogin = () => {
     const { navigation, closeModal } = this.props;

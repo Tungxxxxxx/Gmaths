@@ -13,9 +13,6 @@ import com.facebook.FacebookSdk;
 //Thêm InAppBrowser
 import com.proyecto26.inappbrowser.RNInAppBrowserPackage;
 //End Thêm InAppBrowser
-// Thêm custom tabs
-// import com.github.droibit.android.reactnative.customtabs.CustomTabsPackage;
-// End Thêm custom tabs
 
 public class MainApplication extends Application implements ReactApplication {
 
@@ -32,12 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
       // Packages that cannot be autolinked yet can be added manually here, for
       // example:
       // packages.add(new MyReactNativePackage());
-      // Thêm gói mới vào danh sách thủ công (InAppBrowser)
-      // packages.add(inAppBrowserPackage);
-      // End Thêm gói mới vào danh sách thủ công (InAppBrowser)
-      // Thêm custom tabs
-      // packages.add(new CustomTabsPackage());
-      // End Thêm custom tabs
+
       return packages;
 
     }
